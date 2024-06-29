@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{04D51C72-6B1A-4E0B-8E88-3AC5B4DE94E6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OrakYazilimLib</RootNamespace>
+    <AssemblyName>OrakYazilimLib</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'local|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\local\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Google.Protobuf, Version=3.27.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\..\entegre-dotnet\SCReportingAPI\packages\Google.Protobuf.3.27.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.0.13.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\hyproApi\packages\MySql.Data.8.0.13\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\entegre-dotnet\SCReportingAPI\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Portable.System.DateTimeOnly, Version=7.0.1.0, Culture=neutral, PublicKeyToken=16fb7a27ac3b9689, processorArchitecture=MSIL">
+      <HintPath>..\..\entegre-dotnet\SCReportingAPI\packages\Portable.System.DateTimeOnly.7.0.1\lib\net462\Portable.System.DateTimeOnly.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\entegre-dotnet\SCReportingAPI\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\entegre-dotnet\SCReportingAPI\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\entegre-dotnet\SCReportingAPI\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\entegre-dotnet\SCReportingAPI\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdoNetHelper\Abstract\IDbOperations.cs" />
+    <Compile Include="AdoNetHelper\Database.cs" />
+    <Compile Include="AdoNetHelper\FiSqlUtil.cs" />
+    <Compile Include="AdoNetHelper\ParamItem.cs" />
+    <Compile Include="AdoNetHelper\DbCreateHelper.cs" />
+    <Compile Include="AdoNetHelper\SuperHelper.cs" />
+    <Compile Include="CouchDb\CouchDbClient.cs" />
+    <Compile Include="CouchDb\Credentials.cs" />
+    <Compile Include="DataContainer\Torg.cs" />
+    <Compile Include="DataContainer\Tor.cs" />
+    <Compile Include="DataContainer\FiResponseNonGen.cs" />
+    <Compile Include="DataContainer\FiReturn2.cs" />
+    <Compile Include="DataContainer\Fdr.cs" />
+    <Compile Include="DbAttribute\IsPK.cs" />
+    <Compile Include="DbGeneric\FiCol.cs" />
+    <Compile Include="DbGeneric\FiColType.cs" />
+    <Compile Include="DbGeneric\RepoCommon.cs" />
+    <Compile Include="DbGeneric\RepoCommon2.cs" />
+    <Compile Include="DbGeneric\RepoGeneric2.cs" />
+    <Compile Include="DbUtil\FiConnConfig.cs" />
+    <Compile Include="DbUtil\FiMetaEntity.cs" />
+    <Compile Include="DbUtil\FiQueryGenMs.cs" />
+    <Compile Include="DbUtil\FiQueryTools.cs" />
+    <Compile Include="DbUtil\Fsf.cs" />
+    <Compile Include="DbGeneric\FiSqlParameter.cs" />
+    <Compile Include="DbGeneric\RepoGeneric.cs" />
+    <Compile Include="DbInterface\IEntity.cs" />
+    <Compile Include="DbInterface\IRepo.cs" />
+    <Compile Include="DbUtil\DbAttributes.cs" />
+    <Compile Include="DbUtil\EmTblCreateTypes.cs" />
+    <Compile Include="DbUtil\FiDbhms.cs" />
+    <Compile Include="DbUtil\FiDbMetaSqlServer.cs" />
+    <Compile Include="DbUtil\FiMetaField.cs" />
+    <Compile Include="DbUtil\FiSqlPrmBind.cs" />
+    <Compile Include="DbUtil\FiListFiSqlParam.cs" />
+    <Compile Include="DbUtil\FiListSqlParam.cs" />
+    <Compile Include="DemoEntity\DemoMusteri.cs" />
+    <Compile Include="DbUtil\FiDataTableEntensions.cs" />
+    <Compile Include="DbUtil\FiDbHelperMysql.cs" />
+    <Compile Include="DbUtil\FiMySqlQuery.cs" />
+    <Compile Include="DbUtil\FiQuery.cs" />
+    <Compile Include="DbUtil\FiLINQtoDataTable.cs" />
+    <Compile Include="DbUtil\FiListExtensions.cs" />
+    <Compile Include="DbUtil\FiSqlServerQuery.cs" />
+    <Compile Include="DemoEntity\DemoMkfields.cs" />
+    <Compile Include="DemoEntity\MysqlQueryDemo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UtilThirdParty\ShortGuid.cs" />
+    <Compile Include="UtilThirdParty\TextHelper.cs" />
+    <Compile Include="Util\core\FiBoolean.cs" />
+    <Compile Include="Util\core\FiCalender.cs" />
+    <Compile Include="Util\config\FiAppConfig.cs" />
+    <Compile Include="Util\core\FiConsoleWeb.cs" />
+    <Compile Include="Util\core\FiDataTable.cs" />
+    <Compile Include="Util\core\FiDate.cs" />
+    <Compile Include="Util\core\FiKeyBean.cs" />
+    <Compile Include="Util\core\FiLog.cs" />
+    <Compile Include="Util\core\FiNumber.cs" />
+    <Compile Include="Util\core\FiReflection.cs" />
+    <Compile Include="Util\core\FiRegExp.cs" />
+    <Compile Include="Util\core\FiSql.cs" />
+    <Compile Include="Util\core\FiType.cs" />
+    <Compile Include="Util\core\ObservableProperties.cs" />
+    <Compile Include="Util\helper\Fistf.cs" />
+    <Compile Include="Util\web\FiJson.cs" />
+    <Compile Include="Util\core\FiCollection.cs" />
+    <Compile Include="Util\core\FiLogWeb.cs" />
+    <Compile Include="Util\core\FiString.cs" />
+    <Compile Include="Util\web\FiTypescript.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
