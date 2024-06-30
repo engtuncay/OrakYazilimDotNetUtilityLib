@@ -1,23 +1,10 @@
 using OrakYazilimLib.DbUtil;
+using System;
 
 namespace OrakYazilimLib.DbGeneric
 {
-    public class RepoCommon<T>
+    public class RepoCommon : RepoCommonGen<Object>
     {
-        public string connProfile { get; set; }
-        public string connString{ get; set; }
-
-        //public FiConnConfig fiConnConfig { get; set; }
-
-        public FiDbhms getDbHelper()
-        {
-            return FiDbhms.FactoryWitCs(connString);
-        }
-
-        public void checkAndSetConnProfile()
-        {
-            // TODO metod yaz
-        }
 
     }
 }

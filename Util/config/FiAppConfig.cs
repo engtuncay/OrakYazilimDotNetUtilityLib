@@ -8,7 +8,11 @@ namespace OrakYazilimLib.Util.config
 
         public static String GetConnectionString(string key)
         {
-            return ConfigurationManager.ConnectionStrings[key].ConnectionString;
+            string connString = ConfigurationManager.ConnectionStrings[key].ConnectionString;
+
+            //FiLogWeb.logWeb("FiAppConfig ConnString Key : " + key);
+            //FiLogWeb.logWeb("FiAppConfig ConnString : " + connString);
+            return connString;
         }
 
     }
