@@ -35,6 +35,11 @@ namespace OrakYazilimLib.DbUtil
             return new FiDbhms(FiAppConfig.GetConnectionString(configKey));
         }
 
+        //public static FiDbhms Factory(FiConnConfig configKey)
+        //{
+        //    return new FiDbhms(FiAppConfig.GetConnectionString(configKey));
+        //}
+
         /// <summary>
         /// connString direk olarak alır
         /// </summary>
