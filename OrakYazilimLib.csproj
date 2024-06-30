@@ -187,6 +187,7 @@
     <Compile Include="Util\core\FiDate.cs" />
     <Compile Include="Util\core\FiKeyBean.cs" />
     <Compile Include="Util\core\FiLog.cs" />
+    <Compile Include="Util\core\FiMeta.cs" />
     <Compile Include="Util\core\FiNumber.cs" />
     <Compile Include="Util\core\FiReflection.cs" />
     <Compile Include="Util\core\FiRegExp.cs" />
