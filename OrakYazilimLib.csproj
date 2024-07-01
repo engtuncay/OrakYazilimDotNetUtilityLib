@@ -158,6 +158,7 @@
     <Compile Include="DbUtil\FiMetaEntity.cs" />
     <Compile Include="DbUtil\FiQueryGenMs.cs" />
     <Compile Include="DbUtil\FiQueryTools.cs" />
+    <Compile Include="DbUtil\FiRepoConfig.cs" />
     <Compile Include="DbUtil\Fsf.cs" />
     <Compile Include="DbGeneric\FiSqlParameter.cs" />
     <Compile Include="DbGeneric\RepoGeneric.cs" />

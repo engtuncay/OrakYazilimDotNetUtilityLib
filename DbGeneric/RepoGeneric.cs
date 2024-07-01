@@ -8,7 +8,7 @@ namespace OrakYazilimLib.DbGeneric
 
         public FiDbhms GetDbHelper()
         {
-            return FiDbhms.Factory(connProfile);
+            return FiDbhms.FactoryWitProfile(connProfile);
         }
 
         public void CheckAndSetConnProfile()

@@ -1,4 +1,5 @@
 using OrakYazilimLib.DbUtil;
+using OrakYazilimLib.Util.config;
 
 namespace OrakYazilimLib.DbGeneric
 {
@@ -11,7 +12,7 @@ namespace OrakYazilimLib.DbGeneric
 
         public FiDbhms getDbHelper()
         {
-            return FiDbhms.FactoryWitCs(connString);
+            return FiDbhms.FactoryWitProfile(connProfile);
         }
 
         public void checkAndSetConnProfile()
