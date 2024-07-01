@@ -8,6 +8,10 @@ namespace OrakYazilimLib.DataContainer
     public class Fdr<T>
     {
 
+        public bool? boResult { get; set; }
+        /// <summary>
+        /// deprecated - boResult kullan
+        /// </summary>
         public bool? blResult { get; set; }
         public T obReturn { get; set; }
         public string txErrorMsgShort { get; set; }
@@ -84,6 +88,7 @@ namespace OrakYazilimLib.DataContainer
             this.txErrorMsgDetail = FiLogWeb.getStackTrace(exception);
             this.lnRowsAffected = -1;
             this.blResult = false;
+            this.boResult = false;
         }
 
         public bool isTrueResult()

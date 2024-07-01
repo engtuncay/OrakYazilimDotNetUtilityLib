@@ -10,6 +10,7 @@ namespace OrakYazilimLib.Util.config
         {
             string connString = ConfigurationManager.ConnectionStrings[key].ConnectionString;
 
+            FiLogWeb.logWeb(ConfigurationManager.AppSettings[key]);
             //FiLogWeb.logWeb("FiAppConfig ConnString Key : " + key);
             //FiLogWeb.logWeb("FiAppConfig ConnString : " + connString);
             return connString;

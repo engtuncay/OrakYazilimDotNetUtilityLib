@@ -5,14 +5,14 @@ using OrakYazilimLib.Util;
 
 namespace OrakYazilimLib.DataContainer
 {
-    public class FiResponse : Fdr<object>
+    public class Fdr : Fdr<object>
     {
-        public FiResponse()
+        public Fdr()
         {
             
         }
 
-        public FiResponse(bool v)
+        public Fdr(bool v)
         {
             base.blResult = v;
         }

@@ -96,11 +96,11 @@ namespace OrakYazilimLib.DbUtil
 
         }
 
-        public FiResponse SqlExecuteNonQueryFi(string sql, List<FiSqlParameter> sqlParamList)
+        public Fdr SqlExecuteNonQueryFi(string sql, List<FiSqlParameter> sqlParamList)
         {
 
             SqlConnection connection = new SqlConnection(connString);
-            FiResponse fiResponse = new FiResponse();
+            Fdr fiResponse = new Fdr();
             SqlParameter[] prms = FiSqlParameter.convertSqlParameter(sqlParamList).ToArray();
 
             using (connection)
@@ -448,14 +448,14 @@ namespace OrakYazilimLib.DbUtil
         }
 
         //Draft
-        public FiResponse SelectList(string sql, List<FiSqlParameter> listParam)
+        public Fdr SelectList(string sql, List<FiSqlParameter> listParam)
         {
 
             DataSet ds = new DataSet();
             SqlConnection connection = new SqlConnection(connString);
             var prms = FiSqlParameter.convertSqlParameter(listParam).ToArray();
 
-            var fiReturn = new FiResponse();
+            var fiReturn = new Fdr();
 
             using (connection)
             {

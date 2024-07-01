@@ -8,7 +8,6 @@ namespace OrakYazilimLib.DbGeneric
 {
     public enum FiColType
     {
-        String, Int,
-        Date,Double
+        String, Int, Date, Double
     }
 }
