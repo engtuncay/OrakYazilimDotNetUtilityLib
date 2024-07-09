@@ -14,7 +14,6 @@ namespace OrakYazilimLib.Util
 	{
 		public static bool boTestEnabled = false;
 		public static bool boDebugDetailEnabled = false;
-		//public static bool testLogEnabled = true;
 
 		public static void logWeb(String message)
 		{
