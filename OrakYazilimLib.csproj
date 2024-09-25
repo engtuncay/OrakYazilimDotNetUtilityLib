@@ -190,7 +190,7 @@
     <Compile Include="Util\core\FiConsoleWeb.cs" />
     <Compile Include="Util\core\FiDataTable.cs" />
     <Compile Include="Util\core\FiDate.cs" />
-    <Compile Include="Util\core\FiKeyBean.cs" />
+    <Compile Include="Util\core\FiKeybean.cs" />
     <Compile Include="Util\core\FiLog.cs" />
     <Compile Include="Util\core\FiMeta.cs" />
     <Compile Include="Util\core\FiNumber.cs" />

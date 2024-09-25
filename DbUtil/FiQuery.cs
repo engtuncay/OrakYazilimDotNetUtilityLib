@@ -15,17 +15,17 @@ namespace OrakYazilimLib.DbUtil
     {
         public string sql { get; set; }
 
-        private FiKeyBean fkbParams { get; set; }
+        private FiKeybean fkbParams { get; set; }
 
         public FiQuery(string sql)
         {
             this.sql = sql;
         }
 
-        public FiQuery(string sql, FiKeyBean fkbParams)
+        public FiQuery(string sql, FiKeybean fkbParams)
         {
             this.sql = sql;
-            this.fkbParams = new FiKeyBean(fkbParams);
+            this.fkbParams = new FiKeybean(fkbParams);
         }
 
         public static void addMultiParam(List<object> list, string prmName, List<SqlParameter> listSqlParam)

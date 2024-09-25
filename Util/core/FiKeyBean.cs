@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace OrakYazilimLib.Util.core
 {
-    public class FiKeyBean : Dictionary<string, object>
+    public class FiKeybean : Dictionary<string, object>
     {
-        public FiKeyBean()
+        public FiKeybean()
         {
         }
 
-        public FiKeyBean(IDictionary<string, object> dictionary) : base(dictionary)
+        public FiKeybean(IDictionary<string, object> dictionary) : base(dictionary)
         {
         }
         public void AddByFiCol(FiCol ficol, object objValue)

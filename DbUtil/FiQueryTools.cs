@@ -40,11 +40,11 @@ namespace OrakYazilimLib.DbUtil
 	 * @param collParamData
 	 * @param boKeepOldParam
 	 */
-        public static string convertSingleParamToMultiParam(string txQuery, FiKeyBean mapParams, String param, IList listParamData, bool boKeepOldParam)
+        public static string convertSingleParamToMultiParam(string txQuery, FiKeybean mapParams, String param, IList listParamData, bool boKeepOldParam)
         {
 
             // (1) şablona göre yeni eklenecek parametre listesi
-            // FiKeyBean paramsNew = new FiKeyBean();
+            // FiKeybean paramsNew = new FiKeybean();
             StringBuilder sbNewParamsForQuery = new StringBuilder();
 
             int index = 0;
@@ -79,7 +79,7 @@ namespace OrakYazilimLib.DbUtil
             return param + "_" + index.ToString();
         }
 
-        public static string convertListParamToMultiParams(string txQuery, FiKeyBean mapParams, bool boKeepOldMultiParamInFkb)
+        public static string convertListParamToMultiParams(string txQuery, FiKeybean mapParams, bool boKeepOldMultiParamInFkb)
         {
 
             if (mapParams == null) return txQuery;
