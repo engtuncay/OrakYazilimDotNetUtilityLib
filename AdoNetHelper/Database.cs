@@ -6,103 +6,106 @@ using System.Linq;
 
 namespace OrakYazilimLib.AdoNetHelper
 {
-    public partial class Database
-    {
-        public string ConnectionString { get; private set; }
-        public SqlConnection Connention { get; private set; }
-        public SqlCommand Command { get; private set; }
+	public partial class Database
+	{
+		public string ConnString { get; private set; }
+		public SqlConnection Conn { get; private set; }
+		/// <summary>
+		/// Comm : Command
+		/// </summary>
+		public SqlCommand Comm { get; private set; }
 
 
-        public Database(string _connectionString)
-        {
-            ConnectionString = _connectionString;
-            Connention = new SqlConnection(ConnectionString);
-            Command = Connention.CreateCommand();
-        }
+		public Database(string _connString)
+		{
+			ConnString = _connString;
+			Conn = new SqlConnection(ConnString);
+			Comm = Conn.CreateCommand();
+		}
 
 
-        private SqlParameter[] ProcessParameters(params ParamItem[] parameters)
-        {
-            SqlParameter[] pars = parameters.Select(x => new SqlParameter()
-            {
-                ParameterName = x.ParamName,
-                Value = x.ParamValue
-            }).ToArray();
+		private SqlParameter[] ProcessParameters(params ParamItem[] parameters)
+		{
+			SqlParameter[] pars = parameters.Select(x => new SqlParameter()
+			{
+				ParameterName = x.ParamName,
+				Value = x.ParamValue
+			}).ToArray();
 
-            return pars;
-        }
-
-
-        public virtual int RunQuery(string query, params ParamItem[] parameters)
-        {
-            Command.Parameters.Clear();
-            Command.CommandText = query;
-            Command.CommandType = CommandType.Text;
-
-            if (parameters != null && parameters.Length > 0)
-            {
-                Command.Parameters.AddRange(ProcessParameters(parameters));
-            }
-
-            int result = 0;
-
-            Connention.Open();
-            try
-            {
-                result = Command.ExecuteNonQuery();
-                if (result == -1) result = 1;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                result = -2;
-                //throw;
-            }
-
-            Connention.Close();
-
-            return result;
-        }
+			return pars;
+		}
 
 
-        public virtual DataTable RunProc(string procName, params ParamItem[] parameters)
-        {
-            Command.Parameters.Clear();
-            Command.CommandText = procName;
-            Command.CommandType = CommandType.StoredProcedure;
+		public virtual int RunQuery(string query, params ParamItem[] parameters)
+		{
+			Comm.Parameters.Clear();
+			Comm.CommandText = query;
+			Comm.CommandType = CommandType.Text;
 
-            if (parameters != null && parameters.Length > 0)
-            {
-                Command.Parameters.AddRange(ProcessParameters(parameters));
-            }
+			if (parameters != null && parameters.Length > 0)
+			{
+				Comm.Parameters.AddRange(ProcessParameters(parameters));
+			}
 
-            DataTable dt = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter(Command);
-            adapter.Fill(dt);
+			int result = 0;
 
-            return dt;
-        }
+			Conn.Open();
+			try
+			{
+				result = Comm.ExecuteNonQuery();
+				if (result == -1) result = 1;
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+				result = -2;
+				//throw;
+			}
+
+			Conn.Close();
+
+			return result;
+		}
 
 
-        public virtual DataTable GetTable(string query, params ParamItem[] parameters)
-        {
-            Command.Parameters.Clear();
-            Command.CommandText = query;
-            Command.CommandType = CommandType.Text;
+		public virtual DataTable RunProc(string procName, params ParamItem[] parameters)
+		{
+			Comm.Parameters.Clear();
+			Comm.CommandText = procName;
+			Comm.CommandType = CommandType.StoredProcedure;
 
-            if (parameters != null && parameters.Length > 0)
-            {
-                Command.Parameters.AddRange(ProcessParameters(parameters));
-            }
+			if (parameters != null && parameters.Length > 0)
+			{
+				Comm.Parameters.AddRange(ProcessParameters(parameters));
+			}
 
-            SqlDataAdapter da = new SqlDataAdapter(Command);
+			DataTable dt = new DataTable();
+			SqlDataAdapter adapter = new SqlDataAdapter(Comm);
+			adapter.Fill(dt);
 
-            // Adaptor : otomatik bağlantı açar. Verileri çeker(sorguyu çalıştırır) ve bir datatable 'a doldurur ve bağlantıyı otomatik kapatır.
+			return dt;
+		}
 
-            DataTable dt = new DataTable();
-            da.Fill(dt);
 
-            return dt;
-        }
-    }
+		public virtual DataTable GetTable(string query, params ParamItem[] parameters)
+		{
+			Comm.Parameters.Clear();
+			Comm.CommandText = query;
+			Comm.CommandType = CommandType.Text;
+
+			if (parameters != null && parameters.Length > 0)
+			{
+				Comm.Parameters.AddRange(ProcessParameters(parameters));
+			}
+
+			SqlDataAdapter da = new SqlDataAdapter(Comm);
+
+			// Adaptor : otomatik bağlantı açar. Verileri çeker(sorguyu çalıştırır) ve bir datatable 'a doldurur ve bağlantıyı otomatik kapatır.
+
+			DataTable dt = new DataTable();
+			da.Fill(dt);
+
+			return dt;
+		}
+	}
 }

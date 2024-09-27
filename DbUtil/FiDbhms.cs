@@ -14,7 +14,7 @@ namespace OrakYazilimLib.DbUtil
 	public class FiDbhms
 	{
 		public string connString { get; set; }
-		//private static readonly string connectionString = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+		//private static readonly string connectionString = ConfigurationManager.ConnectionStrings["ConnStr"].ConnString;
 
 		public int errorRetValue = -1;
 

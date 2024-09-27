@@ -10,7 +10,7 @@ namespace OrakYazilimLib.DbUtil
     public class FiDbHelperMySql
     {
         public string ConnectionString;
-        //private static readonly string connectionString = ConfigurationManager.ConnectionStrings["ConnStr"].ConnectionString;
+        //private static readonly string connectionString = ConfigurationManager.ConnectionStrings["ConnStr"].ConnString;
 
 
         public FiDbHelperMySql()

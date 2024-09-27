@@ -18,7 +18,7 @@ namespace OrakYazilimLib.AdoNetHelper
         {
             if(connectionString == null || string.IsNullOrEmpty(connectionString.Trim()) == true)
             {
-                throw new Exception("ConnectionString can not be empty.");
+                throw new Exception("ConnString can not be empty.");
             }
             else
             {
