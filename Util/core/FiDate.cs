@@ -15,7 +15,7 @@ namespace OrakYazilimLib.Util.core
 
 		public static string dtNowWithTime()
 		{
-			return DateOnly.FromDateTime(DateTime.Now).ToString("yyyy-MM-dd hh:mm:ss");
+			return DateOnly.FromDateTime(DateTime.Now).ToString("yyyy-MM-dd");
 		}
 	}
 }

@@ -146,7 +146,7 @@
   <ItemGroup>
     <Compile Include="AdoNetHelper\Abstract\IDbOperations.cs" />
     <Compile Include="AdoNetHelper\FiSqLite.cs" />
-    <Compile Include="AdoNetHelper\Database.cs" />
+    <Compile Include="AdoNetHelper\FiMssql.cs" />
     <Compile Include="AdoNetHelper\FiSqlUtil.cs" />
     <Compile Include="AdoNetHelper\ParamItem.cs" />
     <Compile Include="AdoNetHelper\DbCreateHelper.cs" />
@@ -183,7 +183,7 @@
     <Compile Include="DbUtil\FiListSqlParam.cs" />
     <Compile Include="DemoEntity\DemoMusteri.cs" />
     <Compile Include="DbUtil\FiDataTableEntensions.cs" />
-    <Compile Include="DbUtil\FiDbHelperMysql.cs" />
+    <Compile Include="DbUtil\FiMySql.cs" />
     <Compile Include="DbUtil\FiMySqlQuery.cs" />
     <Compile Include="DbUtil\FiQuery.cs" />
     <Compile Include="DbUtil\FiLINQtoDataTable.cs" />

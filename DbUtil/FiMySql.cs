@@ -7,18 +7,18 @@ using System.Diagnostics;
 
 namespace OrakYazilimLib.DbUtil
 {
-    public class FiDbHelperMySql
+    public class FiMySql
     {
         public string ConnectionString;
         //private static readonly string connectionString = ConfigurationManager.ConnectionStrings["ConnStr"].ConnString;
 
 
-        public FiDbHelperMySql()
+        public FiMySql()
         {
             
         }
 
-        public FiDbHelperMySql(String connStr)
+        public FiMySql(String connStr)
         {
             ConnectionString = connStr;
         }

@@ -8,7 +8,7 @@ namespace OrakYazilimLib.AdoNetHelper
     {
         public int CreateTableWithCsAndRefresh(string connStr, Type typeTable)
         {
-            var database = new Database(connStr);
+            var database = new FiMssql(connStr);
 
             int rowsaffected = database.RunQuery(new FiSqlServerQuery().createQuery(typeTable, (int)EmTblCreateTypes.Refresh));
 

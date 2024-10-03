@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace OrakYazilimLib.AdoNetHelper
 {
-	public partial class Database
+	public partial class FiMssql
 	{
 		public string ConnString { get; private set; }
 		public SqlConnection Conn { get; private set; }
@@ -16,7 +16,7 @@ namespace OrakYazilimLib.AdoNetHelper
 		public SqlCommand Comm { get; private set; }
 
 
-		public Database(string _connString)
+		public FiMssql(string _connString)
 		{
 			ConnString = _connString;
 			Conn = new SqlConnection(ConnString);
