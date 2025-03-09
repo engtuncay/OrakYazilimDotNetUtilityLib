@@ -423,21 +423,21 @@ namespace OrakYazilimLib.DbUtil
             }
 
             fdrMain.boResult = true;
-            fdrMain.obReturn = dt;
+            fdrMain.refValue = dt;
           }
           catch (SqlException sqlEx) // SQL Hataları için
           {
             FiAppConfig.fiLogManager?.LogMessage($"SQL Error: {sqlEx.Message}");
             fdrMain.boResult = false;
             fdrMain.txErrorMsgShort = sqlEx.Message;
-            fdrMain.obReturn = new DataTable();
+            fdrMain.refValue = new DataTable();
           }
           catch (Exception ex) // Genel hatalar
           {
             FiAppConfig.fiLogManager?.LogMessage($"General Error: {ex.Message}");
             fdrMain.boResult = false;
             fdrMain.txErrorMsgShort = ex.Message;
-            fdrMain.obReturn = new DataTable();
+            fdrMain.refValue = new DataTable();
           }
         }
       }

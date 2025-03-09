@@ -9,5 +9,10 @@ namespace OrakYazilimLib.Util.core
             if (value == null) return false;
             return (bool) value;
         }
+        public static bool IsFalse(bool? value)
+        {
+            if (value == null) return false;
+            return (bool) !value;
+        }
     }
 }

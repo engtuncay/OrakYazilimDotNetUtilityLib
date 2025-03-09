@@ -2,6 +2,7 @@
 using System.Dynamic;
 using System.Web.UI.WebControls;
 using OrakYazilimLib.Util;
+using OrakYazilimLib.Util.core;
 using System.Data;
 
 namespace OrakYazilimLib.DataContainer
@@ -24,10 +25,14 @@ namespace OrakYazilimLib.DataContainer
       }
     }
 
+    public bool? boTknCheck  { get; set;}
+
     /// <summary>
     /// deprecated - boResult kullan
     /// </summary>
     public bool? blResult { get; set; }
+
+    public bool? boOpResult { get; set; }
     public T obReturn { get; set; }
 
     private T _refValue;
@@ -69,6 +74,71 @@ namespace OrakYazilimLib.DataContainer
     public TS GetExtObject<TS>()
     {
       return (TS)this.spec1;
+    }
+
+    /**
+ * İşlem sonuçlarının hepsi true olursa sonuç true olur, bir tane false varsa sonuç false olur.
+ *
+ * Tüm İşlemlerde Birleştirilen Alanlar : Log, Message, Exception
+ *
+ * Value ile birleştirme vs yapmaz.
+ *
+ * @param fdrSubWork Birleştirilecek Fdr (alt fdr işi)
+ */
+    public  void CombineAnd<TPrmeA>(Fdr<TPrmeA> fdrSubWork)
+    {
+
+      // And işlemi olduğu false sonuç, boResult false yapar
+      if (FiBoolean.IsFalse(fdrSubWork.boResult))
+      {
+        boResult = false;
+        //setLnFailureOpCount(getLnFailureOpCountInit() + 1);
+      }
+
+      if (FiBoolean.IsTrue(fdrSubWork.boResult))
+      {
+        //setLnSuccessOpCount(getLnSuccessOpCountInit() + 1);
+        boResult ??= true;
+      }
+
+      // null sonuçlara özel combine işlemi
+//        if (fdrSubWork.getBoResult() == null) {
+//
+//        }
+      // if(FiBool.isTrue(getBoMultiFdr())){
+      //   getFdrListInit().add(fdrSubWork);
+      // }
+
+      // Tümü için yapılacaklar
+      if (fdrSubWork.refException != null)
+      {
+        refException ??= fdrSubWork.refException;
+        // exception birden fazla olma ihtimali var.
+        //getListExceptionInit().add(fdrSubWork.getException());
+      }
+
+      // Tüm işlemlerde mesaj birleştirilir.
+      if (!FiString.IsEmptyWithTrim(fdrSubWork.txMessage)) AppendMessageLn(fdrSubWork.txMessage);
+
+      // Loglar birleştirilir.
+      //if (!FiCollection.isEmpty(fdrSubWork.getLogList())) getLogListInit().addAll(fdrSubWork.getLogList());
+
+      // appendRowsAffected(fdrSubWork.getRowsAffectedOrEmpty());
+      // appendLnUpdated(fdrSubWork.getLnUpdatedRows());
+      // appendLnInserted(fdrSubWork.getLnInsertedRows());
+      // appendLnDeleted(fdrSubWork.getLnDeletedRows());
+
+      // Birleştirme yapıldığı için eski Fdr'ye log eklenmesi engellenir
+      // fdrSubWork.setBoLockAddLog(true);
+    }
+    public void AppendMessageLn(string txValue)
+    {
+      txMessage = txMessage + (!FiString.IsEmptyWithTrim(txMessage)?"\n":"") + txValue;
+    }
+
+    public void AppendMessageWithSc(string txValue)
+    {
+      txMessage = txMessage + (!FiString.IsEmptyWithTrim(txMessage)?";;":"") + txValue;
     }
 
     public Fdr(bool prmBlResult) { this.blResult = prmBlResult; }
@@ -130,7 +200,7 @@ namespace OrakYazilimLib.DataContainer
       return blResult.Value;
     }
 
-    public bool isTrueBoResult()
+    public bool IsTrueBoResult()
     {
       if (this.blResult == null) return false;
       return blResult.Value;
@@ -152,7 +222,6 @@ namespace OrakYazilimLib.DataContainer
 
     public Fdr(bool v)
     {
-      base.blResult = v;
       base.boResult = v;
     }
   }

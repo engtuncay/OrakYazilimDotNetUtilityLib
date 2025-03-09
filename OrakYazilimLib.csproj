@@ -109,6 +109,7 @@
     <Compile Include="DbGeneric\RepoCommonGen.cs" />
     <Compile Include="DbGeneric\RepoCommon.cs" />
     <Compile Include="DbGeneric\RepoGenericAlt.cs" />
+    <Compile Include="DbUtil\FiwDataTable.cs" />
     <Compile Include="DbUtil\IFiDbConnFactory.cs" />
     <Compile Include="DbUtil\FiMetaEntity.cs" />
     <Compile Include="DbUtil\FicQugen.cs" />
