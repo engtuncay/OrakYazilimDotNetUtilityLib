@@ -11,7 +11,7 @@ namespace OrakYazilimLib.DataContainer
 
         public string txMessage { get; set; }
 
-        //public bool? boTknCheck { get; set; }
+        //public bool? boTknValid { get; set; }
 
         public static DtoFdr1 ImportFdr<TPrmA>(Fdr<TPrmA> fdr)
         {

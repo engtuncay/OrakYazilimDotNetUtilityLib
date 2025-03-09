@@ -25,7 +25,7 @@ namespace OrakYazilimLib.DataContainer
       }
     }
 
-    public bool? boTknCheck  { get; set;}
+    public bool? boTknValid  { get; set;}
 
     /// <summary>
     /// deprecated - boResult kullan
