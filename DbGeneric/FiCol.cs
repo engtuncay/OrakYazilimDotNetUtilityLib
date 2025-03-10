@@ -15,6 +15,8 @@ namespace OrakYazilimLib.DbGeneric
 
         public bool? ofcBoTransient { get; set; }
 
+        public string ofcTxFieldDesc { get; set; }
+
         /**
          * Alanın varsayılan veri türü
          *

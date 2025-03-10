@@ -5,10 +5,9 @@ namespace OrakYazilimLib.DataContainer
 {
     public class DtoFdr1
     {
+        public bool? boExecution { get; set; }
         public bool? boResult { get; set; }
-        public bool? boOpResult { get; set; }
         public Object refValue { get; set; }
-
         public string txMessage { get; set; }
 
         //public bool? boTknValid { get; set; }
@@ -17,8 +16,8 @@ namespace OrakYazilimLib.DataContainer
         {
             DtoFdr1 dtoFdr1 = new DtoFdr1
             {
+                boExecution = fdr.boExecution,
                 boResult = fdr.boResult,
-                boOpResult = fdr.boOpResult,
                 refValue = fdr.refValue,
                 txMessage = fdr.txMessage,
             };

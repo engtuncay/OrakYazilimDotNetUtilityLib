@@ -31,18 +31,18 @@ namespace OrakYazilimLib.DbUtil
       {
         if (dataTable.Columns.Contains(columnName))
         {
-          fdr.boResult = true;
+          fdr.boExecution = true;
           fdr.refValue = dataTable.Rows[0][columnName];
           return fdr;
         }
 
-        fdr.boResult = false;
+        fdr.boExecution = false;
         fdr.txMessage = "Belirtilen sütun adı DataTable'da mevcut değil.";
 
         return fdr;
       }
 
-      fdr.boResult = false;
+      fdr.boExecution = false;
       fdr.txMessage = "DataTable boş veya hiç satır içermiyor.";
 
       return fdr;
@@ -88,12 +88,12 @@ namespace OrakYazilimLib.DbUtil
           return fdrMain;
         }
 
-        fdrMain.boResult = false;
+        fdrMain.boExecution = false;
         fdrMain.txMessage = "Belirtilen sütun adı DataTable'da mevcut değil.";
         return fdrMain;
       }
 
-      fdrMain.boResult = false;
+      fdrMain.boExecution = false;
       fdrMain.txMessage = "DataTable boş veya hiç satır içermiyor.";
       return fdrMain;
     }

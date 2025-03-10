@@ -98,13 +98,13 @@ namespace OrakYazilimLib.AdoNetHelper
 			try
 			{
 				fdrMain.lnRowsAffected = comm.ExecuteNonQuery();
-				fdrMain.boResult = true;
+				fdrMain.boExecution = true;
 			}
 			catch (Exception e)
 			{
 				//Console.WriteLine(e);
 				fdrMain.refException = e;
-				fdrMain.boResult = false;
+				fdrMain.boExecution = false;
 			}
 			finally
 			{

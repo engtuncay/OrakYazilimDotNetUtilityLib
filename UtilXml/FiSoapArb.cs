@@ -31,7 +31,7 @@ namespace OrakYazilimLib.UtilXml
                     if (responseStream == null)
                     {
                         //throw new InvalidOperationException("Response stream is null.");
-                        fdrMain.boResult = false;
+                        fdrMain.boExecution = false;
                         fdrMain.txMessage = "Response stream is null.";
                         return fdrMain;
                     }
@@ -44,7 +44,7 @@ namespace OrakYazilimLib.UtilXml
 
                         int statusCode = (int)response.StatusCode;
                         fdrMain.lnStatusCode = statusCode;
-                        fdrMain.boResult = true;
+                        fdrMain.boExecution = true;
                         Console.WriteLine($"HTTP Durum Kodu: {statusCode}");
                     }
 
@@ -54,7 +54,7 @@ namespace OrakYazilimLib.UtilXml
             {
                 Console.WriteLine(ex);
                 fdrMain.txMessage = ex.Message;
-                fdrMain.boResult = false;
+                fdrMain.boExecution = false;
             }
 
             return fdrMain;

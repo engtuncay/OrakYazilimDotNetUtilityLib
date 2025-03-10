@@ -68,14 +68,14 @@ namespace OrakYazilimLib.DbUtil
           int totalRowsAffected = command.ExecuteNonQuery();
           fdr.obReturn = totalRowsAffected;
           fdr.lnRowsAffected = totalRowsAffected;
-          fdr.boResult = true;
+          fdr.boExecution = true;
 
         }
         catch (Exception e)
         {
           FiLogWeb.logException(e);
           fdr.ExceptionQueryErrorLog(e);
-          fdr.boResult = false;
+          fdr.boExecution = false;
         }
 
       }
@@ -109,13 +109,13 @@ namespace OrakYazilimLib.DbUtil
           int totalRowsAffected = command.ExecuteNonQuery();
           fdr.obReturn = totalRowsAffected;
           fdr.lnRowsAffected = totalRowsAffected;
-          fdr.boResult = true;
+          fdr.boExecution = true;
         }
         catch (Exception e)
         {
           FiLogWeb.logException(e);
           fdr.ExceptionQueryErrorLog(e);
-          fdr.boResult = false;
+          fdr.boExecution = false;
         }
 
       }
@@ -150,7 +150,7 @@ namespace OrakYazilimLib.DbUtil
           }
 
           result = command.ExecuteScalar();
-          fdrMain.boResult = true;
+          fdrMain.boExecution = true;
 
         }
         catch (Exception e)
@@ -160,7 +160,7 @@ namespace OrakYazilimLib.DbUtil
 
           fdrMain.txErrorMsgShort = e.Message;
           //fiResponse.txErrorStackTrace = e.StackTrace;
-          fdrMain.boResult = false;
+          fdrMain.boExecution = false;
           fdrMain.lnRowsAffected = -1;
           return fdrMain;
         }
@@ -367,14 +367,14 @@ namespace OrakYazilimLib.DbUtil
           try
           {
             da.Fill(ds);
-            fdrMain.boResult = true;
+            fdrMain.boExecution = true;
             fdrMain.obReturn = ds.Tables[0];
           }
           catch (Exception ex)
           {
             //Debug.Write(ex.ToString());
             FiAppConfig.fiLogManager?.LogMessage(ex.ToString());
-            fdrMain.boResult = false;
+            fdrMain.boExecution = false;
             fdrMain.txErrorMsgShort = ex.Message;
             fdrMain.obReturn = new DataTable();
           }
@@ -422,20 +422,20 @@ namespace OrakYazilimLib.DbUtil
               da.Fill(dt);
             }
 
-            fdrMain.boResult = true;
+            fdrMain.boExecution = true;
             fdrMain.refValue = dt;
           }
           catch (SqlException sqlEx) // SQL Hataları için
           {
             FiAppConfig.fiLogManager?.LogMessage($"SQL Error: {sqlEx.Message}");
-            fdrMain.boResult = false;
+            fdrMain.boExecution = false;
             fdrMain.txErrorMsgShort = sqlEx.Message;
             fdrMain.refValue = new DataTable();
           }
           catch (Exception ex) // Genel hatalar
           {
             FiAppConfig.fiLogManager?.LogMessage($"General Error: {ex.Message}");
-            fdrMain.boResult = false;
+            fdrMain.boExecution = false;
             fdrMain.txErrorMsgShort = ex.Message;
             fdrMain.refValue = new DataTable();
           }
@@ -470,7 +470,7 @@ namespace OrakYazilimLib.DbUtil
     //       try
     //       {
     //         da.Fill(ds);
-    //         fdrMain.boResult = true;
+    //         fdrMain.boExecution = true;
     //         fdrMain.obReturn = ds.Tables[0];
     //       }
     //       catch (Exception ex)
@@ -479,7 +479,7 @@ namespace OrakYazilimLib.DbUtil
     //         //Debug.Write(ex.ToString());
     //         FiAppConfig.fiLogManager?.LogMessage(ex.ToString());
     //         //fdrMain.blResult = false;
-    //         fdrMain.boResult = false;
+    //         fdrMain.boExecution = false;
     //         fdrMain.txErrorMsgShort = ex.Message;
     //         fdrMain.obReturn = new DataTable();
     //       }

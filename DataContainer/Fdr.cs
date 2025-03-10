@@ -9,18 +9,18 @@ namespace OrakYazilimLib.DataContainer
 {
   public class Fdr<T>
   {
-    private bool? _boResult;
+    private bool? _boExecution;
 
-    public bool? boResult
+    public bool? boExecution
     {
       get
       {
-        return _boResult;
+        return _boExecution;
       }
 
       set
       {
-        _boResult = value;
+        _boExecution = value;
         blResult = value;
       }
     }
@@ -28,11 +28,11 @@ namespace OrakYazilimLib.DataContainer
     public bool? boTknValid  { get; set;}
 
     /// <summary>
-    /// deprecated - boResult kullan
+    /// deprecated - boExecution kullan
     /// </summary>
     public bool? blResult { get; set; }
 
-    public bool? boOpResult { get; set; }
+    public bool? boResult { get; set; }
     public T obReturn { get; set; }
 
     private T _refValue;
@@ -88,17 +88,17 @@ namespace OrakYazilimLib.DataContainer
     public  void CombineAnd<TPrmeA>(Fdr<TPrmeA> fdrSubWork)
     {
 
-      // And işlemi olduğu false sonuç, boResult false yapar
-      if (FiBoolean.IsFalse(fdrSubWork.boResult))
+      // And işlemi olduğu false sonuç, boExecution false yapar
+      if (FiBoolean.IsFalse(fdrSubWork.boExecution))
       {
-        boResult = false;
+        boExecution = false;
         //setLnFailureOpCount(getLnFailureOpCountInit() + 1);
       }
 
-      if (FiBoolean.IsTrue(fdrSubWork.boResult))
+      if (FiBoolean.IsTrue(fdrSubWork.boExecution))
       {
         //setLnSuccessOpCount(getLnSuccessOpCountInit() + 1);
-        boResult ??= true;
+        boExecution ??= true;
       }
 
       // null sonuçlara özel combine işlemi
@@ -191,7 +191,7 @@ namespace OrakYazilimLib.DataContainer
       this.txErrorMsgDetail = FiLogWeb.getStackTrace(exception);
       this.lnRowsAffected = -1;
       this.blResult = false;
-      this.boResult = false;
+      this.boExecution = false;
     }
 
     public bool isTrueResult()
@@ -222,7 +222,7 @@ namespace OrakYazilimLib.DataContainer
 
     public Fdr(bool v)
     {
-      base.boResult = v;
+      base.boExecution = v;
     }
   }
 }
