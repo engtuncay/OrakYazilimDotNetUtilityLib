@@ -19,18 +19,11 @@ namespace OrakYazilimLib.UtilRequest
     {
       if (FiString.IsEmptyWithTrim(frTxProfile))
       {
-        if (FiAppConfig.boTestMode)
-        {
-          return "kbb-test";
-        }
-        return "kbb";
+        return FiAppConfig.boTestMode ? "kbb-test" : "kbb";
       }
 
-      if (FiAppConfig.boTestMode)
-      {
-        return "kbb-test-" + frTxProfile;
-      }
-      return "kbb-" + frTxProfile;
+      string txPref = FiAppConfig.boTestMode ? "kbb-test-" : "kbb-";
+      return txPref + frTxProfile;
     }
 
     public string GetTxPanoProfile()
