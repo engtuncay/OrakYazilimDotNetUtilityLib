@@ -17,6 +17,12 @@ namespace OrakYazilimLib.DbGeneric
 
         public string ofcTxFieldDesc { get; set; }
 
+        public string ofcTxFieldType { get; set; }
+
+        public int? ofcLnLength { get; set; }
+        public int? ofcLnPrecision { get; set; }
+        public int? ofcLnScale { get; set; }
+
         /**
          * Alanın varsayılan veri türü
          *
