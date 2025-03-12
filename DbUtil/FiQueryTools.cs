@@ -237,5 +237,39 @@ namespace OrakYazilimLib.DbUtil
        */
 
     }
+
+    public static string ActivateParamsNotNull(string txSqlValue, FiKeybean fkbParams)
+    {
+
+
+      if (fkbParams != null)
+      {
+
+        List<string> listParamsWillDeactivate = new List<string>();
+
+        foreach (var param in fkbParams)
+        {
+          // Null olanlar deaktif olacak
+          if (param.Value != null)
+          { // null degilse aktif edilir.
+            txSqlValue = ActivateOptParamMain(txSqlValue, param.Key);
+            //setTxQuery(newQuery);
+          }
+          else
+          { // param null ise,deaktif edilir
+            txSqlValue = FiQueryTools.DeActivateOptParamMain(txSqlValue, param.Key);
+            listParamsWillDeactivate.Add(param.Key);
+          }
+        }
+
+        // deAktif edilen parametreler çıkarıldı.
+        foreach (string deActivatedParam in listParamsWillDeactivate)
+        {
+          fkbParams.Remove(deActivatedParam);
+        }
+      }
+
+      return txSqlValue;
+    }
   }
 }

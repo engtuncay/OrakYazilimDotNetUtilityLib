@@ -77,7 +77,7 @@ namespace OrakYazilimLib.DbUtil
     /**
     * Collection (List,Set) Türündeki parametreleri multi param (abc_1,abc_2... gibi) çevirir
     */
-    public void convertListParamToMultiParams()
+    public void ConvertListParamToMultiParams()
     {
       if (FiCollection.IsEmpty(fkbParams)) return;
 
@@ -86,35 +86,14 @@ namespace OrakYazilimLib.DbUtil
       //FiLogWeb.logWeb("sql:" + sql);
     }
 
-    public void activateParamsNotNull()
+    public void ActivateParamsNotNull()
     {
 
-      if (fkbParams != null)
+      if (!FiCollection.IsEmpty(fkbParams))
       {
-
-        List<string> listParamsWillDeactivate = new List<string>();
-
-        foreach (var param in fkbParams)
-        {
-          // Null olanlar deaktif olacak
-          if (param.Value != null)
-          { // null degilse aktif edilir.
-            this.sql = FiQueryTools.ActivateOptParamMain(sql, param.Key);
-            //setTxQuery(newQuery);
-          }
-          else
-          { // param null ise,deaktif edilir
-            this.sql = FiQueryTools.DeActivateOptParamMain(sql, param.Key);
-            listParamsWillDeactivate.Add(param.Key);
-          }
-        }
-
-        // deAktif edilen parametreler çıkarıldı.
-        foreach (string deActivatedParam in listParamsWillDeactivate)
-        {
-          fkbParams.Remove(deActivatedParam);
-        }
+        this.sql = FiQueryTools.ActivateParamsNotNull(sql, fkbParams);
       }
+
     }
 
 
