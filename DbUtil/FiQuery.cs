@@ -82,7 +82,7 @@ namespace OrakYazilimLib.DbUtil
       if (fkbParams == null) return;
 
       //FiLogWeb.logWeb("fkbParams null degil");
-      this.sql = FiQueryTools.convertListParamToMultiParams(sql, fkbParams, false);
+      this.sql = FiQueryTools.ConvertListParamToMultiParams(sql, fkbParams, false);
       //FiLogWeb.logWeb("sql:" + sql);
     }
 
@@ -91,7 +91,6 @@ namespace OrakYazilimLib.DbUtil
 
       if (fkbParams != null)
       {
-
         List<string> listParamsWillDeactivate = new List<string>();
 
         foreach (var param in fkbParams)
@@ -99,12 +98,12 @@ namespace OrakYazilimLib.DbUtil
           // Null olanlar deaktif olacak
           if (param.Value != null)
           { // null degilse aktif edilir.
-            this.sql = FiQueryTools.activateOptParamMain(sql, param.Key);
+            this.sql = FiQueryTools.ActivateOptParamMain(sql, param.Key);
             //setTxQuery(newQuery);
           }
           else
           { // param null ise,deaktif edilir
-            this.sql = FiQueryTools.deActivateOptParamMain(sql, param.Key);
+            this.sql = FiQueryTools.DeActivateOptParamMain(sql, param.Key);
             listParamsWillDeactivate.Add(param.Key);
           }
         }

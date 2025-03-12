@@ -402,7 +402,7 @@ namespace OrakYazilimLib.DbUtil
 
       using (var sqConn = new SqlConnection(connString))
       {
-        string query = FiQueryTools.fixSqlProblems(fiQuery.sql);
+        string query = FiQueryTools.FixSqlProblems(fiQuery.sql);
         var queryParams = fiQuery.GetParamsAsSqlParamList().ToArray();
 
         using (var command = new SqlCommand(query, sqConn))
@@ -456,7 +456,7 @@ namespace OrakYazilimLib.DbUtil
     //
     //   using (sqConn)
     //   {
-    //     String query = FiQueryTools.fixSqlProblems(fiQuery.sql);
+    //     String query = FiQueryTools.FixSqlProblems(fiQuery.sql);
     //     SqlCommand command = new SqlCommand(query, sqConn);
     //
     //     if (FiCollection.isFull(queryParams))
