@@ -79,10 +79,10 @@ namespace OrakYazilimLib.DbUtil
     */
     public void convertListParamToMultiParams()
     {
-      if (fkbParams == null) return;
+      if (FiCollection.IsEmpty(fkbParams)) return;
 
       //FiLogWeb.logWeb("fkbParams null degil");
-      this.sql = FiQueryTools.convertListParamToMultiParams(sql, fkbParams, false);
+      sql = FiQueryTools.ConvertListParamToMultiParams(sql, fkbParams, false);
       //FiLogWeb.logWeb("sql:" + sql);
     }
 
@@ -99,12 +99,12 @@ namespace OrakYazilimLib.DbUtil
           // Null olanlar deaktif olacak
           if (param.Value != null)
           { // null degilse aktif edilir.
-            this.sql = FiQueryTools.activateOptParamMain(sql, param.Key);
+            this.sql = FiQueryTools.ActivateOptParamMain(sql, param.Key);
             //setTxQuery(newQuery);
           }
           else
           { // param null ise,deaktif edilir
-            this.sql = FiQueryTools.deActivateOptParamMain(sql, param.Key);
+            this.sql = FiQueryTools.DeActivateOptParamMain(sql, param.Key);
             listParamsWillDeactivate.Add(param.Key);
           }
         }
@@ -130,5 +130,16 @@ namespace OrakYazilimLib.DbUtil
     //    return fullprm;
     //}
 
+    public void ActivateParamsByMapParams()
+    {
+      ActivateParamsMain(false);
+    }
+
+    public void ActivateParamsMain(bool boActivateOnlyFullParams)
+    {
+      if ( fkbParams != null) {
+         this.sql = FiQueryTools.ActivateParamsMain(sql, fkbParams, boActivateOnlyFullParams);
+      }
+    }
   }
 }
