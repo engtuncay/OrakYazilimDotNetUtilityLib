@@ -13,9 +13,9 @@ using System.Collections.ObjectModel;
 
 namespace OrakYazilimLib.DbUtil
 {
-  public class FiQueryTools
+  public static class FiQueryTools
   {
-    public FiQueryTools() {}
+    //public FiQueryTools() {}
 
     public static string DeActivateSqlParam(string fieldName, string sql)
     {
@@ -158,7 +158,7 @@ namespace OrakYazilimLib.DbUtil
     ///
     /// boActivateOnlyFullParams true olursa sadece dolu olan parametreleri aktif eder, parametre dolu değilse (null dahil) deaktif eder.
     ///
-    /// Deaktif edilecek parametrelerde FiKeyBean'de bulunmalı
+    /// Deaktif edilecek parametrelerde FiKeyBean'de bulunmalı. (FkbParams olmayanlar deaktif edilmez)
     ///
     /// Dolu olma Şartları : String boş string degilse
     ///
@@ -170,34 +170,32 @@ namespace OrakYazilimLib.DbUtil
     /// <param name="mapParams"></param>
     /// <param name="boActivateOnlyFullParams"></param>
     /// <returns></returns>
-    public static String ActivateParamsMain(string txQuery, FiKeybean mapParams, bool boActivateOnlyFullParams)
+    public static string ActivateParamsMain(string txQuery, FiKeybean mapParams, bool boActivateOnlyFullParams)
     {
 
       var listParamsDeActivated = new List<string>();
-      string spQuery = txQuery;
 
       foreach (KeyValuePair<string, object> keyValuePair in mapParams)
       {
         if (FiBoolean.IsTrue(boActivateOnlyFullParams))
         {
-
           // Dolu olanları aktif edecek, boş olanları deaktif edecek
           bool boCheckParamsEmpty = CheckParamsEmpty(keyValuePair.Value);
 
           if (FiBoolean.IsFalse(boCheckParamsEmpty))
           {
-            spQuery = ActivateOptParamMain(spQuery, keyValuePair.Key);
+            txQuery = ActivateOptParamMain(txQuery, keyValuePair.Key);
           }
           else
           {
-            spQuery = DeActivateOptParamMain(spQuery, keyValuePair.Key);
+            txQuery = DeActivateOptParamMain(txQuery, keyValuePair.Key);
             listParamsDeActivated.Add(keyValuePair.Key);
           }
 
         }
         else
         { // boActivateOnlyFullParams false veya null ise, tüm parametreleri aktif eder
-          spQuery = ActivateOptParamMain(spQuery, keyValuePair.Key);
+          txQuery = ActivateOptParamMain(txQuery, keyValuePair.Key);
         }
 
       }
@@ -207,8 +205,9 @@ namespace OrakYazilimLib.DbUtil
         mapParams.Remove(deActivatedParam);
       }
 
-      return spQuery;
+      return txQuery;
     }
+
     private static bool CheckParamsEmpty(object value)
     {
       return value switch
@@ -241,35 +240,48 @@ namespace OrakYazilimLib.DbUtil
     public static string ActivateParamsNotNull(string txSqlValue, FiKeybean fkbParams)
     {
 
+      if (fkbParams == null) return txSqlValue;
 
-      if (fkbParams != null)
+      List<string> listParamsWillDeactivate = new List<string>();
+
+      foreach (var param in fkbParams)
       {
-
-        List<string> listParamsWillDeactivate = new List<string>();
-
-        foreach (var param in fkbParams)
-        {
-          // Null olanlar deaktif olacak
-          if (param.Value != null)
-          { // null degilse aktif edilir.
-            txSqlValue = ActivateOptParamMain(txSqlValue, param.Key);
-            //setTxQuery(newQuery);
-          }
-          else
-          { // param null ise,deaktif edilir
-            txSqlValue = FiQueryTools.DeActivateOptParamMain(txSqlValue, param.Key);
-            listParamsWillDeactivate.Add(param.Key);
-          }
+        // Null olanlar deaktif olacak
+        if (param.Value != null)
+        { // null degilse aktif edilir.
+          txSqlValue = ActivateOptParamMain(txSqlValue, param.Key);
+          //setTxQuery(newQuery);
         }
-
-        // deAktif edilen parametreler çıkarıldı.
-        foreach (string deActivatedParam in listParamsWillDeactivate)
-        {
-          fkbParams.Remove(deActivatedParam);
+        else
+        { // param null ise,deaktif edilir
+          txSqlValue = FiQueryTools.DeActivateOptParamMain(txSqlValue, param.Key);
+          listParamsWillDeactivate.Add(param.Key);
         }
+      }
+
+      // deAktif edilen parametreler çıkarıldı.
+      foreach (string deActivatedParam in listParamsWillDeactivate)
+      {
+        fkbParams.Remove(deActivatedParam);
       }
 
       return txSqlValue;
     }
+
+    /**
+     * Tüm optional parametreleri ( --!optParam ) deaktif eder. (alt satır yoruma alınmasa bile deaktif olur)
+     *
+     * <returns>string</returns>
+     */
+    public static string DeActivateAllOptParams(string sql) {
+      //"--!(\\w+).*\\s*.*"; // @ verbatim operatörü eklenince ikinci slashlar kaldırılır
+      const string regex = @"--!(\w+).*\s*.*"; // 15-10-19
+      const string subst = "--$1 deactivated"; // 15-10-19
+      return Regex.Replace(sql,regex, subst);
+    }
+
+
+
+
   }
 }
