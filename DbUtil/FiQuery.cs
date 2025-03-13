@@ -28,6 +28,7 @@ namespace OrakYazilimLib.DbUtil
       this.fkbParams = fkbParams; // new FiKeybean(fkbParams); // orjinali bozmamak istenirse kopya oluşturlabilir
     }
 
+    // URFIX fkbparams ekleme yapmalı
     public static void AddMultiParam(List<object> list, string prmName, List<SqlParameter> listSqlParam)
     {
       int index = 0;
