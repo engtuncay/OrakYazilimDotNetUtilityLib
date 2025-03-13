@@ -290,7 +290,7 @@ namespace OrakYazilimLib.DbUtil
       {
         SqlCommand command = new SqlCommand(fiMsQuery.sql, connection);
 
-        if (FiCollection.isFull(prms))
+        if (FiCollection.IsFull(prms))
         {
           AttachParameters(command, prms);
         }
@@ -355,7 +355,7 @@ namespace OrakYazilimLib.DbUtil
       {
         SqlCommand command = new SqlCommand(sql, connection);
 
-        if (FiCollection.isFull(prms))
+        if (FiCollection.IsFull(prms))
         {
           AttachParameters(command, prms);
         }
@@ -407,7 +407,7 @@ namespace OrakYazilimLib.DbUtil
 
         using (var command = new SqlCommand(query, sqConn))
         {
-          if (FiCollection.isFull(queryParams))
+          if (FiCollection.IsFull(queryParams))
           {
             AttachParameters(command, queryParams);
           }
@@ -515,7 +515,7 @@ namespace OrakYazilimLib.DbUtil
       {
         SqlCommand command = new SqlCommand(sql, connection);
 
-        if (FiCollection.isFull(prms))
+        if (FiCollection.IsFull(prms))
         {
           AttachParameters(command, prms);
         }

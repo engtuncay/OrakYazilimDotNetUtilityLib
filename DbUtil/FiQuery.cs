@@ -28,9 +28,11 @@ namespace OrakYazilimLib.DbUtil
       this.fkbParams = fkbParams; // new FiKeybean(fkbParams); // orjinali bozmamak istenirse kopya oluşturlabilir
     }
 
-    public static void addMultiParam(List<object> list, string prmName, List<SqlParameter> listSqlParam)
+    // URFIX fkbparams ekleme yapmalı
+    public static void AddMultiParam(List<object> list, string prmName, List<SqlParameter> listSqlParam)
     {
       int index = 0;
+
       foreach (object eleman in list)
       {
         listSqlParam.Add(new SqlParameter("@" + prmName + index, eleman));
@@ -39,7 +41,7 @@ namespace OrakYazilimLib.DbUtil
 
     }
 
-    public void addMultiParam(List<object> list, string paramName)
+    public void AddMultiParam(List<object> list, string paramName)
     {
       int index = 0;
       foreach (object eleman in list)
@@ -77,43 +79,22 @@ namespace OrakYazilimLib.DbUtil
     /**
     * Collection (List,Set) Türündeki parametreleri multi param (abc_1,abc_2... gibi) çevirir
     */
-    public void convertListParamToMultiParams()
+    public void ConvertListParamToMultiParams()
     {
-      if (fkbParams == null) return;
-
+      if (FiCollection.IsEmpty(fkbParams)) return;
       //FiLogWeb.logWeb("fkbParams null degil");
-      this.sql = FiQueryTools.ConvertListParamToMultiParams(sql, fkbParams, false);
+      sql = FiQueryTools.ConvertListParamToMultiParams(sql, fkbParams, false);
       //FiLogWeb.logWeb("sql:" + sql);
     }
 
-    public void activateParamsNotNull()
+    public void ActivateParamsNotNull()
     {
 
-      if (fkbParams != null)
+      if (!FiCollection.IsEmpty(fkbParams))
       {
-        List<string> listParamsWillDeactivate = new List<string>();
-
-        foreach (var param in fkbParams)
-        {
-          // Null olanlar deaktif olacak
-          if (param.Value != null)
-          { // null degilse aktif edilir.
-            this.sql = FiQueryTools.ActivateOptParamMain(sql, param.Key);
-            //setTxQuery(newQuery);
-          }
-          else
-          { // param null ise,deaktif edilir
-            this.sql = FiQueryTools.DeActivateOptParamMain(sql, param.Key);
-            listParamsWillDeactivate.Add(param.Key);
-          }
-        }
-
-        // deAktif edilen parametreler çıkarıldı.
-        foreach (string deActivatedParam in listParamsWillDeactivate)
-        {
-          fkbParams.Remove(deActivatedParam);
-        }
+        this.sql = FiQueryTools.ActivateParamsNotNull(sql, fkbParams);
       }
+
     }
 
 
@@ -128,6 +109,41 @@ namespace OrakYazilimLib.DbUtil
     //    }
     //    return fullprm;
     //}
+
+    /**
+     * boActivateOnlyFullParams parametresine false değeri gönderir.
+     *
+     * <para><see cref="FiQueryTools.ActivateParamsMain"/></para>
+     */
+    public void ActivateParamsByMapParams()
+    {
+      ActivateParamsMain(false);
+    }
+
+    /// <summary>
+    /// FiMapParam'da olan parametreleri aktive eder.
+    /// <para>
+    /// <see cref="FiQueryTools.ActivateParamsMain"/>
+    /// </para>
+    /// </summary>
+    /// <param name="boActivateOnlyFullParams"></param>
+    public void ActivateParamsMain(bool boActivateOnlyFullParams)
+    {
+      if (fkbParams != null)
+      {
+        this.sql = FiQueryTools.ActivateParamsMain(sql, fkbParams, boActivateOnlyFullParams);
+      }
+    }
+
+    /// <summary>
+    /// <see cref="FiQueryTools.DeActivateAllOptParams"/>
+    /// </summary>
+    public void DeActivateAllOptParams()
+    {
+      sql = FiQueryTools.DeActivateAllOptParams(sql);
+    }
+
+
 
   }
 }

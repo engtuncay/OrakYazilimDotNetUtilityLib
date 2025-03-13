@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace OrakYazilimLib.DbUtil
 {
@@ -27,18 +28,27 @@ namespace OrakYazilimLib.DbUtil
 
     public static string FixSqlProblems(string sql)
     {
-      // yorum satırlarında @ varsa # diyeze çevirir.
-      string txSql = Regex.Replace(sql, @"--(.*?)@(\w+)(.*)", "--fixed$1$2"); // 23-12-22
-      return txSql;
+      // yorum satırların @ varsa # diyeze çevirir.
+      string sql2 = Regex.Replace(sql, @"--(.*?)@(\w+)(.*)", "--fixed$1$2"); // 23-12-22
+      return sql2;
     }
 
-    /**
-    * Collection (List,Set) değerindeki parametreyi abc_1,abc_2 gibi multi parametreye çevirir
-    *
-    * @param param
-    * @param collParamData
-    * @param boKeepOldParam
-    */
+//     /**
+// Collection (List,Set) değerindeki parametreyi abc_1,abc_2 gibi multi parametreye çevirir
+//
+//  @param param
+//  @param collParamData
+// @param boKeepOldParam
+// */
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="txQuery"></param>
+    /// <param name="mapParams"></param>
+    /// <param name="param"></param>
+    /// <param name="listParamData"></param>
+    /// <param name="boKeepOldParam"></param>
+    /// <returns></returns>
     public static string ConvertSingleParamToMultiParam(string txQuery, FiKeybean mapParams, String param, IList listParamData, bool boKeepOldParam)
     {
 
@@ -128,7 +138,12 @@ namespace OrakYazilimLib.DbUtil
 
     }
 
-
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="sql"></param>
+    /// <param name="paramKey"></param>
+    /// <returns></returns>
     public static string ActivateOptParamMain(string sql, string paramKey)
     {
       // 200317_1741 sql param altındaki ifade yorum satırı olursa, yorum satırını kaldırır.
@@ -137,5 +152,136 @@ namespace OrakYazilimLib.DbUtil
       var subst = "--$1 activated \n$2"; // 17-03-2020
       return Regex.Replace(sql, regex, subst); // sql.replaceAll(regex, subst);
     }
+
+    /// <summary>
+    /// FiMapParam'da olan parametreleri aktive eder.
+    ///
+    /// boActivateOnlyFullParams true olursa sadece dolu olan parametreleri aktif eder, parametre dolu değilse (null dahil) deaktif eder.
+    ///
+    /// Deaktif edilecek parametrelerde FiKeyBean'de bulunmalı. (FkbParams olmayanlar deaktif edilmez)
+    ///
+    /// Dolu olma Şartları : String boş string degilse
+    ///
+    /// Collection larda size > 0 olmalı
+    ///
+    /// Diger türler için null olmamalı
+    /// </summary>
+    /// <param name="txQuery"></param>
+    /// <param name="mapParams"></param>
+    /// <param name="boActivateOnlyFullParams"></param>
+    /// <returns></returns>
+    public static string ActivateParamsMain(string txQuery, FiKeybean mapParams, bool boActivateOnlyFullParams)
+    {
+
+      var listParamsDeActivated = new List<string>();
+
+      foreach (KeyValuePair<string, object> keyValuePair in mapParams)
+      {
+        if (FiBoolean.IsTrue(boActivateOnlyFullParams))
+        {
+          // Dolu olanları aktif edecek, boş olanları deaktif edecek
+          bool boCheckParamsEmpty = CheckParamsEmpty(keyValuePair.Value);
+
+          if (FiBoolean.IsFalse(boCheckParamsEmpty))
+          {
+            txQuery = ActivateOptParamMain(txQuery, keyValuePair.Key);
+          }
+          else
+          {
+            txQuery = DeActivateOptParamMain(txQuery, keyValuePair.Key);
+            listParamsDeActivated.Add(keyValuePair.Key);
+          }
+
+        }
+        else
+        { // boActivateOnlyFullParams false veya null ise, tüm parametreleri aktif eder
+          txQuery = ActivateOptParamMain(txQuery, keyValuePair.Key);
+        }
+
+      }
+
+      foreach (string deActivatedParam in listParamsDeActivated)
+      {
+        mapParams.Remove(deActivatedParam);
+      }
+
+      return txQuery;
+    }
+
+    private static bool CheckParamsEmpty(object value)
+    {
+      return value switch
+      {
+        null => true,
+        string txValue => FiString.IsEmptyWithTrim(txValue),
+        ICollection collection => FiCollection.IsEmpty(collection),
+        _ => false
+      };
+
+      /*
+       if (value == null) return true;
+
+      if (value is string txValue)
+      {
+        return FiString.IsEmptyWithTrim(txValue);
+      }
+      else if (value is System.Collections.IEnumerable enumerable)
+      { // Collection size'a göre karar verecek
+        return FiCollection.IsEmpty(enumerable);
+      }
+      else
+      { // string ve collection tipinden dışında olanlar, null degilse aktif edilir
+        return false;
+      }
+       */
+
+    }
+
+    public static string ActivateParamsNotNull(string txSqlValue, FiKeybean fkbParams)
+    {
+
+      if (fkbParams == null) return txSqlValue;
+
+      List<string> listParamsWillDeactivate = new List<string>();
+
+      foreach (var param in fkbParams)
+      {
+        // Null olanlar deaktif olacak
+        if (param.Value != null)
+        { // null degilse aktif edilir.
+          txSqlValue = ActivateOptParamMain(txSqlValue, param.Key);
+          //setTxQuery(newQuery);
+        }
+        else
+        { // param null ise,deaktif edilir
+          txSqlValue = FiQueryTools.DeActivateOptParamMain(txSqlValue, param.Key);
+          listParamsWillDeactivate.Add(param.Key);
+        }
+      }
+
+      // deAktif edilen parametreler çıkarıldı.
+      foreach (string deActivatedParam in listParamsWillDeactivate)
+      {
+        fkbParams.Remove(deActivatedParam);
+      }
+
+      return txSqlValue;
+    }
+
+    /**
+     * Tüm optional parametreleri ( --!optParam ) deaktif eder. (alt satır yoruma alınmasa bile deaktif olur)
+     *
+     * <returns>string</returns>
+     */
+    public static string DeActivateAllOptParams(string sql) {
+      //"--!(\\w+).*\\s*.*"; // @ verbatim operatörü eklenince ikinci slashlar kaldırılır
+      const string regex = @"--!(\w+).*\s*.*"; // 15-10-19
+      const string subst = "--$1 deactivated"; // 15-10-19
+      return Regex.Replace(sql,regex, subst);
+    }
+
+
+
+
   }
 }
