@@ -149,7 +149,6 @@
     <Compile Include="Util\Collection\ListFkb.cs" />
     <Compile Include="Util\ColStruct\FiColList.cs" />
     <Compile Include="Util\ColStruct\IFiTableMeta.cs" />
-    <Compile Include="Util\ColStruct\IFiTableMeta2.cs" />
     <Compile Include="Util\config\IFiConfigManager.cs" />
     <Compile Include="Util\config\IFiLogManager.cs" />
     <Compile Include="Util\core\FiBoolean.cs" />

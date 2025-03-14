@@ -6,6 +6,8 @@ namespace OrakYazilimLib.Util.ColStruct
     {
         string GetITxTableName();
 
+        string GetITxPrefix();
+
         FiColList GenITableCols();
 
         FiColList GenITableColsTrans();
