@@ -120,6 +120,17 @@ namespace OrakYazilimLib.DbUtil
       ActivateParamsMain(false);
     }
 
+    /**
+     * ActivateParamsByMapParams(),DeActivateAllOptParams(); metodlarını çalıştırır
+     * <para><see cref="FiQueryTools.ActivateParamsMain"/></para>
+     * <para><see cref="FiQueryTools.DeActivateAllOptParams"/></para>
+     */
+    public void ActivateParamsByMapParamsWitDeAct()
+    {
+      ActivateParamsMain(false);
+      DeActivateAllOptParams();
+    }
+
     /// <summary>
     /// FiMapParam'da olan parametreleri aktive eder.
     /// <para>

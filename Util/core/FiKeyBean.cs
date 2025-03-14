@@ -31,5 +31,9 @@ namespace OrakYazilimLib.Util.core
             return setFiCol ?? (setFiCol = new HashSet<FiCol>());
         }
 
+        public bool ContainsKeyByFiCol(FiCol fiCol)
+        {
+            return ContainsKey(fiCol.ofcTxFieldName);
+        }
     }
 }

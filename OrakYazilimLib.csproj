@@ -171,6 +171,7 @@
     <Compile Include="Util\core\FiType.cs" />
     <Compile Include="Util\core\ObservableProps.cs" />
     <Compile Include="Util\helper\Fistf.cs" />
+    <Compile Include="Util\web\FiConfMngr.cs" />
     <Compile Include="Util\web\FiJson.cs" />
     <Compile Include="Util\core\FiCollection.cs" />
     <Compile Include="Util\core\FiLogWeb.cs" />
