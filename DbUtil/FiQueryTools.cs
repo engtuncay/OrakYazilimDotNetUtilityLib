@@ -213,7 +213,7 @@ namespace OrakYazilimLib.DbUtil
       return value switch
       {
         null => true,
-        string txValue => FiString.IsEmptyWithTrim(txValue),
+        string txValue => FiString.IsEmpty(txValue),
         ICollection collection => FiCollection.IsEmpty(collection),
         _ => false
       };
@@ -223,7 +223,7 @@ namespace OrakYazilimLib.DbUtil
 
       if (value is string txValue)
       {
-        return FiString.IsEmptyWithTrim(txValue);
+        return FiString.IsEmpty(txValue);
       }
       else if (value is System.Collections.IEnumerable enumerable)
       { // Collection size'a göre karar verecek

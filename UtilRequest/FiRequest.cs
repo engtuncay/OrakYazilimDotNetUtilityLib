@@ -17,7 +17,7 @@ namespace OrakYazilimLib.UtilRequest
 
     public string GetTxKbbProfile()
     {
-      if (FiString.IsEmptyWithTrim(frTxProfile))
+      if (FiString.IsEmpty(frTxProfile))
       {
         return FiAppConfig.boTestMode ? "kbb-test" : "kbb";
       }
@@ -28,7 +28,7 @@ namespace OrakYazilimLib.UtilRequest
 
     public string GetTxPanoProfile()
     {
-      if (FiString.IsEmptyWithTrim(frTxProfile))
+      if (FiString.IsEmpty(frTxProfile))
       {
         if (FiAppConfig.boTestMode)
         {

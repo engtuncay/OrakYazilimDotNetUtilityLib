@@ -1,4 +1,5 @@
-﻿using OrakYazilimLib.Util.Collection;
+﻿using OrakYazilimLib.DbGeneric;
+using OrakYazilimLib.Util.Collection;
 using OrakYazilimLib.Util.ColStruct;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,22 @@ namespace OrakYazilimLib.DbUtil
 
         public static string Select(FiColList list,IFiTableMeta iFiTableMeta)
         {
-            return null;            
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append("SELECT ");
+
+            for (int index = 0; index < list.Count; index++)
+            {
+                FiCol fiCol = list[index];
+
+                if(index > 0) sb.Append(",");
+
+                sb.Append($" {iFiTableMeta.GetITxPrefix()}.{fiCol.GetOfcTxDbFieldOr()} {fiCol.ofcTxFieldName} ");
+            }
+
+            sb.Append($" FROM {iFiTableMeta.GetITxTableName()} {iFiTableMeta.GetITxPrefix()}");
+
+            return sb.ToString();
         }
         
         public static string Insert(FiColList list,IFiTableMeta iFiTableMeta)

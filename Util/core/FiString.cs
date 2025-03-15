@@ -22,6 +22,11 @@ namespace OrakYazilimLib.Util
 
         public static bool IsEmpty(string value)
         {
+            return value == null || value.Trim().Equals("");
+        }
+
+        public static bool IsEmptyWoutTrim(string value)
+        {
             if (value == null || value.Equals("")) return true;
             return false;
         }
@@ -40,12 +45,6 @@ namespace OrakYazilimLib.Util
         public static string OrEmpty(string p)
         {
             return p ?? "";
-        }
-
-
-        public static bool IsEmptyWithTrim(string txValue)
-        {
-            return txValue == null || IsEmpty(txValue.Trim());
         }
 
         public static string ToUpperCamelCase(string input)

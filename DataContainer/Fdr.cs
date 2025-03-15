@@ -118,7 +118,7 @@ namespace OrakYazilimLib.DataContainer
       }
 
       // Tüm işlemlerde mesaj birleştirilir.
-      if (!FiString.IsEmptyWithTrim(fdrSubWork.txMessage)) AppendMessageLn(fdrSubWork.txMessage);
+      if (!FiString.IsEmpty(fdrSubWork.txMessage)) AppendMessageLn(fdrSubWork.txMessage);
 
       // Loglar birleştirilir.
       //if (!FiCollection.isEmpty(fdrSubWork.getLogList())) getLogListInit().addAll(fdrSubWork.getLogList());
@@ -133,12 +133,12 @@ namespace OrakYazilimLib.DataContainer
     }
     public void AppendMessageLn(string txValue)
     {
-      txMessage = txMessage + (!FiString.IsEmptyWithTrim(txMessage)?"\n":"") + txValue;
+      txMessage = txMessage + (!FiString.IsEmpty(txMessage)?"\n":"") + txValue;
     }
 
     public void AppendMessageWithSc(string txValue)
     {
-      txMessage = txMessage + (!FiString.IsEmptyWithTrim(txMessage)?";;":"") + txValue;
+      txMessage = txMessage + (!FiString.IsEmpty(txMessage)?";;":"") + txValue;
     }
 
     public Fdr(bool prmBlResult) { this.blResult = prmBlResult; }

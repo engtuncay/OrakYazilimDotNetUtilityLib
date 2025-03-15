@@ -1,4 +1,5 @@
 ﻿using OrakYazilimLib;
+using OrakYazilimLib.Util;
 
 namespace OrakYazilimLib.DbGeneric
 {
@@ -62,6 +63,10 @@ namespace OrakYazilimLib.DbGeneric
     {
       this.fiColType = fiColType;
       return this;
+    }
+    public string GetOfcTxDbFieldOr()
+    {
+      return FiString.IsEmpty(ofcTxDbField) ? ofcTxFieldName : ofcTxDbField;
     }
   }
 
