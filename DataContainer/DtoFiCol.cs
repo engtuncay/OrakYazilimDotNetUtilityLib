@@ -22,11 +22,11 @@ namespace OrakYazilimLib.DataContainer
     {
       dynamic obj = new System.Dynamic.ExpandoObject();
 
-      obj.ofcTxFieldName = ficol.ofcTxFieldName;
-      obj.ofcTxHeader = ficol.ofcTxHeader;
-      obj.ofcLength = ficol.ofcLnLength;
-      obj.ofcLnPrecision = ficol.ofcLnPrecision;
-      obj.ofcTxFieldDesc = ficol.ofcTxFieldDesc;
+      if(ficol.ofcTxFieldName != null) obj.ofcTxFieldName = ficol.ofcTxFieldName;
+      if(ficol.ofcTxHeader != null) obj.ofcTxHeader = ficol.ofcTxHeader;
+      if(ficol.ofcLnLength != null) obj.ofcLength = ficol.ofcLnLength;
+      if(ficol.ofcLnPrecision != null) obj.ofcPrecision = ficol.ofcLnPrecision;
+      if(ficol.ofcTxFieldDesc != null) obj.ofcFieldDesc = ficol.ofcTxFieldDesc;
 
       return obj;
     }
