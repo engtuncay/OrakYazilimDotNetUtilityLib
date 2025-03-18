@@ -90,7 +90,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdoNetHelper\Abstract\IDbOperations.cs" />
-    <Compile Include="AdoNetHelper\FiSqLite.cs" />
     <Compile Include="AdoNetHelper\FiMssqlSoc.cs" />
     <Compile Include="AdoNetHelper\FiSqlUtil.cs" />
     <Compile Include="AdoNetHelper\ParamItem.cs" />

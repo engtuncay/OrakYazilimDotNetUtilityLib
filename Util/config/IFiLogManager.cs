@@ -7,6 +7,8 @@ namespace OrakYazilimLib.Util.config
     {
         void LogMessage(string message);
 
+        void ErrorMessage(string message);
+
         void LogMessage(string message,Type refType);
     }
 
