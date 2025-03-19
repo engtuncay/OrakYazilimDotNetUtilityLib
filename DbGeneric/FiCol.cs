@@ -68,6 +68,12 @@ namespace OrakYazilimLib.DbGeneric
     {
       return FiString.IsEmpty(ofcTxDbField) ? ofcTxFieldName : ofcTxDbField;
     }
+
+    // ReSharper disable once InconsistentNaming
+    public string tof()
+    {
+      return ofcTxFieldName;
+    }
   }
 
 }
