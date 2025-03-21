@@ -15,7 +15,7 @@ namespace OrakYazilimLib.DbUtil
   {
     public string sql { get; set; }
 
-    private FiKeybean fkbParams { get; set; }
+    public FiKeybean fkbParams { get; set; }
 
     public FiQuery(string sql)
     {
