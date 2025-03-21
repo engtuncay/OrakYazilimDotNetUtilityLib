@@ -95,8 +95,6 @@
     <Compile Include="AdoNetHelper\ParamItem.cs" />
     <Compile Include="AdoNetHelper\DbCreateHelper.cs" />
     <Compile Include="AdoNetHelper\SuperHelper.cs" />
-    <Compile Include="CouchDb\CouchDbClient.cs" />
-    <Compile Include="CouchDb\Credentials.cs" />
     <Compile Include="DataContainer\DtoFdr1.cs" />
     <Compile Include="DataContainer\DtoFiCol.cs" />
     <Compile Include="DataContainer\FiColGui.cs" />
