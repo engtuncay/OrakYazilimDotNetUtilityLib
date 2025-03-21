@@ -412,11 +412,11 @@ namespace OrakYazilimLib.DbUtil
         AttachParameters(command, queryParams);
       }
 
-      sqConn.Open();
-
       try
       {
+        sqConn.Open();
         var dt = new DataTable();
+
         using (var da = new SqlDataAdapter(command))
         {
           da.Fill(dt);
