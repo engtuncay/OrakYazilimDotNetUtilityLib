@@ -400,46 +400,38 @@ namespace OrakYazilimLib.DbUtil
     {
       var fdrMain = new Fdr<DataTable>();
 
-      using (var sqConn = new SqlConnection(connString))
+      using var sqConn = new SqlConnection(connString);
+
+      string query = FiQueryTools.FixSqlProblems(fiQuery.sql);
+      var queryParams = fiQuery.GetParamsAsSqlParamList().ToArray();
+
+      using var command = new SqlCommand(query, sqConn);
+
+      if (FiCollection.IsFull(queryParams))
       {
-        string query = FiQueryTools.FixSqlProblems(fiQuery.sql);
-        var queryParams = fiQuery.GetParamsAsSqlParamList().ToArray();
+        AttachParameters(command, queryParams);
+      }
 
-        using (var command = new SqlCommand(query, sqConn))
+      sqConn.Open();
+
+      try
+      {
+        var dt = new DataTable();
+        using (var da = new SqlDataAdapter(command))
         {
-          if (FiCollection.IsFull(queryParams))
-          {
-            AttachParameters(command, queryParams);
-          }
-
-          sqConn.Open();
-
-          try
-          {
-            var dt = new DataTable();
-            using (var da = new SqlDataAdapter(command))
-            {
-              da.Fill(dt);
-            }
-
-            fdrMain.boExecution = true;
-            fdrMain.refValue = dt;
-          }
-          catch (SqlException sqlEx) // SQL Hataları için
-          {
-            FiAppConfig.fiLogManager?.LogMessage($"SQL Error: {sqlEx.Message}");
-            fdrMain.boExecution = false;
-            fdrMain.txErrorMsgShort = sqlEx.Message;
-            fdrMain.refValue = new DataTable();
-          }
-          catch (Exception ex) // Genel hatalar
-          {
-            FiAppConfig.fiLogManager?.LogMessage($"General Error: {ex.Message}");
-            fdrMain.boExecution = false;
-            fdrMain.txErrorMsgShort = ex.Message;
-            fdrMain.refValue = new DataTable();
-          }
+          da.Fill(dt);
         }
+
+        fdrMain.boExecution = true;
+        fdrMain.refValue = dt;
+      }
+      catch (Exception ex) // SQL Hataları için
+      {
+        FiAppConfig.fiLogManager?.ErrorMessage($"SQL Error: {ex.Message}");
+        Console.WriteLine(ex.StackTrace);
+        fdrMain.boExecution = false;
+        fdrMain.txErrorMsgShort = ex.Message;
+        fdrMain.refValue = new DataTable();
       }
 
       return fdrMain;

@@ -14,5 +14,15 @@ namespace OrakYazilimLib.Util.core
                 Console.WriteLine($"{name}={value}");
             }
         }
+
+        public static void printFkb(FiKeybean fkb)
+        {
+            foreach(PropertyDescriptor descriptor in TypeDescriptor.GetProperties(obj))
+            {
+                string name=descriptor.Name;
+                object value=descriptor.GetValue(obj);
+                Console.WriteLine($"{name}={value}");
+            }
+        }
     }
 }
