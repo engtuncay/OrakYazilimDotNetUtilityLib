@@ -10,6 +10,8 @@ namespace OrakYazilimLib.DataContainer
         public Object refValue { get; set; }
         public string txMessage { get; set; }
 
+        public string txErrorMsgShort { get; set; }
+
         //public bool? boTknValid { get; set; }
 
         public static DtoFdr1 ImportFdr<TPrmA>(Fdr<TPrmA> fdr)
@@ -20,6 +22,7 @@ namespace OrakYazilimLib.DataContainer
                 boResult = fdr.boResult,
                 refValue = fdr.refValue,
                 txMessage = fdr.txMessage,
+                txErrorMsgShort = fdr.txErrorMsgShort
             };
 
             if(fdr.obReturn!=null) dtoFdr1.refValue = fdr.obReturn;
