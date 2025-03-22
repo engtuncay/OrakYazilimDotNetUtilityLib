@@ -136,6 +136,7 @@
     <Compile Include="DbUtil\FiMsQuery.cs" />
     <Compile Include="DemoEntity\DemoMkfields.cs" />
     <Compile Include="DemoEntity\MysqlQueryDemo.cs" />
+    <Compile Include="FiExtensions\FiDataTableExt.cs" />
     <Compile Include="MvcPattern\AbsModal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UtilRequest\FiRequest.cs" />

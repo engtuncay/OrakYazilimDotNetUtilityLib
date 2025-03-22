@@ -51,7 +51,7 @@ namespace OrakYazilimLib.Util.core
       Remove(txKey);
       Add(txKey, listValues);
     }
-    private string GetAsString(string txKey)
+    public string GetAsString(string txKey)
     {
       // Eğer sözlük belirtilen anahtarı içeriyorsa:
       if (this.ContainsKey(txKey))
@@ -59,6 +59,18 @@ namespace OrakYazilimLib.Util.core
         // Değeri al ve string türüne çevir.
         object value = this[txKey];
         return value?.ToString() ?? ""; // Null kontrolü yaparak değeri döndür.
+      }
+      // Eğer anahtar bulunamazsa, null döner
+      return null;
+    }
+    public object GetAsObject(string txKey)
+    {
+      // Eğer sözlük belirtilen anahtarı içeriyorsa:
+      if (this.ContainsKey(txKey))
+      {
+        // Değeri al ve string türüne çevir.
+        object value = this[txKey];
+        return value;
       }
       // Eğer anahtar bulunamazsa, null döner
       return null;
