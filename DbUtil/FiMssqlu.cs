@@ -427,11 +427,12 @@ namespace OrakYazilimLib.DbUtil
       }
       catch (Exception ex) // SQL Hataları için
       {
-        FiAppConfig.fiLogManager?.ErrorMessage($"SQL Error: {ex.Message}");
-        Console.WriteLine(ex.StackTrace);
+        //Console.WriteLine(ex.StackTrace);
         fdrMain.boExecution = false;
         fdrMain.txErrorMsgShort = ex.Message;
         fdrMain.refValue = new DataTable();
+        FiAppConfig.fiLogManager?.ErrorMessage($"Error: {ex.Message}");
+        FiAppConfig.fiLogManager?.ErrorMessage($"StackTrace: {ex.StackTrace}");
       }
 
       return fdrMain;

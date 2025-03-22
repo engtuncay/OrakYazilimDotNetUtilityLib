@@ -7,7 +7,7 @@ namespace OrakYazilimLib.Util.core
 {
   public class FiConsole
   {
-    public static void printAllMembers(Object obj)
+    public static void PrintAllMembers(Object obj)
     {
       foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(obj))
       {

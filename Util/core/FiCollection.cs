@@ -19,11 +19,13 @@ namespace OrakYazilimLib.Util.core
 
         public static bool IsFull<T>(T[] prms)
         {
-            if (prms == null) return false;
+            return !IsEmpty(prms);
+        }
 
-            if (prms.Length > 0) return true;
-
-            return false;
+        public static bool IsEmpty<T>(T[] arrValue)
+        {
+            if (arrValue == null) return true;
+            return arrValue.Length == 0;
         }
         public static bool IsEmpty(ICollection collection)
         {
