@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OrakYazilimLib.DbGeneric;
+using System;
 using System.Data;
 using System.Text;
 
@@ -37,9 +38,39 @@ namespace OrakYazilimLib.FiExtensions
 
       return csvBuilder.ToString();
     }
-    public static object GetAsObject(this DataTable dataTable, int lnRowNo, string ofcTxFieldName)
+
+    public static object GetAsObject(this DataTable dataTable, int lnRowNo, string txFieldName)
     {
-      return dataTable.Rows[lnRowNo][ofcTxFieldName];
+      // 1. DataTable null kontrolü
+      if (dataTable == null)
+        return null;
+      //throw new ArgumentNullException(nameof(dataTable), "DataTable boş olamaz!");
+
+      // 2. Satır numarasının geçerli olup olmadığının kontrolü
+      if (lnRowNo < 0 || lnRowNo >= dataTable.Rows.Count)
+        return null;
+      //throw new IndexOutOfRangeException($"Geçersiz satır numarası: {lnRowNo}. DataTable'daki satır sayısı: {dataTable.Rows.Count}");
+
+      // 3. Kolon adının geçerli olup olmadığının kontrolü
+      if (!dataTable.Columns.Contains(txFieldName))
+        return null;
+      //throw new ArgumentException($"Geçerli bir kolon adı verilmelidir. '{txFieldName}' tablodaki bir kolon değil.");
+
+      // 4. Satırda ilgili değer null olabilir, bunu kontrol edelim (isteğe bağlı)
+      object value = dataTable.Rows[lnRowNo][txFieldName];
+
+      // if (value == null)
+      // return null; // null döner veya alternatif bir işlem yapılabilir
+
+      return value;
+    }
+
+    /**
+     * GetFieldAsObject
+     */
+    public static object GetFldAsObject(this DataTable dataTable, int lnRowNo, FiCol fiCol)
+    {
+        return GetAsObject(dataTable, lnRowNo, fiCol.ofcTxFieldName);
     }
   }
 

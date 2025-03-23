@@ -58,7 +58,7 @@ namespace OrakYazilimLib.DbUtil
     /// <returns>İlk satırdaki sütun verisinin belirtilen türde döndürülmüş hali</returns>
     public Fdr<T> GetValueFromFirstRow2<T>(string columnName, T defaultValue = default)
     {
-      FiAppConfig.fiLogManager?.LogMessage("col : " + columnName);
+      //FiAppConfig.fiLogManager?.LogMessage("col : " + columnName);
 
       Fdr<T> fdrMain = new Fdr<T>();
 
@@ -68,7 +68,7 @@ namespace OrakYazilimLib.DbUtil
         {
           object value = dataTable.Rows[0][columnName];
 
-          FiAppConfig.fiLogManager?.LogMessage("value : " + value);
+          //FiAppConfig.fiLogManager?.LogMessage("value : " + value);
 
           // // Eğer değer null ise, varsayılan değeri döndür
           // if (value == DBNull.Value || value == null)

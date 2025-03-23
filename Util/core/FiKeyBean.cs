@@ -20,10 +20,51 @@ namespace OrakYazilimLib.Util.core
     {
     }
 
-    public void AddByFiCol(FiCol ficol, object objValue)
+    public void AddFiCol(FiCol ficol, object objValue)
     {
       GetSetFiColInit().Add(ficol);
       Add(ficol.ofcTxFieldName, objValue);
+    }
+
+    public void AddCheckFiCol(FiCol ficol, object objValue)
+    {
+      if (ContainsKey(ficol.ofcTxFieldName))
+      {
+        Remove(ficol.ofcTxFieldName);
+      }
+      else
+      {
+        GetSetFiColInit().Add(ficol);
+      }
+      Add(ficol.ofcTxFieldName, objValue);
+    }
+
+    public void AddField(FiCol ficol, object objValue)
+    {
+      Add(ficol.ofcTxFieldName, objValue);
+    }
+
+    /**
+     * Daha önceden eklenmiş key varsa, remove eder, sonrasında ekler
+     */
+    public void AddCheckField(FiCol ficol, object objValue)
+    {
+      if (ContainsKey(ficol.ofcTxFieldName))
+      {
+        Remove(ficol.ofcTxFieldName);
+      }
+      Add(ficol.ofcTxFieldName, objValue);
+    }
+
+    /**
+     * Yoksa ekleme yapar, varsa birşey yapmaz
+     */
+    public void AddFieldIfNot(FiCol ficol, object objValue)
+    {
+      if (!ContainsKey(ficol.ofcTxFieldName))
+      {
+        Add(ficol.ofcTxFieldName, objValue);
+      }
     }
 
     public HashSet<FiCol> GetSetFiColInit()
