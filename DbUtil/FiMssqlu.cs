@@ -400,13 +400,12 @@ namespace OrakYazilimLib.DbUtil
     {
       var fdrMain = new Fdr<DataTable>();
 
-      using var sqConn = new SqlConnection(connString);
-
+      using SqlConnection sqConn = new SqlConnection(connString);
       string query = FiQueryTools.FixSqlProblems(fiQuery.sql);
-      var queryParams = fiQuery.GetParamsAsSqlParamList().ToArray();
 
-      using var command = new SqlCommand(query, sqConn);
+      using SqlCommand command = new SqlCommand(query, sqConn);
 
+      SqlParameter[] queryParams = fiQuery.GetParamsAsSqlParamList().ToArray();
       if (FiCollection.IsFull(queryParams))
       {
         AttachParameters(command, queryParams);
@@ -415,8 +414,8 @@ namespace OrakYazilimLib.DbUtil
       try
       {
         sqConn.Open();
-        var dt = new DataTable();
 
+        var dt = new DataTable();
         using (var da = new SqlDataAdapter(command))
         {
           da.Fill(dt);
