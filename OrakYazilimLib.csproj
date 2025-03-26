@@ -97,6 +97,7 @@
     <Compile Include="AdoNetHelper\SuperHelper.cs" />
     <Compile Include="DataContainer\DtoFdr1.cs" />
     <Compile Include="DataContainer\DtoFiCol.cs" />
+    <Compile Include="DataContainer\FdrDtb.cs" />
     <Compile Include="DataContainer\FiColGui.cs" />
     <Compile Include="DataContainer\Torg.cs" />
     <Compile Include="DataContainer\Tor.cs" />
@@ -169,6 +170,7 @@
     <Compile Include="Util\core\FiTemplate.cs" />
     <Compile Include="Util\core\FiType.cs" />
     <Compile Include="Util\core\ObservableProps.cs" />
+    <Compile Include="Util\FiModal.cs" />
     <Compile Include="Util\helper\Fistf.cs" />
     <Compile Include="Util\web\FiConfMngr.cs" />
     <Compile Include="Util\web\FiJson.cs" />
