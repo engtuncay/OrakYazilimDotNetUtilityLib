@@ -68,9 +68,12 @@ namespace OrakYazilimLib.Util
         }
 
 
-
+        /**
+         *  null değeri varsa false sonuç döner.
+         */
         public static bool Equals(string txVal1, string txVal2)
         {
+            if(txVal1 == null || txVal2 == null) return false;
             return txVal1.Equals(txVal2);
         }
     }
