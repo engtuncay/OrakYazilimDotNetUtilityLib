@@ -69,5 +69,9 @@ namespace OrakYazilimLib.Util
 
 
 
+        public static bool Equals(string txVal1, string txVal2)
+        {
+            return txVal1.Equals(txVal2);
+        }
     }
 }
