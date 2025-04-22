@@ -92,6 +92,10 @@ namespace OrakYazilimLib.Util.core
       Remove(txKey);
       Add(txKey, listValues);
     }
+
+    /**
+     * Boolean ToString yaparken lower yapar (normalde csh True olarak yapıyor)
+     */
     public string GetAsString(string txKey)
     {
       // Eğer sözlük belirtilen anahtarı içeriyorsa:
@@ -99,6 +103,12 @@ namespace OrakYazilimLib.Util.core
       {
         // Değeri al ve string türüne çevir.
         object value = this[txKey];
+
+        if(value is bool)
+        {
+          return value.ToString().ToLower();
+        }
+
         return value?.ToString() ?? ""; // Null kontrolü yaparak değeri döndür.
       }
       // Eğer anahtar bulunamazsa, null döner

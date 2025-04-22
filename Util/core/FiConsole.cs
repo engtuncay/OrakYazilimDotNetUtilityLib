@@ -20,10 +20,11 @@ namespace OrakYazilimLib.Util.core
     public static string TextFkb(FiKeybean fkb)
     {
       StringBuilder sb = new StringBuilder();
+      sb.Append("Fkb İçerik\n");
       int index = 0;
       foreach (KeyValuePair<string, object> keyValuePair in fkb)
       {
-        if (index > 0) sb.Append("\n");
+         if (index > 0) sb.Append("\n");
         sb.Append($"{keyValuePair.Key}={keyValuePair.Value}");
         index++;
       }

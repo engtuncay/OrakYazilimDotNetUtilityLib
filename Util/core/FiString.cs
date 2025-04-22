@@ -14,12 +14,6 @@ namespace OrakYazilimLib.Util
     /// </summary>
     public static class FiString
     {
-        public static void check()
-        {
-            //
-            //
-        }
-
         public static bool IsEmpty(string value)
         {
             return value == null || value.Trim().Equals("");

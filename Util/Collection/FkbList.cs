@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 namespace OrakYazilimLib.Util.Collection
 {
-    public class ListFkb: List<FiKeybean>
+    public class FkbList: List<FiKeybean>
     {
-        public ListFkb()
+        public FkbList()
         {
         }
 
-        public ListFkb(int capacity) : base(capacity)
+        public FkbList(int capacity) : base(capacity)
         {
         }
         
-        public ListFkb(IEnumerable<FiKeybean> collection) : base(collection)
+        public FkbList(IEnumerable<FiKeybean> collection) : base(collection)
         {
         }
         
