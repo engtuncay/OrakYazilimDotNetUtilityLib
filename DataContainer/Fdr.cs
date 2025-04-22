@@ -63,6 +63,8 @@ namespace OrakYazilimLib.DataContainer
 
     public Exception refException { get; set; }
 
+    public string txResponse { get; set; }
+
     /**
      * External Object
      */

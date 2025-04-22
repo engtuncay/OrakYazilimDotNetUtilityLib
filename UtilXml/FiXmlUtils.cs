@@ -3,7 +3,7 @@ using OrakYazilimLib.Util.core;
 
 namespace OrakYazilimLib.UtilXml
 {
-  public class FiXmlPrep
+  public class FiXmlUtils
   {
 
     public static string ConvertXmlParams(string txXmlTemp, FiKeybean fkbParams)

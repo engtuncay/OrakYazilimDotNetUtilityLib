@@ -15,6 +15,11 @@ namespace OrakYazilimLib.UtilRequest
     public string frTxToken { get; set; }
     public FiKeybean frFkbParams { get; set; }
 
+    public string GetTxProfile()
+    {
+      return frTxProfile;
+    }
+
     public string GetTxKbbProfile()
     {
       if (FiString.IsEmpty(frTxProfile))
@@ -43,5 +48,7 @@ namespace OrakYazilimLib.UtilRequest
       }
       return "pano-" + frTxProfile;
     }
+
+
   }
 }

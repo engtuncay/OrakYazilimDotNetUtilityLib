@@ -8,17 +8,26 @@ namespace OrakYazilimLib.UtilXml
     /// <summary>
     /// Xml Parser (xml alanlarını objeye atar)
     /// </summary>
-    public class FiXmlpArb
+    public class FiXmlPars
     {
         private XDocument xdoc { get; set; }
 
-        public static FiXmlpArb BuiParseXml(string txXml)
+        public FiXmlPars(string txXml)
+        {
+            this.xdoc = XDocument.Parse(txXml);
+        }
+
+        public FiXmlPars()
+        {
+        }
+
+        public static FiXmlPars BuiParseXml(string txXml)
         {
             // create document instance using XML file path
             // XDocument doc = XDocument.Load(filePath);
             XDocument doc = XDocument.Parse(txXml);
 
-            FiXmlpArb fiArb = new FiXmlpArb
+            FiXmlPars fiArb = new FiXmlPars
             {
                 xdoc = doc
             };

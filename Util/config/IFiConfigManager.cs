@@ -8,5 +8,6 @@ namespace OrakYazilimLib.Util.config
         //Dictionary<string, string?> mapConnString { get; set; }
 
         string GetConnString(string profile);
+        string GetApiUrl(string txProfile);
     }
 }

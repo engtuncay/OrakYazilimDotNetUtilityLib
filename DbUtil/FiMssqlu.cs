@@ -13,13 +13,13 @@ namespace OrakYazilimLib.DbUtil
 {
 
   /// <summary>
-  /// FiDbHelper-Mssql - Utility Library
+  /// FiDbHelper - Mssql - Utility Library
   /// </summary>
   public class FiMssqlu
   {
-    public string connString { get; set; }
+    private string connString { get; set; }
 
-    //public IFiDbConnFactory iFiDbConnFactory{ get; set; }
+    // connProfile'den connection string çeken AbsClass tanımlanabilir
 
     public FiMssqlu()
     {
@@ -30,7 +30,6 @@ namespace OrakYazilimLib.DbUtil
     {
       //Console.WriteLine("FiMssqlu Constructor");
       connString = connStr;
-      //this.sqlConnection = new SqlConnection(connString);
     }
 
     public static FiMssqlu BuiWitProfile(string connProfile)

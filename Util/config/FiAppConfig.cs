@@ -44,6 +44,14 @@ namespace OrakYazilimLib.Util.config
       return connString;
     }
 
+    public static string GetBaseUrl(string txProfile)
+    {
+      // config dosyasından key'den sonra test ile geleni alması için.
+      //if (boTestMode == true) txProfile = txProfile + "-test";
+      return fiConfigManager?.GetApiUrl(txProfile);
+
+    }
+
     public static void LogMessage(string message)
     {
       fiLogManager?.LogMessage(message);

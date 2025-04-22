@@ -1,76 +1,112 @@
-﻿using System;
-using System.Xml;
-using System.Net;
+﻿using OrakYazilimLib.DataContainer;
+using System;
 using System.IO;
+using System.Net;
+using System.Xml;
 
 namespace OrakYazilimLib.UtilXml
 {
-    public class FiSoap
+    public static class FiSoap
     {
-
-        public static void CallWebService()
+        public static Fdr Execute(string txXmlContent,string txUrl)
         {
-            var _url = "http://xxxxxxxxx/Service1.asmx";
-            var _action = "http://xxxxxxxx/Service1.asmx?op=HelloWorld";
+            Fdr fdrMain = new Fdr();
 
-            XmlDocument soapEnvelopeXml = CreateSoapEnvelope();
-            HttpWebRequest webRequest = CreateWebRequest(_url, _action);
-            InsertSoapEnvelopeIntoWebRequest(soapEnvelopeXml, webRequest);
-
-            // begin async call to web request.
-            IAsyncResult asyncResult = webRequest.BeginGetResponse(null, null);
-
-            // suspend this thread until call is complete. You might want to
-            // do something usefull here like update your UI.
-            asyncResult.AsyncWaitHandle.WaitOne();
-
-            // get the response from the completed web request.
-            string soapResult;
-            using (WebResponse webResponse = webRequest.EndGetResponse(asyncResult))
+            try
             {
-                using (StreamReader rd = new StreamReader(webResponse.GetResponseStream()))
+                HttpWebRequest request = CreateWebRequest(txUrl);
+                XmlDocument soapEnvelopeXml = new XmlDocument();
+                soapEnvelopeXml.LoadXml(txXmlContent); //AddNamespace(txXmlContent) //txXmlContent
+
+                using (Stream stream = request.GetRequestStream())
                 {
-                    soapResult = rd.ReadToEnd();
+                    soapEnvelopeXml.Save(stream);
                 }
 
-                Console.Write(soapResult);
+                //request.Method = "GET";
+                using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
+                {
+
+                    Stream responseStream = response.GetResponseStream();
+                    if (responseStream == null)
+                    {
+                        //throw new InvalidOperationException("Response stream is null.");
+                        fdrMain.boExecution = false;
+                        fdrMain.txMessage = "Response stream is null.";
+                        return fdrMain;
+                    }
+
+                    using (StreamReader rd = new StreamReader(responseStream))
+                    {
+                        string soapResult = rd.ReadToEnd();
+                        fdrMain.txResponse = soapResult;
+                        Console.WriteLine(soapResult);
+
+                        int statusCode = (int)response.StatusCode;
+                        fdrMain.lnStatusCode = statusCode;
+                        fdrMain.boExecution = true;
+                        Console.WriteLine($"HTTP Durum Kodu: {statusCode}");
+                    }
+
+                }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                fdrMain.txMessage = ex.Message;
+                fdrMain.boExecution = false;
+            }
+
+            return fdrMain;
         }
 
-        private static HttpWebRequest CreateWebRequest(string url, string action)
+        private static HttpWebRequest CreateWebRequest(string url)
         {
-            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(url);
-            webRequest.Headers.Add("SOAPAction", action);
-            webRequest.ContentType = "text/xml;charset=\"utf-8\"";
-            webRequest.Accept = "text/xml";
-            webRequest.Method = "POST";
+            //string url = "";
+            HttpWebRequest webRequest = null;
+
+            try
+            {
+                webRequest = (HttpWebRequest)WebRequest.Create(url);
+                webRequest.Headers.Add(@"SOAPAction","LoginRequest");
+                webRequest.ContentType = "text/xml;charset=\"utf-8\"";
+                webRequest.Accept = "text/xml";
+                webRequest.Method = "POST";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
             return webRequest;
         }
 
-        private static XmlDocument CreateSoapEnvelope()
+        private static string AddNamespace(string XML)
         {
-            XmlDocument soapEnvelopeDocument = new XmlDocument();
-            soapEnvelopeDocument.LoadXml(
-                @"<SOAP-ENV:Envelope xmlns:SOAP-ENV=""http://schemas.xmlsoap.org/soap/envelope/"" 
-               xmlns:xsi=""http://www.w3.org/1999/XMLSchema-instance"" 
-               xmlns:xsd=""http://www.w3.org/1999/XMLSchema"">
-            <SOAP-ENV:Body>
-            <HelloWorld xmlns=""http://tempuri.org/"" 
-                SOAP-ENV:encodingStyle=""http://schemas.xmlsoap.org/soap/encoding/"">
-                <int1 xsi:type=""xsd:integer"">12</int1>
-                <int2 xsi:type=""xsd:integer"">32</int2>
-            </HelloWorld>
-        </SOAP-ENV:Body>
-    </SOAP-ENV:Envelope>");
-            return soapEnvelopeDocument;
+            string result = string.Empty;
+            try
+            {
+                XmlDocument xdoc = new XmlDocument();
+                xdoc.LoadXml(XML);
+
+                XmlElement temproot = xdoc.CreateElement("ws", "Request", "http://example.com/");
+                temproot.InnerXml = xdoc.DocumentElement.InnerXml;
+                result = temproot.OuterXml;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return result;
         }
 
-        private static void InsertSoapEnvelopeIntoWebRequest(XmlDocument soapEnvelopeXml, HttpWebRequest webRequest)
+        private static string AppendEnvelope(string data)
         {
-            using (Stream stream = webRequest.GetRequestStream())
-            {
-                soapEnvelopeXml.Save(stream);
-            }
+            string txHead = @"<soapenv:Envelope xmlns:soapenv=""http://schemas.xmlsoap.org/soap/envelope/"" ><soapenv:Header/><soapenv:Body>";
+            string txEnd = @"</soapenv:Body></soapenv:Envelope>";
+            return txHead + data + txEnd;
         }
     }
+
 }

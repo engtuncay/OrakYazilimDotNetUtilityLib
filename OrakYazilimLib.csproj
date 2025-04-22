@@ -104,6 +104,7 @@
     <Compile Include="DataContainer\FiReturn2.cs" />
     <Compile Include="DataContainer\Fdr.cs" />
     <Compile Include="DbAttribute\IsPK.cs" />
+    <Compile Include="DbGeneric\AbsRepoSoap.cs" />
     <Compile Include="DbGeneric\FiCol.cs" />
     <Compile Include="DbGeneric\FiColType.cs" />
     <Compile Include="DbGeneric\RepoCommonGen.cs" />
@@ -143,10 +144,11 @@
     <Compile Include="UtilRequest\FiRequest.cs" />
     <Compile Include="UtilThirdParty\ShortGuid.cs" />
     <Compile Include="UtilThirdParty\TextHelper.cs" />
+    <Compile Include="UtilXml\FiSoap2.cs" />
     <Compile Include="UtilXml\FiSoap.cs" />
-    <Compile Include="UtilXml\FiSoapArb.cs" />
-    <Compile Include="UtilXml\FiXmlPrep.cs" />
-    <Compile Include="UtilXml\FiXmlpArb.cs" />
+    <Compile Include="UtilXml\FiXmlUtils.cs" />
+    <Compile Include="UtilXml\FiXmlPars.cs" />
+    <Compile Include="UtilXml\FiXmlReq.cs" />
     <Compile Include="Util\Collection\FkbList.cs" />
     <Compile Include="Util\ColStruct\FiColList.cs" />
     <Compile Include="Util\ColStruct\IFiTableMeta.cs" />
