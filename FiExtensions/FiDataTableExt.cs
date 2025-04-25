@@ -89,17 +89,17 @@ namespace OrakYazilimLib.FiExtensions
     }
 
     // DataTable'dan bir sütunu index ile silen extension metot
-    public static void RemoveColumnAtFi(this DataTable dataTable, int columnIndex)
-    {
-      // Kontroller: DataTable'ın ve index'in geçerli olması
-      if (dataTable == null)
-        throw new ArgumentNullException(nameof(dataTable), "DataTable boş olamaz!");
-
-      if (columnIndex < 0 || columnIndex >= dataTable.Columns.Count)
-        throw new IndexOutOfRangeException($"Geçersiz sütun index'i: {columnIndex}. Geçerli değerler 0-{dataTable.Columns.Count - 1} arasındadır.");
-
-      // Sütunu sil
-      dataTable.Columns.RemoveAt(columnIndex);
-    }
+    // public static void RemoveColumnAtFi(this DataTable dataTable, int columnIndex)
+    // {
+    //   // Kontroller: DataTable'ın ve index'in geçerli olması
+    //   if (dataTable == null)
+    //     throw new ArgumentNullException(nameof(dataTable), "DataTable boş olamaz!");
+    //
+    //   if (columnIndex < 0 || columnIndex >= dataTable.Columns.Count)
+    //     throw new IndexOutOfRangeException($"Geçersiz sütun index'i: {columnIndex}. Geçerli değerler 0-{dataTable.Columns.Count - 1} arasındadır.");
+    //
+    //   // Sütunu sil
+    //   dataTable.Columns.RemoveAt(columnIndex);
+    // }
   }
 }
