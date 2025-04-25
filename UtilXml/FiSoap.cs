@@ -9,6 +9,7 @@ namespace OrakYazilimLib.UtilXml
 {
     public static class FiSoap
     {
+        // Execute2
         public static Fdr Execute2(string txXmlContent,string txUrl)
         {
             Fdr fdrMain = new Fdr();
