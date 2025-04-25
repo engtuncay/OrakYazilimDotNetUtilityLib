@@ -33,18 +33,17 @@ namespace OrakYazilimLib.DataContainer
 
     public static object ImportFdr2(Fdr<DataTable> fdr)
     {
-
       dynamic obj = new System.Dynamic.ExpandoObject();
 
       if (fdr.boExecution != null) obj.boExecution = fdr.boExecution;
       if (fdr.boResult != null) obj.boResult = fdr.boResult;
+      if (fdr.fqpLnTotal != null) obj.fqpLnTotal = fdr.fqpLnTotal;
       if (fdr.refValue != null) obj.refValue = fdr.refValue;
       if (fdr.txMessage != null) obj.txMessage = fdr.txMessage;
+      if (fdr.txErrorMsgShort != null) obj.txErrorMsgShort = fdr.txErrorMsgShort;
 
-      // if (fdr.refValue != null) obj.refValue = fdr.refValue;
 
       return obj;
-
     }
   }
 }

@@ -52,7 +52,7 @@ namespace OrakYazilimLib.DataContainer
     public string txErrorMsgDetail { get; set; }
     public int lnRowsAffected { get; set; }
     public int? lnIdAffected { get; set; }
-    public int? lnTotalLength { get; set; }
+    public int? fqpLnTotal { get; set; }
     public object spec1 { get; set; }
 
     public int? lnStatusCode { get; set; }

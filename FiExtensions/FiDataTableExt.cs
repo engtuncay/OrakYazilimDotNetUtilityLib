@@ -8,7 +8,7 @@ namespace OrakYazilimLib.FiExtensions
   public static class FiDataTableExt
   {
     // DataTable'ı CSV formatına çeviren extension metot
-    public static string ToCsv(this DataTable dataTable, char delimiter = ',')
+    public static string ToCsvFi(this DataTable dataTable, char delimiter = ',')
     {
       if (dataTable == null)
         throw new ArgumentNullException(nameof(dataTable));
@@ -39,28 +39,22 @@ namespace OrakYazilimLib.FiExtensions
       return csvBuilder.ToString();
     }
 
-    public static object GetAsObject(this DataTable dataTable, int lnRowNo, string txFieldName)
+    public static object GetCellAsObjectFi(this DataTable dataTable, int lnRowNo, string txFieldName)
     {
       // 1. DataTable null kontrolü
       if (dataTable == null)
         return null;
-      //throw new ArgumentNullException(nameof(dataTable), "DataTable boş olamaz!");
 
       // 2. Satır numarasının geçerli olup olmadığının kontrolü
       if (lnRowNo < 0 || lnRowNo >= dataTable.Rows.Count)
         return null;
-      //throw new IndexOutOfRangeException($"Geçersiz satır numarası: {lnRowNo}. DataTable'daki satır sayısı: {dataTable.Rows.Count}");
 
       // 3. Kolon adının geçerli olup olmadığının kontrolü
       if (!dataTable.Columns.Contains(txFieldName))
         return null;
-      //throw new ArgumentException($"Geçerli bir kolon adı verilmelidir. '{txFieldName}' tablodaki bir kolon değil.");
 
       // 4. Satırda ilgili değer null olabilir, bunu kontrol edelim (isteğe bağlı)
       object value = dataTable.Rows[lnRowNo][txFieldName];
-
-      // if (value == null)
-      // return null; // null döner veya alternatif bir işlem yapılabilir
 
       return value;
     }
@@ -70,8 +64,42 @@ namespace OrakYazilimLib.FiExtensions
      */
     public static object GetFldAsObject(this DataTable dataTable, int lnRowNo, FiCol fiCol)
     {
-        return GetAsObject(dataTable, lnRowNo, fiCol.ofcTxFieldName);
+        return GetCellAsObjectFi(dataTable, lnRowNo, fiCol.ofcTxFieldName);
+    }
+
+    // DataTable'dan bir sütunu silen extension metot
+    public static void RemoveColumnFi(this DataTable dataTable, string columnName)
+    {
+      // Kontroller: DataTable'ın ve sütunun geçerli olması
+      if (dataTable == null)
+      {
+        //throw new ArgumentNullException(nameof(dataTable), "DataTable boş olamaz!");
+        return;
+      }
+
+
+      if (string.IsNullOrWhiteSpace(columnName)) return;
+        //throw new ArgumentException("Sütun adı boş veya geçersiz olamaz!", nameof(columnName));
+
+      if (!dataTable.Columns.Contains(columnName)) return;
+        //throw new ArgumentException($"'{columnName}' adlı sütun DataTable'da mevcut değil.", nameof(columnName));
+
+      // Sütunu sil
+      dataTable.Columns.Remove(columnName);
+    }
+
+    // DataTable'dan bir sütunu index ile silen extension metot
+    public static void RemoveColumnAtFi(this DataTable dataTable, int columnIndex)
+    {
+      // Kontroller: DataTable'ın ve index'in geçerli olması
+      if (dataTable == null)
+        throw new ArgumentNullException(nameof(dataTable), "DataTable boş olamaz!");
+
+      if (columnIndex < 0 || columnIndex >= dataTable.Columns.Count)
+        throw new IndexOutOfRangeException($"Geçersiz sütun index'i: {columnIndex}. Geçerli değerler 0-{dataTable.Columns.Count - 1} arasındadır.");
+
+      // Sütunu sil
+      dataTable.Columns.RemoveAt(columnIndex);
     }
   }
-
 }
