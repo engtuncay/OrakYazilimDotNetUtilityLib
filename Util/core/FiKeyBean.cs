@@ -12,6 +12,8 @@ namespace OrakYazilimLib.Util.core
 
     public HashSet<FiCol> setFiCol { get; set; }
 
+    //public string txTemplate {get; set;}
+
     public FiKeybean()
     {
     }
@@ -104,10 +106,10 @@ namespace OrakYazilimLib.Util.core
         // Değeri al ve string türüne çevir.
         object value = this[txKey];
 
-        if(value is bool)
-        {
-          return value.ToString().ToLower();
-        }
+        // if(value is bool)
+        // {
+        //   return value.ToString().ToLower();
+        // }
 
         return value?.ToString() ?? ""; // Null kontrolü yaparak değeri döndür.
       }

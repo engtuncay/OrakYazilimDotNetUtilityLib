@@ -13,7 +13,7 @@ using System.Collections.ObjectModel;
 
 namespace OrakYazilimLib.DbUtil
 {
-  public static class FiQueryTools
+  public static class FiQueryUtils
   {
     //public FiQueryTools() {}
 
@@ -254,7 +254,7 @@ namespace OrakYazilimLib.DbUtil
         }
         else
         { // param null ise,deaktif edilir
-          txSqlValue = FiQueryTools.DeActivateOptParamMain(txSqlValue, param.Key);
+          txSqlValue = FiQueryUtils.DeActivateOptParamMain(txSqlValue, param.Key);
           listParamsWillDeactivate.Add(param.Key);
         }
       }

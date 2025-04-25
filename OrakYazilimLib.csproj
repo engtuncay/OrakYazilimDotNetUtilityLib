@@ -114,7 +114,7 @@
     <Compile Include="DbUtil\IFiDbConnFactory.cs" />
     <Compile Include="DbUtil\FiMetaEntity.cs" />
     <Compile Include="DbUtil\FicQugen.cs" />
-    <Compile Include="DbUtil\FiQueryTools.cs" />
+    <Compile Include="DbUtil\FiQueryUtils.cs" />
     <Compile Include="DbUtil\Fsf.cs" />
     <Compile Include="DbGeneric\FiSqlParameter.cs" />
     <Compile Include="DbGeneric\AbsRepoGeneric.cs" />
@@ -155,6 +155,7 @@
     <Compile Include="Util\config\IFiConfigManager.cs" />
     <Compile Include="Util\config\IFiLogManager.cs" />
     <Compile Include="Util\core\FiBoolean.cs" />
+    <Compile Include="Util\core\FiCal.cs" />
     <Compile Include="Util\core\FiCalender.cs" />
     <Compile Include="Util\config\FiAppConfig.cs" />
     <Compile Include="Util\core\FiConsole.cs" />
@@ -170,7 +171,7 @@
     <Compile Include="Util\core\FiNumber.cs" />
     <Compile Include="Util\core\FiObject.cs" />
     <Compile Include="Util\core\FiReflection.cs" />
-    <Compile Include="Util\core\FiRegExp.cs" />
+    <Compile Include="Util\core\FiRegex.cs" />
     <Compile Include="Util\core\FiSql.cs" />
     <Compile Include="Util\core\FiTemplate.cs" />
     <Compile Include="Util\core\FiType.cs" />

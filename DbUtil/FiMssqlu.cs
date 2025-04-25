@@ -400,7 +400,7 @@ namespace OrakYazilimLib.DbUtil
       var fdrMain = new Fdr<DataTable>();
 
       using SqlConnection sqConn = new SqlConnection(connString);
-      string query = FiQueryTools.FixSqlProblems(fiQuery.sql);
+      string query = FiQueryUtils.FixSqlProblems(fiQuery.sql);
 
       using SqlCommand command = new SqlCommand(query, sqConn);
 

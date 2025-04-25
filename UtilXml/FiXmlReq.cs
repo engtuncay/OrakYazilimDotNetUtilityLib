@@ -1,12 +1,16 @@
 ﻿using OrakYazilimLib.DbGeneric;
 using OrakYazilimLib.Util.core;
+using System.Text.RegularExpressions;
 
 namespace OrakYazilimLib.UtilXml
 {
   public class FiXmlReq
   {
-    private string txXml { get; set; }
-    FiKeybean fkbParams { get; set; }
+    public string txXml { get; set; }
+
+    public FiKeybean fkbParams { get; set; }
+
+    public string txBaseUrl { get; set; }
 
     public FiXmlReq(string prmTxXml, FiKeybean prmFkbParams)
     {
@@ -24,7 +28,14 @@ namespace OrakYazilimLib.UtilXml
     {
       if(FiCollection.IsEmpty(this.fkbParams)) return txXml;
 
-      return FiXmlUtils.ConvertXmlParams(txXml, fkbParams);
+      this.txXml = FiXmlUtils.ConvertXmlParams(txXml, this.fkbParams);
+
+      return txXml;
     }
+
+
+
+
+
   }
 }

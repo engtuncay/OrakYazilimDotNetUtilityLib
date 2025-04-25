@@ -83,7 +83,7 @@ namespace OrakYazilimLib.DbUtil
     {
       if (FiCollection.IsEmpty(fkbParams)) return;
       //FiLogWeb.logWeb("fkbParams null degil");
-      sql = FiQueryTools.ConvertListParamToMultiParams(sql, fkbParams, false);
+      sql = FiQueryUtils.ConvertListParamToMultiParams(sql, fkbParams, false);
       //FiLogWeb.logWeb("sql:" + sql);
     }
 
@@ -92,7 +92,7 @@ namespace OrakYazilimLib.DbUtil
 
       if (!FiCollection.IsEmpty(fkbParams))
       {
-        this.sql = FiQueryTools.ActivateParamsNotNull(sql, fkbParams);
+        this.sql = FiQueryUtils.ActivateParamsNotNull(sql, fkbParams);
       }
 
     }
@@ -113,7 +113,7 @@ namespace OrakYazilimLib.DbUtil
     /**
      * boActivateOnlyFullParams parametresine false değeri gönderir.
      *
-     * <para><see cref="FiQueryTools.ActivateParamsMain"/></para>
+     * <para><see cref="FiQueryUtils.ActivateParamsMain"/></para>
      */
     public void ActivateParamsByMapParams()
     {
@@ -122,8 +122,8 @@ namespace OrakYazilimLib.DbUtil
 
     /**
      * ActivateParamsByMapParams(),DeActivateAllOptParams(); metodlarını çalıştırır
-     * <para><see cref="FiQueryTools.ActivateParamsMain"/></para>
-     * <para><see cref="FiQueryTools.DeActivateAllOptParams"/></para>
+     * <para><see cref="FiQueryUtils.ActivateParamsMain"/></para>
+     * <para><see cref="FiQueryUtils.DeActivateAllOptParams"/></para>
      */
     public void ProcessAllParamsByMapParams()
     {
@@ -134,7 +134,7 @@ namespace OrakYazilimLib.DbUtil
     /// <summary>
     /// FiMapParam'da olan parametreleri aktive eder.
     /// <para>
-    /// <see cref="FiQueryTools.ActivateParamsMain"/>
+    /// <see cref="FiQueryUtils.ActivateParamsMain"/>
     /// </para>
     /// </summary>
     /// <param name="boActivateOnlyFullParams"></param>
@@ -142,16 +142,16 @@ namespace OrakYazilimLib.DbUtil
     {
       if (fkbParams != null)
       {
-        this.sql = FiQueryTools.ActivateParamsMain(sql, fkbParams, boActivateOnlyFullParams);
+        this.sql = FiQueryUtils.ActivateParamsMain(sql, fkbParams, boActivateOnlyFullParams);
       }
     }
 
     /// <summary>
-    /// <see cref="FiQueryTools.DeActivateAllOptParams"/>
+    /// <see cref="FiQueryUtils.DeActivateAllOptParams"/>
     /// </summary>
     public void DeActivateAllOptParams()
     {
-      sql = FiQueryTools.DeActivateAllOptParams(sql);
+      sql = FiQueryUtils.DeActivateAllOptParams(sql);
     }
 
 

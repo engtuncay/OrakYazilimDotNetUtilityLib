@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace OrakYazilimLib.Util.core
 {
-    class FiRegExp
+    public class FiRegex
     {
+
     }
 }

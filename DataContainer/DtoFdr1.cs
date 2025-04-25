@@ -3,33 +3,48 @@ using System.Data;
 
 namespace OrakYazilimLib.DataContainer
 {
-    public class DtoFdr1
+  public class DtoFdr1
+  {
+    public bool? boExecution { get; set; }
+    public bool? boResult { get; set; }
+    public Object refValue { get; set; }
+    public string txMessage { get; set; }
+
+    public string txErrorMsgShort { get; set; }
+
+    //public bool? boTknValid { get; set; }
+
+    public static DtoFdr1 ImportFdr<TPrmA>(Fdr<TPrmA> fdr)
     {
-        public bool? boExecution { get; set; }
-        public bool? boResult { get; set; }
-        public Object refValue { get; set; }
-        public string txMessage { get; set; }
+      DtoFdr1 dtoFdr1 = new DtoFdr1
+      {
+        boExecution = fdr.boExecution,
+        boResult = fdr.boResult,
+        refValue = fdr.refValue,
+        txMessage = fdr.txMessage,
+        txErrorMsgShort = fdr.txErrorMsgShort
+      };
 
-        public string txErrorMsgShort { get; set; }
+      if (fdr.obReturn != null) dtoFdr1.refValue = fdr.obReturn;
 
-        //public bool? boTknValid { get; set; }
+      return dtoFdr1;
+    }
 
-        public static DtoFdr1 ImportFdr<TPrmA>(Fdr<TPrmA> fdr)
-        {
-            DtoFdr1 dtoFdr1 = new DtoFdr1
-            {
-                boExecution = fdr.boExecution,
-                boResult = fdr.boResult,
-                refValue = fdr.refValue,
-                txMessage = fdr.txMessage,
-                txErrorMsgShort = fdr.txErrorMsgShort
-            };
 
-            if(fdr.obReturn!=null) dtoFdr1.refValue = fdr.obReturn;
+    public static object ImportFdr2(Fdr<DataTable> fdr)
+    {
 
-            return dtoFdr1;
-        }
+      dynamic obj = new System.Dynamic.ExpandoObject();
 
+      if (fdr.boExecution != null) obj.boExecution = fdr.boExecution;
+      if (fdr.boResult != null) obj.boResult = fdr.boResult;
+      if (fdr.refValue != null) obj.refValue = fdr.refValue;
+      if (fdr.txMessage != null) obj.txMessage = fdr.txMessage;
+
+      // if (fdr.refValue != null) obj.refValue = fdr.refValue;
+
+      return obj;
 
     }
+  }
 }

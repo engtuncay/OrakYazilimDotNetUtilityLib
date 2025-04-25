@@ -1,4 +1,5 @@
 ﻿using OrakYazilimLib.DataContainer;
+using OrakYazilimLib.Util.config;
 using System;
 using System.IO;
 using System.Net;
@@ -8,7 +9,7 @@ namespace OrakYazilimLib.UtilXml
 {
     public static class FiSoap
     {
-        public static Fdr Execute(string txXmlContent,string txUrl)
+        public static Fdr Execute2(string txXmlContent,string txUrl)
         {
             Fdr fdrMain = new Fdr();
 
@@ -60,6 +61,62 @@ namespace OrakYazilimLib.UtilXml
             return fdrMain;
         }
 
+        public static Fdr Execute(FiXmlReq fiXmlReq)
+        {
+            Fdr fdrMain = new Fdr();
+
+            try
+            {
+                HttpWebRequest request = CreateWebRequest(fiXmlReq.txBaseUrl);
+                //request.ContentType = "text/xml;charset=\"utf-8\"";
+                XmlDocument soapEnvelopeXml = new XmlDocument();
+                soapEnvelopeXml.LoadXml(fiXmlReq.GetXmlFinal()); //AddNamespace(txXmlContent) //txXmlContent
+                FiAppConfig.fiLogManager?.LogMessage(fiXmlReq.txXml);
+                FiAppConfig.fiLogManager?.LogMessage(fiXmlReq.txBaseUrl);
+
+                using (Stream stream = request.GetRequestStream())
+                {
+                    soapEnvelopeXml.Save(stream);
+                }
+
+                //request.Method = "GET";
+                using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
+                {
+                    Stream responseStream = response.GetResponseStream();
+                    if (responseStream == null)
+                    {
+                        fdrMain.boExecution = false;
+                        fdrMain.txMessage = "Response stream is null.";
+                        return fdrMain;
+                    }
+
+                    using (StreamReader rd = new StreamReader(responseStream))
+                    {
+                        string soapResult = rd.ReadToEnd();
+                        fdrMain.txResponse = soapResult;
+                        //Console.WriteLine(soapResult);
+                        FiAppConfig.fiLogManager?.LogMessage(soapResult);
+
+                        int statusCode = (int)response.StatusCode;
+                        fdrMain.lnStatusCode = statusCode;
+                        fdrMain.boExecution = true;
+                        //Console.WriteLine($"HTTP Durum Kodu: {statusCode}");
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                FiAppConfig.fiLogManager?.ErrorMessage(ex.Message);
+                FiAppConfig.fiLogManager?.ErrorMessage(ex.ToString());
+                fdrMain.txMessage = ex.Message;
+                fdrMain.boExecution = false;
+            }
+
+            return fdrMain;
+        }
+
+
         private static HttpWebRequest CreateWebRequest(string url)
         {
             //string url = "";
@@ -68,14 +125,15 @@ namespace OrakYazilimLib.UtilXml
             try
             {
                 webRequest = (HttpWebRequest)WebRequest.Create(url);
-                webRequest.Headers.Add(@"SOAPAction","LoginRequest");
+                //webRequest.Headers.Add(@"SOAPAction","LoginRequest");
                 webRequest.ContentType = "text/xml;charset=\"utf-8\"";
                 webRequest.Accept = "text/xml";
                 webRequest.Method = "POST";
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                FiAppConfig.fiLogManager?.LogMessage(ex.Message);
+                FiAppConfig.fiLogManager?.LogMessage(ex.ToString());
             }
             return webRequest;
         }
