@@ -41,9 +41,10 @@ namespace OrakYazilimLib.DataContainer
       if (fdr.txMessage != null) obj.txMessage = fdr.txMessage;
       if (fdr.txErrorMsgShort != null) obj.txErrorMsgShort = fdr.txErrorMsgShort;
       if (fdr.refValue != null) obj.refValue = fdr.refValue;
+      if (fdr.txResponse != null) obj.txResponse = fdr.txResponse;
 
       // geçici olarak eklendi
-      if (fdr.refValue ==null && fdr.obReturn != null ) obj.refValue = fdr.obReturn;
+      if (fdr.refValue == null && fdr.obReturn != null) obj.refValue = fdr.obReturn;
 
       return obj;
     }

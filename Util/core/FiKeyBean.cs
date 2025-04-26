@@ -1,4 +1,5 @@
 ﻿using OrakYazilimLib.DbGeneric;
+using OrakYazilimLib.Util.Collection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace OrakYazilimLib.Util.core
       Add(ficol.ofcTxFieldName, objValue);
     }
 
-    public void AddCheckFiCol(FiCol ficol, object objValue)
+    public void AddForceFiCol(FiCol ficol, object objValue)
     {
       if (ContainsKey(ficol.ofcTxFieldName))
       {
@@ -52,6 +53,11 @@ namespace OrakYazilimLib.Util.core
     public void AddCheckField(FiCol ficol, object objValue)
     {
       AddForce(ficol.ofcTxFieldName, objValue);
+    }
+
+    public void AddFieldForce(FiCol fiCol, object objValue)
+    {
+      AddForce(fiCol.ofcTxFieldName, objValue);
     }
 
     public void AddForce(string key, object objValue)
@@ -121,6 +127,10 @@ namespace OrakYazilimLib.Util.core
       // Eğer anahtar bulunamazsa, null döner
       return null;
     }
+
+    public string GetFieldAsString(FiCol fiCol){
+      return GetAsString(fiCol.ofcTxFieldName);
+    }
     public object GetAsObject(string txKey)
     {
       // Eğer sözlük belirtilen anahtarı içeriyorsa:
@@ -132,6 +142,26 @@ namespace OrakYazilimLib.Util.core
       }
       // Eğer anahtar bulunamazsa, null döner
       return null;
+    }
+    public FkbList GetFieldAsFkbList(FiCol fiCol)
+    {
+      if (this.ContainsKey(fiCol.ofcTxFieldName))
+      {
+        // Değeri al ve string türüne çevir.
+        object value = this[fiCol.ofcTxFieldName];
+
+        if (value is FkbList fkbList)
+        {
+          return fkbList;
+        }
+      }
+      // Eğer anahtar bulunamazsa, null döner
+      return null;
+    }
+
+    public FkbList GetFieldAsFkbListNtn(FiCol fiCol)
+    {
+      return GetFieldAsFkbList(fiCol)??new FkbList();
     }
   }
 }

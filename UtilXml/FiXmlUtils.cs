@@ -18,41 +18,7 @@ namespace OrakYazilimLib.UtilXml
       if (FiString.IsEmpty(txXmlTemp) || fkbParams == null || fkbParams.Count == 0)
         return txXmlTemp;
 
-      var keys = fkbParams.Keys.ToList(); // Keys'i geçici bir listeye kopyalıyoruz
-
-      // Değerler ilgili düzeltmeler
-      foreach (var key1 in keys)
-      {
-        object objValue = fkbParams.GetAsObject(key1);
-
-        // JArray FkbList'e çevrilir, objValue FkbList olur
-        if (objValue is JArray jarrList)
-        {
-          var fkbListChild = FiJArray.ConvertFkbList(jarrList);
-          fkbParams.AddForce(key1, fkbListChild); // Orijinal koleksiyona ekleme yapabilirsiniz
-          objValue = fkbListChild;
-        }
-
-        if (objValue is FkbList fkbListChildElem)
-        {
-          (string txXmlNew, string txXmlExtracted) = ProcessChildFkbList(txXmlTemp, key1);
-          txXmlTemp = txXmlNew;
-          fkbListChildElem.txTemplate = txXmlExtracted;
-
-          StringBuilder sbChild = new StringBuilder();
-          foreach (FiKeybean fkbChild in fkbListChildElem)
-          {
-            string convertXmlParams = ConvertXmlParams(txXmlExtracted, fkbChild);
-            //FiAppConfig.fiLogManager?.LogMessage("Converted:"+ convertXmlParams);
-            //Console.WriteLine("Converted:"+ convertXmlParams);
-            sbChild.Append(convertXmlParams);
-          }
-
-          fkbListChildElem.txValue = sbChild.ToString();
-          //continue;
-        }
-
-      }
+      //txXmlTemp = PrepFkbParams(txXmlTemp, fkbParams);
 
       //
       foreach (var key in fkbParams.Keys)
@@ -62,11 +28,26 @@ namespace OrakYazilimLib.UtilXml
 
         object objValue = fkbParams.GetAsObject(key);
 
-        FiAppConfig.fiLogManager?.LogMessage(objValue.GetType().ToString());
+        //FiAppConfig.fiLogManager?.LogMessage(objValue.GetType().ToString());
+
 
         if (objValue is FkbList fkbListChild)
         {
-          value = fkbListChild.txValue;
+          if(!FiRegex.ContainsTemplateKey(txXmlTemp,key)){
+            continue;
+          }
+
+          StringBuilder sbChild = new StringBuilder();
+
+          foreach (FiKeybean fkbChild in fkbListChild)
+          {
+            string convertXmlParams = ConvertXmlParams(fkbListChild.txTemplate, fkbChild);
+            sbChild.Append(convertXmlParams);
+          }
+
+          //fkbListChildElem.txValue = sbChild.ToString();
+          value = sbChild.ToString(); //fkbListChild.txValue;
+
         }
         else if (objValue is DateTime dtValue)
         {
@@ -100,6 +81,36 @@ namespace OrakYazilimLib.UtilXml
       return txXmlTemp; // Güncellenmiş metni döndür
     }
 
+    public static string PrepFkbParams(string txXmlTemp, FiKeybean fkbParams)
+    {
+      var keys = fkbParams.Keys.ToList(); // Keys'i geçici bir listeye kopyalıyoruz
+
+      // Değerler ile ilgili düzeltmeler
+      foreach (var key1 in keys)
+      {
+        object objValue = fkbParams.GetAsObject(key1);
+
+        // JArray FkbList'e çevrilir, objValue FkbList olur
+        if (objValue is JArray jarrList)
+        {
+          var fkbListChild = FiJArray.ConvertFkbList(jarrList);
+          fkbParams.AddForce(key1, fkbListChild); // Orijinal koleksiyona ekleme yapabilirsiniz
+          objValue = fkbListChild;
+        }
+
+        if (objValue is FkbList fkbListChildElem)
+        {
+          (string txXmlNew, string txXmlExtracted) = ProcessChildFkbList(txXmlTemp, key1);
+          txXmlTemp = txXmlNew;
+          fkbListChildElem.txTemplate = txXmlExtracted;
+          //continue;
+        }
+
+      }
+
+      return txXmlTemp;
+    }
+
     public static (string txXmlNew, string txXmlExtracted) ProcessChildFkbList(string txXml, string key)
     {
       // Regex deseni: <!--!psgRfSipSatirList--> ile <!--!psgRfSipSatirList--> arasındaki içeriği yakalar
@@ -115,5 +126,23 @@ namespace OrakYazilimLib.UtilXml
 
       return (txXmlNew, txXmlExtracted); // Hem değiştirilmiş XML'i hem de bulunan içerik döndürülür
     }
+
+    public static string DeActivateAllParams(string txXml)
+    {
+      //"--!(\\w+).*\\s*.*"; // @ verbatim operatörü eklenince ikinci slashlar kaldırılır
+      const string regex = @"(.*{{(.*?)}}.*\n)"; // 20250426
+      const string subst = "<!--$2 deactive-->\n";
+      return Regex.Replace(txXml, regex, subst);
+    }
+
+    public static string DeActivateParam(string txXml, string key)
+    {
+      string regex = @"(.*{{(" + key + @")}}.*\n)"; // 20250426
+      const string subst = "<!--$2 deactive-->\n";
+      return Regex.Replace(txXml, regex, subst);
+    }
+
+
   }
+
 }

@@ -37,5 +37,25 @@ namespace OrakYazilimLib.UtilXml
 
 
 
+    public void PrepFkbParams()
+    {
+      this.txXml = FiXmlUtils.PrepFkbParams(txXml, this.fkbParams);
+    }
+    public void DeactiveAllParams()
+    {
+      this.txXml = FiXmlUtils.DeActivateAllParams(this.txXml);
+    }
+    public void ProcessParams()
+    {
+      if (FiCollection.IsEmpty(this.fkbParams)) return;
+      this.txXml = FiXmlUtils.ConvertXmlParams(this.txXml, this.fkbParams);
+    }
+
+    public void ProcessParamsWitPrep()
+    {
+      if (FiCollection.IsEmpty(this.fkbParams)) return;
+      this.txXml = FiXmlUtils.PrepFkbParams(this.txXml, this.fkbParams);
+      this.txXml = FiXmlUtils.ConvertXmlParams(this.txXml, this.fkbParams);
+    }
   }
 }
