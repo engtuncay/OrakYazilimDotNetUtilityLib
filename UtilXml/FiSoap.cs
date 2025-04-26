@@ -9,59 +9,6 @@ namespace OrakYazilimLib.UtilXml
 {
     public static class FiSoap
     {
-        // Execute2
-        public static Fdr Execute2(string txXmlContent,string txUrl)
-        {
-            Fdr fdrMain = new Fdr();
-
-            try
-            {
-                HttpWebRequest request = CreateWebRequest(txUrl);
-                XmlDocument soapEnvelopeXml = new XmlDocument();
-                soapEnvelopeXml.LoadXml(txXmlContent); //AddNamespace(txXmlContent) //txXmlContent
-
-                using (Stream stream = request.GetRequestStream())
-                {
-                    soapEnvelopeXml.Save(stream);
-                }
-
-                //request.Method = "GET";
-                using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
-                {
-
-                    Stream responseStream = response.GetResponseStream();
-                    if (responseStream == null)
-                    {
-                        //throw new InvalidOperationException("Response stream is null.");
-                        fdrMain.boExecution = false;
-                        fdrMain.txMessage = "Response stream is null.";
-                        return fdrMain;
-                    }
-
-                    using (StreamReader rd = new StreamReader(responseStream))
-                    {
-                        string soapResult = rd.ReadToEnd();
-                        fdrMain.txResponse = soapResult;
-                        Console.WriteLine(soapResult);
-
-                        int statusCode = (int)response.StatusCode;
-                        fdrMain.lnStatusCode = statusCode;
-                        fdrMain.boExecution = true;
-                        Console.WriteLine($"HTTP Durum Kodu: {statusCode}");
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                fdrMain.txMessage = ex.Message;
-                fdrMain.boExecution = false;
-            }
-
-            return fdrMain;
-        }
-
         public static Fdr Execute(FiXmlReq fiXmlReq)
         {
             Fdr fdrMain = new Fdr();
@@ -166,6 +113,60 @@ namespace OrakYazilimLib.UtilXml
             string txEnd = @"</soapenv:Body></soapenv:Envelope>";
             return txHead + data + txEnd;
         }
-    }
 
+        // Execute2
+        public static Fdr Execute2(string txXmlContent,string txUrl)
+        {
+            Fdr fdrMain = new Fdr();
+
+            try
+            {
+                HttpWebRequest request = CreateWebRequest(txUrl);
+                XmlDocument soapEnvelopeXml = new XmlDocument();
+                soapEnvelopeXml.LoadXml(txXmlContent); //AddNamespace(txXmlContent) //txXmlContent
+
+                using (Stream stream = request.GetRequestStream())
+                {
+                    soapEnvelopeXml.Save(stream);
+                }
+
+                //request.Method = "GET";
+                using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
+                {
+
+                    Stream responseStream = response.GetResponseStream();
+                    if (responseStream == null)
+                    {
+                        //throw new InvalidOperationException("Response stream is null.");
+                        fdrMain.boExecution = false;
+                        fdrMain.txMessage = "Response stream is null.";
+                        return fdrMain;
+                    }
+
+                    using (StreamReader rd = new StreamReader(responseStream))
+                    {
+                        string soapResult = rd.ReadToEnd();
+                        fdrMain.txResponse = soapResult;
+                        Console.WriteLine(soapResult);
+
+                        int statusCode = (int)response.StatusCode;
+                        fdrMain.lnStatusCode = statusCode;
+                        fdrMain.boExecution = true;
+                        Console.WriteLine($"HTTP Durum Kodu: {statusCode}");
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                fdrMain.txMessage = ex.Message;
+                fdrMain.boExecution = false;
+            }
+
+            return fdrMain;
+        }
+
+
+    }//end class
 }

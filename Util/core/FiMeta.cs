@@ -37,5 +37,13 @@ namespace OrakYazilimLib.Util.core
         }
 
 
+        public static FiMeta BuiLn(int lnKey)
+        {
+            return new FiMeta() { lnKey = lnKey };
+        }
+        public static FiMeta BuiLnAndKey(int lnKey, string txKey)
+        {
+            return new FiMeta() { lnKey = lnKey, txKey = txKey };
+        }
     }
 }

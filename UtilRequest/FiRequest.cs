@@ -14,7 +14,7 @@ namespace OrakYazilimLib.UtilRequest
     public string frTxPass { get; set; }
     public string frTxToken { get; set; }
     public FiKeybean frFkbParams { get; set; }
-
+    public bool frBoShowDoc { get; set; }
     public string GetTxProfile()
     {
       return frTxProfile;
