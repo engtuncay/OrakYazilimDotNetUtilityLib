@@ -51,11 +51,16 @@ namespace OrakYazilimLib.Util.core
      */
     public void AddCheckField(FiCol ficol, object objValue)
     {
-      if (ContainsKey(ficol.ofcTxFieldName))
+      AddForce(ficol.ofcTxFieldName, objValue);
+    }
+
+    public void AddForce(string key, object objValue)
+    {
+      if (ContainsKey(key))
       {
-        Remove(ficol.ofcTxFieldName);
+        Remove(key);
       }
-      Add(ficol.ofcTxFieldName, objValue);
+      Add(key, objValue);
     }
 
     /**

@@ -6,6 +6,10 @@ namespace OrakYazilimLib.Util.Collection
 {
     public class FkbList: List<FiKeybean>
     {
+        public string txTemplate { get; set; }
+
+        public string txValue { get; set; }
+
         public FkbList()
         {
         }

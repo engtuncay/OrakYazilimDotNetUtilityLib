@@ -6,6 +6,7 @@ using OrakYazilimLib.Util.core;
 using System;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace OrakYazilimLib.UtilXml
 {
@@ -17,6 +18,43 @@ namespace OrakYazilimLib.UtilXml
       if (FiString.IsEmpty(txXmlTemp) || fkbParams == null || fkbParams.Count == 0)
         return txXmlTemp;
 
+      var keys = fkbParams.Keys.ToList(); // Keys'i geçici bir listeye kopyalıyoruz
+
+      // Değerler ilgili düzeltmeler
+      foreach (var key1 in keys)
+      {
+        object objValue = fkbParams.GetAsObject(key1);
+
+        // JArray FkbList'e çevrilir, objValue FkbList olur
+        if (objValue is JArray jarrList)
+        {
+          var fkbListChild = FiJArray.ConvertFkbList(jarrList);
+          fkbParams.AddForce(key1, fkbListChild); // Orijinal koleksiyona ekleme yapabilirsiniz
+          objValue = fkbListChild;
+        }
+
+        if (objValue is FkbList fkbListChildElem)
+        {
+          (string txXmlNew, string txXmlExtracted) = ProcessChildFkbList(txXmlTemp, key1);
+          txXmlTemp = txXmlNew;
+          fkbListChildElem.txTemplate = txXmlExtracted;
+
+          StringBuilder sbChild = new StringBuilder();
+          foreach (FiKeybean fkbChild in fkbListChildElem)
+          {
+            string convertXmlParams = ConvertXmlParams(txXmlExtracted, fkbChild);
+            //FiAppConfig.fiLogManager?.LogMessage("Converted:"+ convertXmlParams);
+            //Console.WriteLine("Converted:"+ convertXmlParams);
+            sbChild.Append(convertXmlParams);
+          }
+
+          fkbListChildElem.txValue = sbChild.ToString();
+          //continue;
+        }
+
+      }
+
+      //
       foreach (var key in fkbParams.Keys)
       {
         string placeholder = "{{" + key + "}}"; // Şablondaki büyük parantezler
@@ -28,17 +66,7 @@ namespace OrakYazilimLib.UtilXml
 
         if (objValue is FkbList fkbListChild)
         {
-          (string txXmlReplaced, string txDetayXml) = ProcessFkbListKey(txXmlTemp, key);
-          txXmlTemp = txXmlReplaced;
-
-          StringBuilder sbChild = new StringBuilder();
-          foreach (FiKeybean fkbChild in fkbListChild)
-          {
-            sbChild.Append(ConvertXmlParams(txDetayXml, fkbChild));
-          }
-
-          value = sbChild.ToString();
-
+          value = fkbListChild.txValue;
         }
         else if (objValue is DateTime dtValue)
         {
@@ -72,20 +100,20 @@ namespace OrakYazilimLib.UtilXml
       return txXmlTemp; // Güncellenmiş metni döndür
     }
 
-    public static (string txXmlReplaced, string txDetayXml) ProcessFkbListKey(string txXml, string key)
+    public static (string txXmlNew, string txXmlExtracted) ProcessChildFkbList(string txXml, string key)
     {
       // Regex deseni: <!--!psgRfSipSatirList--> ile <!--!psgRfSipSatirList--> arasındaki içeriği yakalar
       string pattern = $"<!--!{key}-->(.*?)<!--!{key}-->";
 
       // İçeriği yakala ve değiştir
-      string extractedContent = "";
-      string replacedXml = Regex.Replace(txXml, pattern, match =>
+      string txXmlExtracted = "";
+      string txXmlNew = Regex.Replace(txXml, pattern, match =>
       {
-        extractedContent = match.Groups[1].Value; // Aradaki içeriği al
+        txXmlExtracted = match.Groups[1].Value; // Aradaki içeriği al
         return "{{" + key + "}}"; // {{key}} olarak değiştir
       }, RegexOptions.Singleline);
 
-      return (replacedXml, extractedContent); // Hem değiştirilmiş XML'i hem de bulunan içerik döndürülür
+      return (txXmlNew, txXmlExtracted); // Hem değiştirilmiş XML'i hem de bulunan içerik döndürülür
     }
   }
 }
