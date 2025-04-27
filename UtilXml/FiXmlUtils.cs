@@ -18,7 +18,7 @@ namespace OrakYazilimLib.UtilXml
       if (FiString.IsEmpty(txXmlTemp) || fkbParams == null || fkbParams.Count == 0)
         return txXmlTemp;
 
-      //txXmlTemp = PrepFkbParams(txXmlTemp, fkbParams);
+
 
       //
       foreach (var key in fkbParams.Keys)
@@ -141,6 +141,22 @@ namespace OrakYazilimLib.UtilXml
       const string subst = "<!--$2 deactive-->\n";
       return Regex.Replace(txXml, regex, subst);
     }
+
+
+    /// <summary>
+    /// Verilen string içinde {{key}} formatında bir yapı olup olmadığını kontrol eder.
+    /// </summary>
+    /// <param name="input">Kontrol edilecek metin.</param>
+    /// <returns>True, eğer {{key}} yapısı varsa; aksi halde False.</returns>
+    public static bool ContainsTemplateKey(string input)
+    {
+      if (String.IsNullOrEmpty(input)) return false;
+
+      // {{key}} formatını kontrol eden regex
+      var regex = new Regex(@"\{\{.+?\}\}");
+      return regex.IsMatch(input);
+    }
+
 
 
   }

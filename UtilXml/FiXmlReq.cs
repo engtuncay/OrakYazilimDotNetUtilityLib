@@ -57,5 +57,9 @@ namespace OrakYazilimLib.UtilXml
       this.txXml = FiXmlUtils.PrepFkbParams(this.txXml, this.fkbParams);
       this.txXml = FiXmlUtils.ConvertXmlParams(this.txXml, this.fkbParams);
     }
+    public void DeactiveField(FiCol fiCol)
+    {
+      this.txXml = FiXmlUtils.DeActivateParam(fiCol.ofcTxFieldName, this.txXml);
+    }
   }
 }
