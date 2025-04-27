@@ -10,6 +10,8 @@ namespace OrakYazilimLib.Util.Collection
 
         public string txValue { get; set; }
 
+        public FiColList fiColList { get; set; }
+
         public FkbList()
         {
         }
