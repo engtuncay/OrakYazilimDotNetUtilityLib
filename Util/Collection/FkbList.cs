@@ -12,6 +12,8 @@ namespace OrakYazilimLib.Util.Collection
 
         public FiColList fiColList { get; set; }
 
+        public FiKeycol fiKeycol { get; set; }
+
         public FkbList()
         {
         }

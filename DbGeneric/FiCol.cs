@@ -1,5 +1,4 @@
-﻿using OrakYazilimLib;
-using OrakYazilimLib.Util;
+﻿using OrakYazilimLib.Util;
 
 namespace OrakYazilimLib.DbGeneric
 {
@@ -7,7 +6,14 @@ namespace OrakYazilimLib.DbGeneric
   public class FiCol
   {
     public string ofcTxFieldName { get; set; }
+
+    /**
+     * Veritabanında farklı bir alan ismi varsa, dbField'a yazılır
+     */
+    public string ofcTxDbField { get; set; }
     public string ofcTxHeader { get; set; }
+
+    public string ofcTxFieldType { get; set; }
 
     /**
      * Alanın Veri Türü (FiColType dan alınabilir)
@@ -20,13 +26,15 @@ namespace OrakYazilimLib.DbGeneric
 
     public string ofcTxFieldDesc { get; set; }
 
-    public string ofcTxFieldType { get; set; }
-
     public int? ofcLnLength { get; set; }
     public int? ofcLnPrecision { get; set; }
     public int? ofcLnScale { get; set; }
 
-    public string ofcTxDbField { get; set; }
+
+    /**
+     * Alanın alacağı şablon, xml için düşünüldü.
+     */
+    public string ficTxTemplate { get; set; }
 
     /**
      * Alanın varsayılan veri türü

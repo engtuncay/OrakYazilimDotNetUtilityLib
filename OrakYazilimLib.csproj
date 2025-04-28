@@ -164,6 +164,7 @@
     <Compile Include="Util\core\FiDate.cs" />
     <Compile Include="Util\core\FiJArray.cs" />
     <Compile Include="Util\core\FiKeybean.cs" />
+    <Compile Include="Util\core\FiKeyCol.cs" />
     <Compile Include="Util\core\FiKeyString.cs" />
     <Compile Include="Util\core\FiLog.cs" />
     <Compile Include="Util\core\FiMeta.cs" />
