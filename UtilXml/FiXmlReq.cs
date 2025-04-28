@@ -23,19 +23,14 @@ namespace OrakYazilimLib.UtilXml
     }
 
 
-
     public string GetXmlFinal()
     {
-      if(FiCollection.IsEmpty(this.fkbParams)) return txXml;
+      if (FiCollection.IsEmpty(this.fkbParams)) return txXml;
 
       this.txXml = FiXmlUtils.ConvertXmlParams(txXml, this.fkbParams);
 
       return txXml;
     }
-
-
-
-
 
     public void PrepFkbParams()
     {
@@ -61,5 +56,7 @@ namespace OrakYazilimLib.UtilXml
     {
       this.txXml = FiXmlUtils.DeActivateParam(fiCol.ofcTxFieldName, this.txXml);
     }
+
   }
+
 }

@@ -15,10 +15,10 @@ namespace OrakYazilimLib.UtilXml
 
     public static string ConvertXmlParams(string txXmlTemp, FiKeybean fkbParams)
     {
-      if (FiString.IsEmpty(txXmlTemp) || fkbParams == null || fkbParams.Count == 0)
+      if (FiString.IsEmpty(txXmlTemp) || fkbParams == null || fkbParams.Count == 0
+        // template key yoksa, değiştirilecek bir şey yok
+        || !FiXmlUtils.ContainsTemplateKey(txXmlTemp))
         return txXmlTemp;
-
-
 
       //
       foreach (var key in fkbParams.Keys)
@@ -130,14 +130,14 @@ namespace OrakYazilimLib.UtilXml
     public static string DeActivateAllParams(string txXml)
     {
       //"--!(\\w+).*\\s*.*"; // @ verbatim operatörü eklenince ikinci slashlar kaldırılır
-      const string regex = @"(.*{{(.*?)}}.*\n)"; // 20250426
+      const string regex = @"(.*\{\{(.*?)\}\}.*\n)"; // 20250426
       const string subst = "<!--$2 deactive-->\n";
       return Regex.Replace(txXml, regex, subst);
     }
 
     public static string DeActivateParam(string txXml, string key)
     {
-      string regex = @"(.*{{(" + key + @")}}.*\n)"; // 20250426
+      string regex = @"(.*\{\{(" + key + @")\}\}.*\n)"; // 20250426
       const string subst = "<!--$2 deactive-->\n";
       return Regex.Replace(txXml, regex, subst);
     }
@@ -146,19 +146,38 @@ namespace OrakYazilimLib.UtilXml
     /// <summary>
     /// Verilen string içinde {{key}} formatında bir yapı olup olmadığını kontrol eder.
     /// </summary>
-    /// <param name="input">Kontrol edilecek metin.</param>
+    /// <param name="txXml">Kontrol edilecek metin.</param>
     /// <returns>True, eğer {{key}} yapısı varsa; aksi halde False.</returns>
-    public static bool ContainsTemplateKey(string input)
+    public static bool ContainsTemplateKey(string txXml)
     {
-      if (String.IsNullOrEmpty(input)) return false;
+      if (String.IsNullOrEmpty(txXml)) return false;
 
       // {{key}} formatını kontrol eden regex
       var regex = new Regex(@"\{\{.+?\}\}");
-      return regex.IsMatch(input);
+      return regex.IsMatch(txXml);
     }
-
-
 
   }
 
+}
+public static class FiRegex
+{
+    /// <summary>
+    /// Verilen string içinde {{key}} formatında bir yapı olup olmadığını kontrol eder.
+    /// </summary>
+    /// <param name="txTemplate">Kontrol edilecek metin.</param>
+    /// <param name="txKey">Aranılan Key Değer</param>
+    /// <returns>True, eğer {{key}} yapısı varsa; aksi halde False.</returns>
+    public static bool ContainsTemplateKey(string txTemplate, string txKey)
+    {
+        if (string.IsNullOrEmpty(txTemplate))
+            return false;
+
+        // Escape special characters in txKey to ensure it's treated as a literal.
+        string escapedKey = Regex.Escape(txKey);
+
+        // Build the regex to match the template key.
+        var regex = new Regex(@"\{\{" + escapedKey + @"\}\}");
+        return regex.IsMatch(txTemplate);
+    }
 }
