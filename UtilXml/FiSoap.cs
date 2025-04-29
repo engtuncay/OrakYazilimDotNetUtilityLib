@@ -3,6 +3,7 @@ using OrakYazilimLib.Util.config;
 using System;
 using System.IO;
 using System.Net;
+using System.Web;
 using System.Xml;
 
 namespace OrakYazilimLib.UtilXml
@@ -41,7 +42,18 @@ namespace OrakYazilimLib.UtilXml
                     using (StreamReader rd = new StreamReader(responseStream))
                     {
                         string soapResult = rd.ReadToEnd();
-                        fdrMain.txResponse = soapResult;
+                        // 1. Escape edilmiş yanıtı decode et
+                        string decodedSoapResponse = HttpUtility.HtmlDecode(soapResult);
+
+                        // Eğer BOM (Byte Order Mark) karakterinden şüpheleniyorsanız:
+                        //decodedSoapResponse = decodedSoapResponse.Replace("\uFEFF", "").Trim();
+
+                        fdrMain.txResponse = decodedSoapResponse.Trim();
+
+                        FiAppConfig.fiLogManager?.LogMessage("[Response XML Start]");
+                        FiAppConfig.fiLogManager?.LogMessage($"[{fdrMain.txResponse}]");
+                        FiAppConfig.fiLogManager?.LogMessage("[Response XML End]");
+
                         //Console.WriteLine(soapResult);
                         FiAppConfig.fiLogManager?.LogMessage(soapResult);
 
