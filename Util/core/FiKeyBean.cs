@@ -42,20 +42,15 @@ namespace OrakYazilimLib.Util.core
       Add(ficol.ofcTxFieldName, objValue);
     }
 
-    public void AddField(FiCol ficol, object objValue)
+    public void AddFieldCore(FiCol ficol, object objValue)
     {
       Add(ficol.ofcTxFieldName, objValue);
     }
 
     /**
-     * Daha önceden eklenmiş key varsa, remove eder, sonrasında ekler
+     * Default imple. Add Force (if exist, remove it, add)
      */
-    public void AddCheckField(FiCol ficol, object objValue)
-    {
-      AddForce(ficol.ofcTxFieldName, objValue);
-    }
-
-    public void AddFieldForce(FiCol fiCol, object objValue)
+    public void AddField(FiCol fiCol, object objValue)
     {
       AddForce(fiCol.ofcTxFieldName, objValue);
     }
@@ -162,6 +157,10 @@ namespace OrakYazilimLib.Util.core
     public FkbList GetFieldAsFkbListNtn(FiCol fiCol)
     {
       return GetFieldAsFkbList(fiCol)??new FkbList();
+    }
+    public void RemoveField(FiCol fiCol)
+    {
+      Remove(fiCol.ofcTxFieldName);
     }
   }
 }
