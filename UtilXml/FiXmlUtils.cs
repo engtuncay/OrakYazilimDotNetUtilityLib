@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace OrakYazilimLib.UtilXml
 {
-  public class FiXmlUtils
+  public static class FiXmlUtils
   {
 
     public static string ConvertXmlParams(string txXmlTemp, FiKeybean fkbParams)
@@ -34,7 +34,7 @@ namespace OrakYazilimLib.UtilXml
 
         if (objValue is FkbList fkbListChild)
         {
-          if(!FiRegex.ContainsTemplateKey(txXmlTemp,key)){
+          if(!ContainsTemplateKey(txXmlTemp,key)){
             continue;
           }
 
@@ -104,7 +104,7 @@ namespace OrakYazilimLib.UtilXml
         {
           bool containsTemplateBlock = ContainsTemplateBlock(txXmlTemp, key);
 
-          FiAppConfig.fiLogManager?.LogMessage("containsTemplateBlock:"+containsTemplateBlock + " key:" + key);
+          //FiAppConfig.fiLogManager?.LogMessage("containsTemplateBlock:"+containsTemplateBlock + " key:" + key);
 
           if (containsTemplateBlock)
           {
@@ -157,7 +157,7 @@ namespace OrakYazilimLib.UtilXml
     /// </summary>
     /// <param name="txXml">Kontrol edilecek metin.</param>
     /// <returns>True, eğer {{key}} yapısı varsa; aksi halde False.</returns>
-    public static bool ContainsTemplateKey(string txXml)
+    public static bool ContainsTemplateKeyAny(string txXml)
     {
       if (String.IsNullOrEmpty(txXml)) return false;
 
@@ -175,6 +175,37 @@ namespace OrakYazilimLib.UtilXml
       var regex = new Regex($"<!--!{txBlockName}-->(.*?)<!--!{txBlockName}-->",RegexOptions.Singleline);
       return regex.IsMatch(txXml);
     }
+
+    /// <summary>
+            /// Verilen string içinde {{key}} formatında bir yapı olup olmadığını kontrol eder.
+            /// </summary>
+            /// <param name="txTemplate">Kontrol edilecek metin.</param>
+            /// <param name="txKey">Aranılan Key Değer</param>
+            /// <returns>True, eğer {{key}} yapısı varsa; aksi halde False.</returns>
+            public static bool ContainsTemplateKey(string txTemplate, string txKey )
+            {
+                if (string.IsNullOrEmpty(txTemplate))
+                    return false;
+
+                // {{key}} formatını kontrol eden regex
+                var regex = new Regex(@"\{\{"+ txKey + @"\}\}");
+                return regex.IsMatch(txTemplate);
+            }
+
+    /// <summary>
+    /// XML içinde sık kullanılan escape edilmiş karakterleri çözmek için bir yardımcı yöntem
+    /// </summary>
+    public static string ReplaceEscapedCharacters(string txXml)
+    {
+      return txXml
+        .Replace("&lt;", "<")
+        .Replace("&gt;", ">")
+        .Replace("&amp;", "&")
+        .Replace("&apos;", "'")
+        .Replace("&quot;", "\"")
+        .Replace("\n", "");
+    }
+
 
   }
 

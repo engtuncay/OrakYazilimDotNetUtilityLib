@@ -10,20 +10,22 @@ namespace OrakYazilimLib.Util.core
     public static class FiRegex
     {
 
-        /// <summary>
-        /// Verilen string içinde {{key}} formatında bir yapı olup olmadığını kontrol eder.
-        /// </summary>
-        /// <param name="txTemplate">Kontrol edilecek metin.</param>
-        /// <param name="txKey">Aranılan Key Değer</param>
-        /// <returns>True, eğer {{key}} yapısı varsa; aksi halde False.</returns>
-        public static bool ContainsTemplateKey(string txTemplate, string txKey )
+        public static (string txXmlNew, string txXmlExtracted) ExtractAndReplace(string txXml, string keyStart, string keyEnd)
         {
-            if (string.IsNullOrEmpty(txTemplate))
-                return false;
+            string pattern = @$"{keyStart}(.*?){keyEnd}";
 
-            // {{key}} formatını kontrol eden regex
-            var regex = new Regex(@"\{\{"+ txKey + @"\}\}");
-            return regex.IsMatch(txTemplate);
+            // İçeriği yakala ve değiştir
+            string txXmlExtracted = "";
+
+            string txXmlNew = Regex.Replace(txXml, pattern, match =>
+            {
+                txXmlExtracted = match.Groups[1].Value; // Aradaki içeriği al
+                return ""; //  olarak değiştir
+            }, RegexOptions.Singleline);
+
+            return (txXmlNew, txXmlExtracted); // Hem değiştirilmiş XML'i hem de bulunan içerik döndürülür
         }
+
+
     }
 }

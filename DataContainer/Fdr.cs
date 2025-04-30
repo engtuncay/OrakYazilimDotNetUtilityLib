@@ -65,6 +65,13 @@ namespace OrakYazilimLib.DataContainer
 
     public string txResponse { get; set; }
 
+    public string txResponse2 { get; set; }
+
+    /**
+     * Metod dönüşü verilen fkbResponse objesi
+     */
+    public FiKeybean fkbResponse { get; set; }
+
     /**
      * External Object
      */

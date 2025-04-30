@@ -43,19 +43,19 @@ namespace OrakYazilimLib.UtilXml
                     {
                         string soapResult = rd.ReadToEnd();
                         // 1. Escape edilmiş yanıtı decode et
-                        string decodedSoapResponse = HttpUtility.HtmlDecode(soapResult);
+                        //string decodedSoapResult = WebUtility.HtmlDecode(soapResult);
 
                         // Eğer BOM (Byte Order Mark) karakterinden şüpheleniyorsanız:
                         //decodedSoapResponse = decodedSoapResponse.Replace("\uFEFF", "").Trim();
 
-                        fdrMain.txResponse = decodedSoapResponse.Trim();
+                        fdrMain.txResponse = soapResult; //decodedSoapResult.Trim();
 
-                        FiAppConfig.fiLogManager?.LogMessage("[Response XML Start]");
-                        FiAppConfig.fiLogManager?.LogMessage($"[{fdrMain.txResponse}]");
-                        FiAppConfig.fiLogManager?.LogMessage("[Response XML End]");
+                        //FiAppConfig.fiLogManager?.LogMessage("[Response XML Start]");
+                        //FiAppConfig.fiLogManager?.LogMessage($"[{fdrMain.txResponse}]");
+                        //FiAppConfig.fiLogManager?.LogMessage("[Response XML End]");
 
                         //Console.WriteLine(soapResult);
-                        FiAppConfig.fiLogManager?.LogMessage(soapResult);
+                        //FiAppConfig.fiLogManager?.LogMessage(soapResult);
 
                         int statusCode = (int)response.StatusCode;
                         fdrMain.lnStatusCode = statusCode;

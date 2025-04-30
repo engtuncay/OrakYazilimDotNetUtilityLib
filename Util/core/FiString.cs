@@ -76,5 +76,28 @@ namespace OrakYazilimLib.Util
             if(txVal1 == null || txVal2 == null) return false;
             return txVal1.Equals(txVal2);
         }
+
+        public static List<string> ExtractAllBetween(string source, string startKey, string endKey)
+        {
+            var results = new List<string>();
+            var span = source.AsSpan();
+
+            while (true)
+            {
+                int startIdx = span.IndexOf(startKey.AsSpan());
+                if (startIdx == -1) break;
+
+                span = span.Slice(startIdx + startKey.Length);
+                int endIdx = span.IndexOf(endKey.AsSpan());
+                if (endIdx == -1) break;
+
+                var value = span.Slice(0, endIdx).ToString();
+                results.Add(value);
+
+                span = span.Slice(endIdx + endKey.Length);
+            }
+
+            return results;
+        }
     }
 }
