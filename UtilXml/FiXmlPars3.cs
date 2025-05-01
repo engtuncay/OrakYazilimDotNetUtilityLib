@@ -40,19 +40,17 @@ namespace OrakYazilimLib.UtilXml
         
         public string GetTxFirstElement(string txElemName){
 
-            // Örnek: Bir eleman değeri okuma
+            // <> şeklinde verilirse
             //string cleanTagName = StripAngleBrackets(txElemName);
             string openingTag = $"<{txElemName}>";
-            string closingTag = "</" + txElemName +">";
+            string closingTag = $"</{txElemName}>";
 
-            List<string> listElement = FiString.ExtractAllBetween(this.txXmlRaw, openingTag, closingTag);
-        
-            // var rootElement = this.xdoc.DocumentElement;
-            // var firstElement = rootElement.SelectSingleNode(cleanTagName)?.InnerText;
-            // Console.WriteLine(firstElement);
-            return listElement.FirstOrDefault();
+            return FiString.ExtractFirstBetween(this.txXmlRaw, openingTag, closingTag);
         }
 
+        /**
+         * fiCol.ofcTxRefField'e göre Değeri Çeker
+         */
         public string GetTxFirstElementByRef(FiCol fiCol)
         {
             return GetTxFirstElement(fiCol.ofcTxRefField);
