@@ -14,6 +14,11 @@ namespace OrakYazilimLib.DbGeneric
     public string ofcTxDbField { get; set; }
     public string ofcTxHeader { get; set; }
 
+    /**
+     * Farklı sistemdeki ismi (xml alanındaki)
+     */
+    public string ofcTxRefField { get; set; }
+
     public string ofcTxFieldType { get; set; }
 
     /**
