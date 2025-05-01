@@ -45,17 +45,48 @@ namespace OrakYazilimLib.UtilXml
             string openingTag = $"<{txElemName}>";
             string closingTag = $"</{txElemName}>";
 
-            return FiString.ExtractFirstBetween(this.txXmlRaw, openingTag, closingTag);
+            return ExtractFirstBetween(this.txXmlRaw, openingTag, closingTag);
         }
 
         /**
          * fiCol.ofcTxRefField'e göre Değeri Çeker
          */
-        public string GetTxFirstElementByRef(FiCol fiCol)
+        public string GetTxElemByRef(FiCol fiCol)
         {
             return GetTxFirstElement(fiCol.ofcTxRefField);
         }
 
+
+
+        public bool? GetBoElemByRef(FiCol fiCol)
+        {
+            string txElemByRef = GetTxElemByRef(fiCol);
+            if(txElemByRef.Equals("true",StringComparison.OrdinalIgnoreCase)) return true;
+            if(txElemByRef.Equals("false",StringComparison.OrdinalIgnoreCase)) return false;
+            return null;
+        }
+
+        public static string ExtractFirstBetween(string source, string startKey, string endKey)
+        {
+            var result = "";
+
+            if (string.IsNullOrEmpty(source) || string.IsNullOrEmpty(startKey) || string.IsNullOrEmpty(endKey))
+                return result;
+
+            int currentPosition = 0;
+
+            int startIdx = source.IndexOf(startKey, currentPosition, StringComparison.Ordinal);
+            if (startIdx == -1) return "";
+
+            startIdx += startKey.Length;
+            int endIdx = source.IndexOf(endKey, startIdx, StringComparison.Ordinal);
+            if (endIdx == -1) return result;
+
+            result = source.Substring(startIdx, endIdx - startIdx);
+            //currentPosition = endIdx + endKey.Length;
+
+            return result;
+        }
 
 
     }//end class

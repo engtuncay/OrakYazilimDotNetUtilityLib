@@ -120,5 +120,13 @@ namespace OrakYazilimLib.Util.core
 
       return result;
     }
+
+    public static string ClearExtraZero(string txValue)
+    {
+      string cleanNumber = System.Text.RegularExpressions.Regex.Replace(txValue, @"(\.\d*?)0+$", "$1"); // sonunda fazla sıfırları kaldırır
+      //temizSayi = System.Text.RegularExpressions.Regex.Replace(temizSayi, @"\.0+$", ""); // sadece ".0" ise onu da kaldırır
+      return cleanNumber;
+    }
+
   }
 }
