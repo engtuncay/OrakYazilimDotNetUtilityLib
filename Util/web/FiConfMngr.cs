@@ -1,4 +1,5 @@
 ﻿using OrakYazilimLib.DbGeneric;
+using OrakYazilimLib.Util.core;
 using System.Configuration;
 
 namespace OrakYazilimLib.Util.web

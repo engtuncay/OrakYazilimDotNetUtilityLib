@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using OrakYazilimLib.Util;
+using OrakYazilimLib.Util.core;
 
 namespace OrakYazilimLib.DbGeneric
 {

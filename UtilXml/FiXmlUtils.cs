@@ -202,8 +202,8 @@ namespace OrakYazilimLib.UtilXml
         .Replace("&gt;", ">")
         .Replace("&amp;", "&")
         .Replace("&apos;", "'")
-        .Replace("&quot;", "\"")
-        .Replace("\n", "");
+        .Replace("&quot;", "\"");
+      //.Replace("\n", "");
     }
 
 

@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
-namespace OrakYazilimLib.Util
+namespace OrakYazilimLib.Util.core
 {
 
     /// <summary>
@@ -80,21 +76,24 @@ namespace OrakYazilimLib.Util
         public static List<string> ExtractAllBetween(string source, string startKey, string endKey)
         {
             var results = new List<string>();
-            var span = source.AsSpan();
+            
+            if (string.IsNullOrEmpty(source) || string.IsNullOrEmpty(startKey) || string.IsNullOrEmpty(endKey))
+                return results;
 
+            int currentPosition = 0;
             while (true)
             {
-                int startIdx = span.IndexOf(startKey.AsSpan());
+                int startIdx = source.IndexOf(startKey, currentPosition, StringComparison.Ordinal);
                 if (startIdx == -1) break;
 
-                span = span.Slice(startIdx + startKey.Length);
-                int endIdx = span.IndexOf(endKey.AsSpan());
+                startIdx += startKey.Length;
+                int endIdx = source.IndexOf(endKey, startIdx, StringComparison.Ordinal);
                 if (endIdx == -1) break;
 
-                var value = span.Slice(0, endIdx).ToString();
+                string value = source.Substring(startIdx, endIdx - startIdx);
                 results.Add(value);
 
-                span = span.Slice(endIdx + endKey.Length);
+                currentPosition = endIdx + endKey.Length;
             }
 
             return results;
