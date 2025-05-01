@@ -1,4 +1,5 @@
-﻿using OrakYazilimLib.Util;
+﻿using OrakYazilimLib.DbGeneric;
+using OrakYazilimLib.Util;
 using OrakYazilimLib.Util.core;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,11 @@ namespace OrakYazilimLib.UtilXml
             // var firstElement = rootElement.SelectSingleNode(cleanTagName)?.InnerText;
             // Console.WriteLine(firstElement);
             return listElement.FirstOrDefault();
+        }
+
+        public string GetTxFirstElementByRef(FiCol fiCol)
+        {
+            return GetTxFirstElement(fiCol.ofcTxRefField);
         }
 
 
