@@ -51,16 +51,16 @@ namespace OrakYazilimLib.UtilXml
         /**
          * fiCol.ofcTxRefField'e göre Değeri Çeker
          */
-        public string GetTxElemByRef(FiCol fiCol)
+        public string GetElemByRefAsTx(FiCol fiCol)
         {
             return GetTxFirstElement(fiCol.ofcTxRefField);
         }
 
 
 
-        public bool? GetBoElemByRef(FiCol fiCol)
+        public bool? GetElemByRefAsBool(FiCol fiCol)
         {
-            string txElemByRef = GetTxElemByRef(fiCol);
+            string txElemByRef = GetElemByRefAsTx(fiCol);
             if(txElemByRef.Equals("true",StringComparison.OrdinalIgnoreCase)) return true;
             if(txElemByRef.Equals("false",StringComparison.OrdinalIgnoreCase)) return false;
             return null;
@@ -76,14 +76,13 @@ namespace OrakYazilimLib.UtilXml
             int currentPosition = 0;
 
             int startIdx = source.IndexOf(startKey, currentPosition, StringComparison.Ordinal);
-            if (startIdx == -1) return "";
+            if (startIdx == -1) return result;
 
             startIdx += startKey.Length;
             int endIdx = source.IndexOf(endKey, startIdx, StringComparison.Ordinal);
             if (endIdx == -1) return result;
 
             result = source.Substring(startIdx, endIdx - startIdx);
-            //currentPosition = endIdx + endKey.Length;
 
             return result;
         }

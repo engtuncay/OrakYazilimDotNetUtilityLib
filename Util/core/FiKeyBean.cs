@@ -52,16 +52,17 @@ namespace OrakYazilimLib.Util.core
      */
     public void AddField(FiCol fiCol, object objValue)
     {
-      AddForce(fiCol.ofcTxFieldName, objValue);
+      AddOverWrite(fiCol.ofcTxFieldName, objValue);
     }
 
-    public void AddForce(string key, object objValue)
+    public void AddOverWrite(string key, object objValue)
     {
-      if (ContainsKey(key))
-      {
-        Remove(key);
-      }
-      Add(key, objValue);
+      this[key] = objValue;
+      // if (ContainsKey(key))
+      // {
+      //   Remove(key);
+      // }
+      // Add(key, objValue);
     }
 
     /**
@@ -88,6 +89,11 @@ namespace OrakYazilimLib.Util.core
     public bool ContainsAnyKeyByFiCol(params FiCol[] fiCols)
     {
       return fiCols.Any(fiCol => ContainsKey(fiCol.ofcTxFieldName));
+    }
+
+    public bool ContainsAllKeyByFiCol(params FiCol[] fiCols)
+    {
+      return fiCols.All(fiCol => ContainsKey(fiCol.ofcTxFieldName));
     }
     public void ConvertCsvToListString(string txKey)
     {
@@ -161,6 +167,24 @@ namespace OrakYazilimLib.Util.core
     public void RemoveField(FiCol fiCol)
     {
       Remove(fiCol.ofcTxFieldName);
+    }
+    public bool? GetFieldAsBool(FiCol psrsBoSuccess)
+    {
+      // Eğer sözlük belirtilen anahtarı içeriyorsa:
+      if (this.ContainsKey(psrsBoSuccess.ofcTxFieldName))
+      {
+        // Değeri al ve string türüne çevir.
+        object value = this[psrsBoSuccess.ofcTxFieldName];;
+
+        if(value is bool boValue)
+        {
+          return boValue;
+        }
+
+        return null;
+      }
+      // Eğer anahtar bulunamazsa, null döner
+      return null;
     }
   }
 }

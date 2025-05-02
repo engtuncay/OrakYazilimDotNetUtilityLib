@@ -157,7 +157,7 @@
     <Compile Include="Util\ColStruct\IFiTableMeta.cs" />
     <Compile Include="Util\config\IFiConfigManager.cs" />
     <Compile Include="Util\config\IFiLogManager.cs" />
-    <Compile Include="Util\core\FiBoolean.cs" />
+    <Compile Include="Util\core\FiBool.cs" />
     <Compile Include="Util\core\FiCal.cs" />
     <Compile Include="Util\core\FiCalender.cs" />
     <Compile Include="Util\config\FiAppConfig.cs" />
@@ -180,6 +180,8 @@
     <Compile Include="Util\core\FiTemplate.cs" />
     <Compile Include="Util\core\FiType.cs" />
     <Compile Include="Util\core\ObservableProps.cs" />
+    <Compile Include="Util\FiEntity\FieLog.cs" />
+    <Compile Include="Util\FiMetas\FimLogTypes.cs" />
     <Compile Include="Util\FiModal.cs" />
     <Compile Include="Util\helper\Fistf.cs" />
     <Compile Include="Util\web\FiConfMngr.cs" />

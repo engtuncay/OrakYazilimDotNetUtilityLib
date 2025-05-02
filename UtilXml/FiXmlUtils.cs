@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using OrakYazilimLib.Util;
 using OrakYazilimLib.Util.Collection;
-using OrakYazilimLib.Util.config;
 using OrakYazilimLib.Util.core;
 using System;
 using System.Text;
@@ -18,7 +16,7 @@ namespace OrakYazilimLib.UtilXml
       if (FiString.IsEmpty(txXmlTemp) || fkbParams == null || fkbParams.Count == 0
         // template key yoksa, değiştirilecek bir şey yok
         //|| !FiXmlUtils.ContainsTemplateKey(txXmlTemp)
-        )
+      )
         return txXmlTemp;
 
       //
@@ -34,7 +32,8 @@ namespace OrakYazilimLib.UtilXml
 
         if (objValue is FkbList fkbListChild)
         {
-          if(!ContainsTemplateKey(txXmlTemp,key)){
+          if (!ContainsTemplateKey(txXmlTemp, key))
+          {
             continue;
           }
 
@@ -95,7 +94,7 @@ namespace OrakYazilimLib.UtilXml
         if (objValue is JArray jarrList)
         {
           var fkbListConverted = FiJArray.ConvertFkbList(jarrList);
-          fkbParams.AddForce(key, fkbListConverted); // Orijinal koleksiyona ekleme yapabilirsiniz
+          fkbParams.AddOverWrite(key, fkbListConverted); // Orijinal koleksiyona ekleme yapabilirsiniz
           objValue = fkbListConverted;
         }
 
@@ -166,31 +165,31 @@ namespace OrakYazilimLib.UtilXml
       return regex.IsMatch(txXml);
     }
 
-    public static bool ContainsTemplateBlock(string txXml,string txBlockName)
+    public static bool ContainsTemplateBlock(string txXml, string txBlockName)
     {
       if (String.IsNullOrEmpty(txXml)) return false;
       if (String.IsNullOrEmpty(txBlockName)) return false;
 
       //var regex = new Regex(@"\{\{.+?\}\}");
-      var regex = new Regex($"<!--!{txBlockName}-->(.*?)<!--!{txBlockName}-->",RegexOptions.Singleline);
+      var regex = new Regex($"<!--!{txBlockName}-->(.*?)<!--!{txBlockName}-->", RegexOptions.Singleline);
       return regex.IsMatch(txXml);
     }
 
     /// <summary>
-            /// Verilen string içinde {{key}} formatında bir yapı olup olmadığını kontrol eder.
-            /// </summary>
-            /// <param name="txTemplate">Kontrol edilecek metin.</param>
-            /// <param name="txKey">Aranılan Key Değer</param>
-            /// <returns>True, eğer {{key}} yapısı varsa; aksi halde False.</returns>
-            public static bool ContainsTemplateKey(string txTemplate, string txKey )
-            {
-                if (string.IsNullOrEmpty(txTemplate))
-                    return false;
+    /// Verilen string içinde {{key}} formatında bir yapı olup olmadığını kontrol eder.
+    /// </summary>
+    /// <param name="txTemplate">Kontrol edilecek metin.</param>
+    /// <param name="txKey">Aranılan Key Değer</param>
+    /// <returns>True, eğer {{key}} yapısı varsa; aksi halde False.</returns>
+    public static bool ContainsTemplateKey(string txTemplate, string txKey)
+    {
+      if (string.IsNullOrEmpty(txTemplate))
+        return false;
 
-                // {{key}} formatını kontrol eden regex
-                var regex = new Regex(@"\{\{"+ txKey + @"\}\}");
-                return regex.IsMatch(txTemplate);
-            }
+      // {{key}} formatını kontrol eden regex
+      var regex = new Regex(@"\{\{" + txKey + @"\}\}");
+      return regex.IsMatch(txTemplate);
+    }
 
     /// <summary>
     /// XML içinde sık kullanılan escape edilmiş karakterleri çözmek için bir yardımcı yöntem

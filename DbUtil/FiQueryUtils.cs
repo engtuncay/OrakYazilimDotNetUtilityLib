@@ -73,7 +73,7 @@ namespace OrakYazilimLib.DbUtil
       string sqlNew = Regex.Replace(txQuery, "@" + param, sbNewParamsForQuery.ToString()); //(%s)
 
       // map paramden eski parametre çıkarılıp, yenileri eklenir
-      if (!FiBoolean.IsTrue(boKeepOldParam))
+      if (!FiBool.IsTrue(boKeepOldParam))
       {
         mapParams.Remove(param);
       }
@@ -177,12 +177,12 @@ namespace OrakYazilimLib.DbUtil
 
       foreach (KeyValuePair<string, object> keyValuePair in mapParams)
       {
-        if (FiBoolean.IsTrue(boActivateOnlyFullParams))
+        if (FiBool.IsTrue(boActivateOnlyFullParams))
         {
           // Dolu olanları aktif edecek, boş olanları deaktif edecek
           bool boCheckParamsEmpty = CheckParamsEmpty(keyValuePair.Value);
 
-          if (FiBoolean.IsFalse(boCheckParamsEmpty))
+          if (FiBool.IsFalse(boCheckParamsEmpty))
           {
             txQuery = ActivateOptParamMain(txQuery, keyValuePair.Key);
           }

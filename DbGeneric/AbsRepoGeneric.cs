@@ -40,6 +40,8 @@ namespace OrakYazilimLib.DbGeneric
     protected AbsRepoGeneric(string connProfile) : base(connProfile)
     {
     }
+
+
   }
 
 }

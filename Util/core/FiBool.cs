@@ -2,7 +2,7 @@ using System;
 
 namespace OrakYazilimLib.Util.core
 {
-    public class FiBoolean
+    public static class FiBool
     {
         public static bool IsTrue(bool? value)
         {

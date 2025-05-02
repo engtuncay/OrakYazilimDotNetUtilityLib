@@ -26,6 +26,8 @@ namespace OrakYazilimLib.DbUtil
 
     }
 
+
+
     public FiMssqlu(string connStr)
     {
       //Console.WriteLine("FiMssqlu Constructor");
@@ -47,6 +49,100 @@ namespace OrakYazilimLib.DbUtil
       return new FiMssqlu(connString);
     }
 
+    public Fdr<DataTable> SqlExecuteSelect(FiQuery fiQuery)
+    {
+      var fdrMain = new Fdr<DataTable>();
+
+      using SqlConnection sqConn = new SqlConnection(connString);
+      string query = FiQueryUtils.FixSqlProblems(fiQuery.sql);
+
+      using SqlCommand command = new SqlCommand(query, sqConn);
+
+      SqlParameter[] queryParams = fiQuery.GetParamsAsSqlParamList().ToArray();
+      if (FiCollection.IsFull(queryParams))
+      {
+        AttachParameters(command, queryParams);
+      }
+
+      try
+      {
+        sqConn.Open();
+
+        var dt = new DataTable();
+        using (var da = new SqlDataAdapter(command))
+        {
+          da.Fill(dt);
+        }
+
+        fdrMain.boExecution = true;
+        fdrMain.refValue = dt;
+      }
+      catch (Exception ex) // SQL Hataları için
+      {
+        //Console.WriteLine(ex.StackTrace);
+        fdrMain.boExecution = false;
+        fdrMain.txErrorMsgShort = ex.Message;
+        fdrMain.refValue = new DataTable();
+        FiAppConfig.fiLogManager?.ErrorMessage($"Error: {ex.Message}");
+        FiAppConfig.fiLogManager?.ErrorMessage($"StackTrace: {ex.StackTrace}");
+      }
+
+      return fdrMain;
+    }
+
+    public Fdr SqlUpdateQuery(FiQuery fiQuery)
+    {
+      return SqlExecuteNonQuery(fiQuery);
+    }
+
+    public Fdr SqlInsertQuery(FiQuery fiQuery)
+    {
+      return SqlExecuteNonQuery(fiQuery);
+    }
+
+    public Fdr SqlDeleteQuery(FiQuery fiQuery)
+    {
+      return SqlExecuteNonQuery(fiQuery);
+    }
+
+    private Fdr SqlExecuteNonQuery(FiQuery fiQuery)
+    {
+      using SqlConnection sqConn = new SqlConnection(connString);
+      string query = FiQueryUtils.FixSqlProblems(fiQuery.sql);
+
+      using SqlCommand command = new SqlCommand(query, sqConn);
+
+      Fdr fdrMain = new Fdr();
+
+      SqlParameter[] queryParams = fiQuery.GetParamsAsSqlParamList().ToArray();
+
+      if (FiCollection.IsFull(queryParams))
+      {
+        AttachParameters(command, queryParams);
+      }
+
+      try
+      {
+        sqConn.Open();
+        fdrMain.lnRowsAffected = command.ExecuteNonQuery();
+        fdrMain.boExecution = true;
+      }
+      catch (Exception ex)
+      {
+        fdrMain.boExecution = false;
+        fdrMain.txErrorMsgShort = ex.Message;
+        FiAppConfig.fiLogManager?.ErrorMessage($"Error: {ex.Message}");
+        FiAppConfig.fiLogManager?.ErrorMessage($"StackTrace: {ex.StackTrace}");
+        //fdrMain.ExceptionQueryErrorLog(e);
+      }
+
+      return fdrMain;
+
+//command = new SqlCommand(sql, connection) { CommandType = CommandType.Text, CommandTimeout = connection.ConnectionTimeout };
+//command.Parameters.AddRange(prms);
+//command.Dispose();
+
+    }
     public Fdr<int> SqlExecuteNonQuery(string sql, SqlParameter[] prms)
     {
 
@@ -395,102 +491,7 @@ namespace OrakYazilimLib.DbUtil
       return fdrMain;
     }
 
-    public Fdr<DataTable> SqlExecuteSelect(FiQuery fiQuery)
-    {
-      var fdrMain = new Fdr<DataTable>();
 
-      using SqlConnection sqConn = new SqlConnection(connString);
-      string query = FiQueryUtils.FixSqlProblems(fiQuery.sql);
-
-      using SqlCommand command = new SqlCommand(query, sqConn);
-
-      SqlParameter[] queryParams = fiQuery.GetParamsAsSqlParamList().ToArray();
-      if (FiCollection.IsFull(queryParams))
-      {
-        AttachParameters(command, queryParams);
-      }
-
-      try
-      {
-        sqConn.Open();
-
-        var dt = new DataTable();
-        using (var da = new SqlDataAdapter(command))
-        {
-          da.Fill(dt);
-        }
-
-        fdrMain.boExecution = true;
-        fdrMain.refValue = dt;
-      }
-      catch (Exception ex) // SQL Hataları için
-      {
-        //Console.WriteLine(ex.StackTrace);
-        fdrMain.boExecution = false;
-        fdrMain.txErrorMsgShort = ex.Message;
-        fdrMain.refValue = new DataTable();
-        FiAppConfig.fiLogManager?.ErrorMessage($"Error: {ex.Message}");
-        FiAppConfig.fiLogManager?.ErrorMessage($"StackTrace: {ex.StackTrace}");
-      }
-
-      return fdrMain;
-    }
-
-
-    // public Fdr<DataTable> SqlExecuteSelectOld(FiQuery fiQuery)
-    // {
-    //   DataSet ds = new DataSet();
-    //   SqlConnection sqConn = new SqlConnection(connString);
-    //   var queryParams = fiQuery.GetParamsAsSqlParamList().ToArray();
-    //
-    //   var fdrMain = new Fdr<DataTable>();
-    //
-    //   using (sqConn)
-    //   {
-    //     String query = FiQueryTools.FixSqlProblems(fiQuery.sql);
-    //     SqlCommand command = new SqlCommand(query, sqConn);
-    //
-    //     if (FiCollection.isFull(queryParams))
-    //     {
-    //       AttachParameters(command, queryParams);
-    //     }
-    //
-    //     using (SqlDataAdapter da = new SqlDataAdapter(command))
-    //     {
-    //       // Fill the DataSet using default values for DataTable names, etc
-    //       try
-    //       {
-    //         da.Fill(ds);
-    //         fdrMain.boExecution = true;
-    //         fdrMain.obReturn = ds.Tables[0];
-    //       }
-    //       catch (Exception ex)
-    //       {
-    //         //FiLogWeb.logWeb("hata at sql execute");
-    //         //Debug.Write(ex.ToString());
-    //         FiAppConfig.fiLogManager?.LogMessage(ex.ToString());
-    //         //fdrMain.blResult = false;
-    //         fdrMain.boExecution = false;
-    //         fdrMain.txErrorMsgShort = ex.Message;
-    //         fdrMain.obReturn = new DataTable();
-    //       }
-    //     }
-    //
-    //     // Detach the SqlParameters from the command object, so they can be used again
-    //     //cmd.Parameters.Clear();
-    //
-    //     //cmd.CommandTimeout = 600;
-    //
-    //     //if (mustCloseConnection)
-    //     //  connection.Close();
-    //
-    //     // Return the dataset
-    //     //return ds;
-    //   }
-    //
-    //
-    //   return fdrMain;
-    // }
 
 
     public Fdr SelectList(string sql, List<FiSqlParameter> listParam)
@@ -1106,3 +1107,59 @@ namespace OrakYazilimLib.DbUtil
     }
   }
 } // end namesapce
+
+
+// public Fdr<DataTable> SqlExecuteSelectOld(FiQuery fiQuery)
+// {
+//   DataSet ds = new DataSet();
+//   SqlConnection sqConn = new SqlConnection(connString);
+//   var queryParams = fiQuery.GetParamsAsSqlParamList().ToArray();
+//
+//   var fdrMain = new Fdr<DataTable>();
+//
+//   using (sqConn)
+//   {
+//     String query = FiQueryTools.FixSqlProblems(fiQuery.sql);
+//     SqlCommand command = new SqlCommand(query, sqConn);
+//
+//     if (FiCollection.isFull(queryParams))
+//     {
+//       AttachParameters(command, queryParams);
+//     }
+//
+//     using (SqlDataAdapter da = new SqlDataAdapter(command))
+//     {
+//       // Fill the DataSet using default values for DataTable names, etc
+//       try
+//       {
+//         da.Fill(ds);
+//         fdrMain.boExecution = true;
+//         fdrMain.obReturn = ds.Tables[0];
+//       }
+//       catch (Exception ex)
+//       {
+//         //FiLogWeb.logWeb("hata at sql execute");
+//         //Debug.Write(ex.ToString());
+//         FiAppConfig.fiLogManager?.LogMessage(ex.ToString());
+//         //fdrMain.blResult = false;
+//         fdrMain.boExecution = false;
+//         fdrMain.txErrorMsgShort = ex.Message;
+//         fdrMain.obReturn = new DataTable();
+//       }
+//     }
+//
+//     // Detach the SqlParameters from the command object, so they can be used again
+//     //cmd.Parameters.Clear();
+//
+//     //cmd.CommandTimeout = 600;
+//
+//     //if (mustCloseConnection)
+//     //  connection.Close();
+//
+//     // Return the dataset
+//     //return ds;
+//   }
+//
+//
+//   return fdrMain;
+// }

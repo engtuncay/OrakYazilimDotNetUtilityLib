@@ -2,7 +2,11 @@
 using System.Dynamic;
 using System.Web.UI.WebControls;
 using OrakYazilimLib.Util;
+using OrakYazilimLib.Util.Collection;
 using OrakYazilimLib.Util.core;
+using OrakYazilimLib.Util.FiEntity;
+using OrakYazilimLib.Util.FiMetas;
+using System.Collections.Generic;
 using System.Data;
 
 namespace OrakYazilimLib.DataContainer
@@ -25,7 +29,7 @@ namespace OrakYazilimLib.DataContainer
       }
     }
 
-    public bool? boTknValid  { get; set;}
+    public bool? boTknValid { get; set; }
 
     /// <summary>
     /// deprecated - boExecution kullan
@@ -65,12 +69,19 @@ namespace OrakYazilimLib.DataContainer
 
     public string txResponse { get; set; }
 
-    public string txResponse2 { get; set; }
+    //public string txResponse2 { get; set; }
 
     /**
      * Metod dönüşü verilen fkbResponse objesi
      */
-    public FiKeybean fkbResponse { get; set; }
+    public FiKeybean fkbVal { get; set; }
+
+    /**
+     * İşlem Dönüşü alınan FkbList değeri
+     */
+    public FkbList fkbListVal { get; set; }
+
+    public List<FieLog> listFieLog { get; set; }
 
     /**
      * External Object
@@ -85,6 +96,12 @@ namespace OrakYazilimLib.DataContainer
       return (TS)this.spec1;
     }
 
+    // XIMSNIP ifnull yapısı
+    public List<FieLog> GetListFieLogInit()
+    {
+      return listFieLog ??= new List<FieLog>();
+    }
+
     /**
  * İşlem sonuçlarının hepsi true olursa sonuç true olur, bir tane false varsa sonuç false olur.
  *
@@ -94,17 +111,17 @@ namespace OrakYazilimLib.DataContainer
  *
  * @param fdrSubWork Birleştirilecek Fdr (alt fdr işi)
  */
-    public  void CombineAnd<TPrmeA>(Fdr<TPrmeA> fdrSubWork)
+    public void CombineAnd<TPrmeA>(Fdr<TPrmeA> fdrSubWork)
     {
 
       // And işlemi olduğu false sonuç, boExecution false yapar
-      if (FiBoolean.IsFalse(fdrSubWork.boExecution))
+      if (FiBool.IsFalse(fdrSubWork.boExecution))
       {
         boExecution = false;
         //setLnFailureOpCount(getLnFailureOpCountInit() + 1);
       }
 
-      if (FiBoolean.IsTrue(fdrSubWork.boExecution))
+      if (FiBool.IsTrue(fdrSubWork.boExecution))
       {
         //setLnSuccessOpCount(getLnSuccessOpCountInit() + 1);
         boExecution ??= true;
@@ -114,6 +131,7 @@ namespace OrakYazilimLib.DataContainer
 //        if (fdrSubWork.getBoResult() == null) {
 //
 //        }
+
       // if(FiBool.isTrue(getBoMultiFdr())){
       //   getFdrListInit().add(fdrSubWork);
       // }
@@ -142,12 +160,12 @@ namespace OrakYazilimLib.DataContainer
     }
     public void AppendMessageLn(string txValue)
     {
-      txMessage = txMessage + (!FiString.IsEmpty(txMessage)?"\n":"") + txValue;
+      txMessage = txMessage + (!FiString.IsEmpty(txMessage) ? "\n" : "") + txValue;
     }
 
     public void AppendMessageWithSc(string txValue)
     {
-      txMessage = txMessage + (!FiString.IsEmpty(txMessage)?";;":"") + txValue;
+      txMessage = txMessage + (!FiString.IsEmpty(txMessage) ? ";;" : "") + txValue;
     }
 
     public Fdr(bool prmBlResult) { this.blResult = prmBlResult; }
@@ -220,6 +238,27 @@ namespace OrakYazilimLib.DataContainer
       this.txMessage = txMessage;
       return this;
     }
+
+    public void CombineLogsAndMess(Fdr fdrSubWork)
+    {
+      // Tüm işlemlerde mesaj birleştirilir.
+      if (!FiString.IsEmpty(fdrSubWork.txMessage)) AppendMessageLn(fdrSubWork.txMessage);
+
+      // Loglar Birleştirilir
+      GetListFieLogInit().AddRange(fdrSubWork.GetListFieLogInit());
+
+    }
+
+    public void AddLogInfo(string txMess)
+    {
+     GetListFieLogInit().Add(new FieLog(FimLogTypes.Info(), txMess));;
+    }
+
+    public void AddLogError(string txMess)
+    {
+      GetListFieLogInit().Add(new FieLog(FimLogTypes.Error(), txMess));;
+    }
+
   }
 
   public class Fdr : Fdr<object>
@@ -233,6 +272,10 @@ namespace OrakYazilimLib.DataContainer
     {
       base.boExecution = v;
     }
+
+
+
+
 
   }
 }

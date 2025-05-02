@@ -44,18 +44,14 @@
         else // overWrite False
         {
           // Hedefte anahtar yoksa veya üzerine yazma aktifse ekle/güncelle
-          if (target.ContainsKey(kvp.Key))
-          {
-            // Eğer overwriteExisting false ise, mevcut anahtarlar atlanır
-          }
-          else // Anahtar yoksa ekle
+          if (!target.ContainsKey(kvp.Key)) // Anahtar yoksa ekle
           {
             target.Add(kvp.Key, kvp.Value);
           }
+          //else // Eğer overwriteExisting false ise, mevcut anahtarlar atlanır
+          //continue;
 
         }
-
-
 
       }
 
