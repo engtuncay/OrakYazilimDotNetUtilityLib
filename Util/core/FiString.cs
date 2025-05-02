@@ -128,5 +128,10 @@ namespace OrakYazilimLib.Util.core
       return cleanNumber;
     }
 
+    public static string AddPrevIfNotEmpty(string txValue, string txPrev)
+    {
+      if (FiString.IsEmpty(txValue)) return "";
+      return txPrev+txPrev;
+    }
   }
 }
