@@ -20,5 +20,9 @@ namespace OrakYazilimLib.Util.core
             return value.ToString("0.######", CultureInfo.InvariantCulture);
         }
 
+        public static double Round(double dbValue, int lnScale)
+        {
+            return Math.Round(dbValue, lnScale);
+        }
     }
 }

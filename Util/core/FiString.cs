@@ -128,10 +128,20 @@ namespace OrakYazilimLib.Util.core
       return cleanNumber;
     }
 
+    public static string RoundString(string txValue)
+    {
+      string cleanNumber = System.Text.RegularExpressions.Regex.Replace(txValue, @"(\.\d{4})\d*$", "$1"); // sonunda fazla sıfırları kaldırır
+      //temizSayi = System.Text.RegularExpressions.Regex.Replace(temizSayi, @"\.0+$", ""); // sadece ".0" ise onu da kaldırır
+      return cleanNumber;
+    }
+
+    /**
+     * Boş Değilse TxValue'ya TxPrev'i ön ek olarak ekler
+     */
     public static string AddPrevIfNotEmpty(string txValue, string txPrev)
     {
       if (FiString.IsEmpty(txValue)) return "";
-      return txPrev+txPrev;
+      return txPrev+txValue;
     }
   }
 }

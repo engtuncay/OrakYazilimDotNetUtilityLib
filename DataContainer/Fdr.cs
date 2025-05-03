@@ -25,7 +25,8 @@ namespace OrakYazilimLib.DataContainer
       set
       {
         _boExecution = value;
-        blResult = value;
+        // blResult
+        // blResult = value;
       }
     }
 
@@ -111,7 +112,7 @@ namespace OrakYazilimLib.DataContainer
  *
  * @param fdrSubWork Birleştirilecek Fdr (alt fdr işi)
  */
-    public void CombineAnd<TPrmeA>(Fdr<TPrmeA> fdrSubWork)
+    public void CombineAndByBoExec<TPrmeA>(Fdr<TPrmeA> fdrSubWork)
     {
 
       // And işlemi olduğu false sonuç, boExecution false yapar
@@ -158,6 +159,53 @@ namespace OrakYazilimLib.DataContainer
       // Birleştirme yapıldığı için eski Fdr'ye log eklenmesi engellenir
       // fdrSubWork.setBoLockAddLog(true);
     }
+
+    public void CombineAnd<PrmT>(Fdr<PrmT> fdrSub)
+    {
+
+      // And işlemi olduğu false sonuç, boExecution false yapar
+      if (FiBool.IsFalse(fdrSub.boResult))
+      {
+        boResult = false;
+        //setLnFailureOpCount(getLnFailureOpCountInit() + 1);
+      }
+
+      if (FiBool.IsTrue(fdrSub.boResult))
+      {
+        //setLnSuccessOpCount(getLnSuccessOpCountInit() + 1);
+        boResult ??= true;
+      }
+
+      // null olduğunda boResult sonucunu değiştirme
+//        if (fdrSubWork.getBoResult() == null) {
+//
+//        }
+
+      // if(FiBool.isTrue(getBoMultiFdr())){
+      //   getFdrListInit().add(fdrSubWork);
+      // }
+
+      // Tüm işlemlerde mesaj birleştirilir.
+      // Loglar birleştirilir.
+      CombineLogsAndMess(fdrSub);
+
+      // Tümü için yapılacaklar
+      if (fdrSub.refException != null)
+      {
+        refException ??= fdrSub.refException;
+        // exception birden fazla olma ihtimali var.
+        //getListExceptionInit().add(fdrSubWork.getException());
+      }
+
+      // appendRowsAffected(fdrSubWork.getRowsAffectedOrEmpty());
+      // appendLnUpdated(fdrSubWork.getLnUpdatedRows());
+      // appendLnInserted(fdrSubWork.getLnInsertedRows());
+      // appendLnDeleted(fdrSubWork.getLnDeletedRows());
+
+      // Birleştirme yapıldığı için eski Fdr'ye log eklenmesi engellenir
+      // fdrSubWork.setBoLockAddLog(true);
+    }
+
     public void AppendMessageLn(string txValue)
     {
       txMessage = txMessage + (!FiString.IsEmpty(txMessage) ? "\n" : "") + txValue;
@@ -205,7 +253,7 @@ namespace OrakYazilimLib.DataContainer
       return fiReturn;
     }
 
-    public static Fdr<T> FactoryObject(T returnObject)
+    public static Fdr<T> BuiObject(T returnObject)
     {
       var fiReturn = new Fdr<T>();
       fiReturn.obReturn = returnObject;
@@ -221,7 +269,7 @@ namespace OrakYazilimLib.DataContainer
       this.boExecution = false;
     }
 
-    public bool isTrueResult()
+    public bool IsTrueBlResult()
     {
       if (this.blResult == null) return false;
       return blResult.Value;
@@ -229,17 +277,23 @@ namespace OrakYazilimLib.DataContainer
 
     public bool IsTrueBoResult()
     {
-      if (this.blResult == null) return false;
-      return blResult.Value;
+      if (this.boResult == null) return false;
+      return boResult.Value;
     }
 
-    public Fdr<T> buiMess(string txMessage)
+    public bool IsTrueBoExec()
+    {
+      if (this.boExecution == null) return false;
+      return boExecution.Value;;
+    }
+
+    public Fdr<T> BuiMess(string txMessage)
     {
       this.txMessage = txMessage;
       return this;
     }
 
-    public void CombineLogsAndMess(Fdr fdrSubWork)
+    public  void  CombineLogsAndMess<PrmT>(Fdr<PrmT> fdrSubWork)
     {
       // Tüm işlemlerde mesaj birleştirilir.
       if (!FiString.IsEmpty(fdrSubWork.txMessage)) AppendMessageLn(fdrSubWork.txMessage);
@@ -259,6 +313,18 @@ namespace OrakYazilimLib.DataContainer
       GetListFieLogInit().Add(new FieLog(FimLogTypes.Error(), txMess));;
     }
 
+    public void SetBoExecAndResultFalse()
+    {
+      this.boExecution = false;
+      this.boResult = false;
+    }
+
+    public void SetBoExecAndResultTrue()
+    {
+      this.boExecution = true;
+      this.boResult = true;
+    }
+
   }
 
   public class Fdr : Fdr<object>
@@ -272,6 +338,7 @@ namespace OrakYazilimLib.DataContainer
     {
       base.boExecution = v;
     }
+
 
 
 

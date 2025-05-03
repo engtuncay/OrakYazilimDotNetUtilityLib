@@ -34,7 +34,7 @@ namespace OrakYazilimLib.UtilXml
                     Stream responseStream = response.GetResponseStream();
                     if (responseStream == null)
                     {
-                        fdrMain.boExecution = false;
+                        fdrMain.SetBoExecAndResultFalse();
                         fdrMain.txMessage = "Response stream is null.";
                         return fdrMain;
                     }
@@ -70,7 +70,7 @@ namespace OrakYazilimLib.UtilXml
                 FiAppConfig.fiLogManager?.ErrorMessage(ex.Message);
                 FiAppConfig.fiLogManager?.ErrorMessage(ex.ToString());
                 fdrMain.txMessage = ex.Message;
-                fdrMain.boExecution = false;
+                fdrMain.SetBoExecAndResultFalse();
             }
 
             return fdrMain;

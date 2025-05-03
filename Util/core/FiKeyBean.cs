@@ -186,5 +186,28 @@ namespace OrakYazilimLib.Util.core
       // Eğer anahtar bulunamazsa, null döner
       return null;
     }
+    public double? GetFieldAsDouble(FiCol fiCol)
+    {
+
+      if (this.ContainsKey(fiCol.ofcTxFieldName))
+      {
+        object value = this[fiCol.ofcTxFieldName];
+
+        if(value is double dbValue)
+        {
+          return dbValue;
+        }
+
+        return null;
+      }
+      // Eğer anahtar bulunamazsa, null döner
+      return null;
+    }
+
+
+    public double GetFieldAsDoubleNtn(FiCol fiCol)
+    {
+      return GetFieldAsDouble(fiCol)??0;
+    }
   }
 }

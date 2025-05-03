@@ -74,13 +74,13 @@ namespace OrakYazilimLib.DbUtil
           da.Fill(dt);
         }
 
-        fdrMain.boExecution = true;
+        fdrMain.SetBoExecAndResultTrue();
         fdrMain.refValue = dt;
       }
       catch (Exception ex) // SQL Hataları için
       {
         //Console.WriteLine(ex.StackTrace);
-        fdrMain.boExecution = false;
+        fdrMain.SetBoExecAndResultFalse();
         fdrMain.txErrorMsgShort = ex.Message;
         fdrMain.refValue = new DataTable();
         FiAppConfig.fiLogManager?.ErrorMessage($"Error: {ex.Message}");
@@ -125,11 +125,11 @@ namespace OrakYazilimLib.DbUtil
       {
         sqConn.Open();
         fdrMain.lnRowsAffected = command.ExecuteNonQuery();
-        fdrMain.boExecution = true;
+        fdrMain.SetBoExecAndResultTrue();
       }
       catch (Exception ex)
       {
-        fdrMain.boExecution = false;
+        fdrMain.SetBoExecAndResultFalse();
         fdrMain.txErrorMsgShort = ex.Message;
         FiAppConfig.fiLogManager?.ErrorMessage($"Error: {ex.Message}");
         FiAppConfig.fiLogManager?.ErrorMessage($"StackTrace: {ex.StackTrace}");
