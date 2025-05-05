@@ -40,6 +40,9 @@ namespace OrakYazilimLib.UtilXml
     {
       this.txXml = FiXmlUtils.DeActivateAllParams(this.txXml);
     }
+    /**
+     * Xml deki parametreleri değerlerle değiştirir.
+     */
     public void ProcessParams()
     {
       if (FiCollection.IsEmpty(this.fkbParams)) return;
