@@ -2,6 +2,7 @@
 using OrakYazilimLib.Util.Collection;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -123,7 +124,14 @@ namespace OrakYazilimLib.Util.core
         //   return value.ToString().ToLower();
         // }
 
-        return value?.ToString() ?? ""; // Null kontrolü yaparak değeri döndür.
+        return value switch
+        {
+          // Double ise, InvariantCulture ile formatla
+          double doubleValue => doubleValue.ToString(CultureInfo.InvariantCulture),
+          int intValue => intValue.ToString(CultureInfo.InvariantCulture),
+          _ => value?.ToString() ?? ""
+        };
+
       }
       // Eğer anahtar bulunamazsa, null döner
       return null;

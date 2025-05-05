@@ -22,13 +22,9 @@ namespace OrakYazilimLib.UtilXml
     {
     }
 
-
     public string GetXmlFinal()
     {
-      if (FiCollection.IsEmpty(this.fkbParams)) return txXml;
-
-      this.txXml = FiXmlUtils.ConvertXmlParams(txXml, this.fkbParams);
-
+      ProcessParams();
       return txXml;
     }
 
