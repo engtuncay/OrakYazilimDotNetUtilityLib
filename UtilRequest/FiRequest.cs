@@ -33,20 +33,7 @@ namespace OrakYazilimLib.UtilRequest
 
     public string GetTxPanoProfile()
     {
-      if (FiString.IsEmpty(frTxProfile))
-      {
-        if (FiAppConfig.boTestMode)
-        {
-          return "pano-test";
-        }
-        return "pano";
-      }
-
-      if (FiAppConfig.boTestMode)
-      {
-        return "pano-test-" + frTxProfile;
-      }
-      return "pano-" + frTxProfile;
+      return "pano-" + FiString.AddPrefixIfnEmpty(frTxProfile,"-");
     }
 
     public string GetTxMikroProfile()

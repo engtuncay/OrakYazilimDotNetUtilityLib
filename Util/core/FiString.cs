@@ -17,8 +17,7 @@ namespace OrakYazilimLib.Util.core
 
     public static bool IsEmptyWoutTrim(string value)
     {
-      if (value == null || value.Equals("")) return true;
-      return false;
+      return value == null || value.Equals("");
     }
 
     public static bool IsEmpty(object value)
@@ -136,12 +135,14 @@ namespace OrakYazilimLib.Util.core
     }
 
     /**
+     * Add Prefix If Not Empty (txValue)
+     * <br/>
      * Boş Değilse TxValue'ya TxPrev'i ön ek olarak ekler
      */
-    public static string AddPrevIfNotEmpty(string txValue, string txPrev)
+    public static string AddPrefixIfnEmpty(string txValue, string txPrefix = "")
     {
       if (FiString.IsEmpty(txValue)) return "";
-      return txPrev+txValue;
+      return txPrefix + txValue;
     }
   }
 }
