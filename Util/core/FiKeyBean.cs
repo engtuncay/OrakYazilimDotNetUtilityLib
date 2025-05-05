@@ -132,6 +132,10 @@ namespace OrakYazilimLib.Util.core
     public string GetFieldAsString(FiCol fiCol){
       return GetAsString(fiCol.ofcTxFieldName);
     }
+
+    public object GetFiledAsObject(FiCol fiCol){
+      return GetAsObject(fiCol.ofcTxFieldName);
+    }
     public object GetAsObject(string txKey)
     {
       // Eğer sözlük belirtilen anahtarı içeriyorsa:

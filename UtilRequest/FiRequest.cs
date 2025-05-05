@@ -33,7 +33,7 @@ namespace OrakYazilimLib.UtilRequest
 
     public string GetTxPanoProfile()
     {
-      return "pano-" + FiString.AddPrefixIfnEmpty(frTxProfile,"-");
+      return "pano" + FiString.AddPrefixIfnEmpty(frTxProfile,"-");
     }
 
     public string GetTxMikroProfile()
