@@ -80,7 +80,12 @@ namespace OrakYazilimLib.DataContainer
     /**
      * İşlem Dönüşü alınan FkbList değeri
      */
-    public FkbList fkbListVal { get; set; }
+    public FkbList refFkbListVal { get; set; }
+
+    /**
+     * İşlem Dönüşü alınan DataTable değeri
+     */
+    public DataTable refDtbVal { get; set; }
 
     public List<FieLog> listFieLog { get; set; }
 

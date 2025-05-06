@@ -42,16 +42,13 @@ namespace OrakYazilimLib.FiExtensions
     public static object GetCellAsObjectFi(this DataTable dataTable, int lnRowNo, string txFieldName)
     {
       // 1. DataTable null kontrolü
-      if (dataTable == null)
-        return null;
+      if (dataTable == null) return null;
 
       // 2. Satır numarasının geçerli olup olmadığının kontrolü
-      if (lnRowNo < 0 || lnRowNo >= dataTable.Rows.Count)
-        return null;
+      if (lnRowNo < 0 || lnRowNo >= dataTable.Rows.Count) return null;
 
       // 3. Kolon adının geçerli olup olmadığının kontrolü
-      if (!dataTable.Columns.Contains(txFieldName))
-        return null;
+      if (!dataTable.Columns.Contains(txFieldName)) return null;
 
       // 4. Satırda ilgili değer null olabilir, bunu kontrol edelim (isteğe bağlı)
       object value = dataTable.Rows[lnRowNo][txFieldName];
@@ -64,7 +61,7 @@ namespace OrakYazilimLib.FiExtensions
      */
     public static object GetFldAsObject(this DataTable dataTable, int lnRowNo, FiCol fiCol)
     {
-        return GetCellAsObjectFi(dataTable, lnRowNo, fiCol.ofcTxFieldName);
+      return GetCellAsObjectFi(dataTable, lnRowNo, fiCol.ofcTxFieldName);
     }
 
     // DataTable'dan bir sütunu silen extension metot
@@ -79,10 +76,10 @@ namespace OrakYazilimLib.FiExtensions
 
 
       if (string.IsNullOrWhiteSpace(columnName)) return;
-        //throw new ArgumentException("Sütun adı boş veya geçersiz olamaz!", nameof(columnName));
+      //throw new ArgumentException("Sütun adı boş veya geçersiz olamaz!", nameof(columnName));
 
       if (!dataTable.Columns.Contains(columnName)) return;
-        //throw new ArgumentException($"'{columnName}' adlı sütun DataTable'da mevcut değil.", nameof(columnName));
+      //throw new ArgumentException($"'{columnName}' adlı sütun DataTable'da mevcut değil.", nameof(columnName));
 
       // Sütunu sil
       dataTable.Columns.Remove(columnName);

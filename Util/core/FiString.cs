@@ -36,6 +36,16 @@ namespace OrakYazilimLib.Util.core
       return p ?? "";
     }
 
+    public static string OrEmpty2(object objVal)
+    {
+      return objVal switch
+      {
+        null => "",
+        string txVal => txVal,
+        _ => objVal.ToString()
+      };
+    }
+
     public static string ToUpperCamelCase(string input)
     {
       if (string.IsNullOrEmpty(input))
