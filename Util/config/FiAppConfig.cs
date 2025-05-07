@@ -9,8 +9,8 @@ namespace OrakYazilimLib.Util.config
   {
     public static bool boTestMode = false;
     public static bool boUseConfigManager = false; // { get; set; }  //= false;
-    public static IFiConfigManager fiConfigMngr;
-    public static IFiLogManager fiLogMngr;
+    public static IFiConfigManager fiConfig;
+    public static IFiLogManager fiLog;
 
     public static void ConvertTestModeTrue()
     {
@@ -22,7 +22,7 @@ namespace OrakYazilimLib.Util.config
     {
       // config dosyasından key'den sonra test ile geleni alması için.
       if (boTestMode == true) txProfile = txProfile + "-test";
-      return fiConfigMngr?.GetConnString(txProfile);
+      return fiConfig?.GetConnString(txProfile);
     }
 
     public static string GetConnectionString(string txProfile)
@@ -32,7 +32,7 @@ namespace OrakYazilimLib.Util.config
 
       if (boUseConfigManager)
       {
-        return fiConfigMngr?.GetConnString(txProfile);
+        return fiConfig?.GetConnString(txProfile);
       }
 
       string connString = ConfigurationManager.ConnectionStrings[txProfile].ConnectionString;
@@ -47,13 +47,13 @@ namespace OrakYazilimLib.Util.config
     {
       // config dosyasından key'den sonra test ile geleni alması için.
       //if (boTestMode == true) txProfile = txProfile + "-test";
-      return fiConfigMngr?.GetApiUrl(txProfile);
+      return fiConfig?.GetApiUrl(txProfile);
 
     }
 
     public static void LogMessage(string message)
     {
-      fiLogMngr?.Debug(message);
+      fiLog?.Debug(message);
     }
 
   }
