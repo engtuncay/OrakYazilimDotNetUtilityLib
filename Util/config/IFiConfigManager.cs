@@ -3,11 +3,16 @@ using System.Collections.Generic;
 
 namespace OrakYazilimLib.Util.config
 {
-    public interface IFiConfigManager
-    {
-        //Dictionary<string, string?> mapConnString { get; set; }
+  public interface IFiConfigManager
+  {
+    //Dictionary<string, string?> mapConnString { get; set; }
 
-        string GetConnString(string profile);
-        string GetApiUrl(string txProfile);
-    }
+    string GetConnString(string profile);
+    string GetApiUrl(string txProfile);
+
+    /**
+    * Ayar dosyasından okunarak alınacak profile
+    */
+    string GetProfile();
+  }
 }

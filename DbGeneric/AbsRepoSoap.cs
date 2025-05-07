@@ -15,7 +15,7 @@ namespace OrakYazilimLib.DbGeneric
     }
     private void SetupBaseUrl()
     {
-      this.txBaseUrl = FiAppConfig.fiConfigManager?.GetApiUrl(txProfile);
+      this.txBaseUrl = FiAppConfig.fiConfigMngr?.GetApiUrl(txProfile);
     }
 
 

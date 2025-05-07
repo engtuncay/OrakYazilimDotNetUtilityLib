@@ -83,8 +83,8 @@ namespace OrakYazilimLib.DbUtil
         fdrMain.SetBoExecAndResultFalse();
         fdrMain.txErrorMsgShort = ex.Message;
         fdrMain.refValue = new DataTable();
-        FiAppConfig.fiLogManager?.Error($"Error: {ex.Message}");
-        FiAppConfig.fiLogManager?.Error($"StackTrace: {ex.StackTrace}");
+        FiAppConfig.fiLogMngr?.Error($"Error: {ex.Message}");
+        FiAppConfig.fiLogMngr?.Error($"StackTrace: {ex.StackTrace}");
       }
 
       return fdrMain;
@@ -124,8 +124,8 @@ namespace OrakYazilimLib.DbUtil
         fdrMain.SetBoExecAndResultFalse();
         fdrMain.txErrorMsgShort = ex.Message;
         fdrMain.refValue = new DataTable();
-        FiAppConfig.fiLogManager?.Error($"Error: {ex.Message}");
-        FiAppConfig.fiLogManager?.Error($"StackTrace: {ex.StackTrace}");
+        FiAppConfig.fiLogMngr?.Error($"Error: {ex.Message}");
+        FiAppConfig.fiLogMngr?.Error($"StackTrace: {ex.StackTrace}");
       }
 
       return fdrMain;
@@ -171,8 +171,8 @@ namespace OrakYazilimLib.DbUtil
       {
         fdrMain.SetBoExecAndResultFalse();
         fdrMain.txErrorMsgShort = ex.Message;
-        FiAppConfig.fiLogManager?.Error($"Error: {ex.Message}");
-        FiAppConfig.fiLogManager?.Error($"StackTrace: {ex.StackTrace}");
+        FiAppConfig.fiLogMngr?.Error($"Error: {ex.Message}");
+        FiAppConfig.fiLogMngr?.Error($"StackTrace: {ex.StackTrace}");
         //fdrMain.ExceptionQueryErrorLog(e);
       }
 
@@ -472,7 +472,7 @@ namespace OrakYazilimLib.DbUtil
       var fdrMain = new Fdr<DataTable>();
 
       //Console.WriteLine("SqlExecuteDataTable");
-      FiAppConfig.fiLogManager?.Debug("SqlExecuteDataTable called");
+      FiAppConfig.fiLogMngr?.Debug("SqlExecuteDataTable called");
 
 
       if (this.connString == null)
@@ -508,7 +508,7 @@ namespace OrakYazilimLib.DbUtil
           catch (Exception ex)
           {
             //Debug.Write(ex.ToString());
-            FiAppConfig.fiLogManager?.Debug(ex.ToString());
+            FiAppConfig.fiLogMngr?.Debug(ex.ToString());
             fdrMain.boExecution = false;
             fdrMain.txErrorMsgShort = ex.Message;
             fdrMain.obReturn = new DataTable();
