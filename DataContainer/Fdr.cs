@@ -349,5 +349,14 @@ namespace OrakYazilimLib.DataContainer
 
 
 
+    public static Fdr BuiBoResult(bool? boResult)
+    {
+      Fdr fdr = new Fdr
+      {
+        boResult = boResult
+      };
+
+      return fdr;
+    }
   }
 }
