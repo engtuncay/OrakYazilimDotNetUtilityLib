@@ -83,8 +83,8 @@ namespace OrakYazilimLib.DbUtil
         fdrMain.SetBoExecAndResultFalse();
         fdrMain.txErrorMsgShort = ex.Message;
         fdrMain.refValue = new DataTable();
-        FiAppConfig.fiLogManager?.ErrorMessage($"Error: {ex.Message}");
-        FiAppConfig.fiLogManager?.ErrorMessage($"StackTrace: {ex.StackTrace}");
+        FiAppConfig.fiLogManager?.Error($"Error: {ex.Message}");
+        FiAppConfig.fiLogManager?.Error($"StackTrace: {ex.StackTrace}");
       }
 
       return fdrMain;
@@ -124,8 +124,8 @@ namespace OrakYazilimLib.DbUtil
         fdrMain.SetBoExecAndResultFalse();
         fdrMain.txErrorMsgShort = ex.Message;
         fdrMain.refValue = new DataTable();
-        FiAppConfig.fiLogManager?.ErrorMessage($"Error: {ex.Message}");
-        FiAppConfig.fiLogManager?.ErrorMessage($"StackTrace: {ex.StackTrace}");
+        FiAppConfig.fiLogManager?.Error($"Error: {ex.Message}");
+        FiAppConfig.fiLogManager?.Error($"StackTrace: {ex.StackTrace}");
       }
 
       return fdrMain;
@@ -171,8 +171,8 @@ namespace OrakYazilimLib.DbUtil
       {
         fdrMain.SetBoExecAndResultFalse();
         fdrMain.txErrorMsgShort = ex.Message;
-        FiAppConfig.fiLogManager?.ErrorMessage($"Error: {ex.Message}");
-        FiAppConfig.fiLogManager?.ErrorMessage($"StackTrace: {ex.StackTrace}");
+        FiAppConfig.fiLogManager?.Error($"Error: {ex.Message}");
+        FiAppConfig.fiLogManager?.Error($"StackTrace: {ex.StackTrace}");
         //fdrMain.ExceptionQueryErrorLog(e);
       }
 
@@ -472,7 +472,7 @@ namespace OrakYazilimLib.DbUtil
       var fdrMain = new Fdr<DataTable>();
 
       //Console.WriteLine("SqlExecuteDataTable");
-      FiAppConfig.fiLogManager?.LogMessage("SqlExecuteDataTable called");
+      FiAppConfig.fiLogManager?.Debug("SqlExecuteDataTable called");
 
 
       if (this.connString == null)
@@ -508,7 +508,7 @@ namespace OrakYazilimLib.DbUtil
           catch (Exception ex)
           {
             //Debug.Write(ex.ToString());
-            FiAppConfig.fiLogManager?.LogMessage(ex.ToString());
+            FiAppConfig.fiLogManager?.Debug(ex.ToString());
             fdrMain.boExecution = false;
             fdrMain.txErrorMsgShort = ex.Message;
             fdrMain.obReturn = new DataTable();

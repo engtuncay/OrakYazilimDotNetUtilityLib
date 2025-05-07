@@ -54,7 +54,7 @@ namespace OrakYazilimLib.Util.config
 
     public static void LogMessage(string message)
     {
-      fiLogManager?.LogMessage(message);
+      fiLogManager?.Debug(message);
     }
 
   }

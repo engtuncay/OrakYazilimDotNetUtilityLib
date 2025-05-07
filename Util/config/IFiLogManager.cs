@@ -5,9 +5,9 @@ namespace OrakYazilimLib.Util.config
 {
     public interface IFiLogManager
     {
-        void LogMessage(string message);
+        void Debug(string message);
 
-        void ErrorMessage(string message);
+        void Error(string message);
 
         //void LogMessage(string message,Type refType);
     }

@@ -67,8 +67,8 @@ namespace OrakYazilimLib.UtilXml
             }
             catch (Exception ex)
             {
-                FiAppConfig.fiLogManager?.ErrorMessage(ex.Message);
-                FiAppConfig.fiLogManager?.ErrorMessage(ex.ToString());
+                FiAppConfig.fiLogManager?.Error(ex.Message);
+                FiAppConfig.fiLogManager?.Error(ex.ToString());
                 fdrMain.txMessage = ex.Message;
                 fdrMain.SetBoExecAndResultFalse();
             }
@@ -92,8 +92,8 @@ namespace OrakYazilimLib.UtilXml
             }
             catch (Exception ex)
             {
-                FiAppConfig.fiLogManager?.LogMessage(ex.Message);
-                FiAppConfig.fiLogManager?.LogMessage(ex.ToString());
+                FiAppConfig.fiLogManager?.Debug(ex.Message);
+                FiAppConfig.fiLogManager?.Debug(ex.ToString());
             }
             return webRequest;
         }
