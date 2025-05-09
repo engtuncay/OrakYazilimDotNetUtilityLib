@@ -6,11 +6,11 @@ namespace OrakYazilimLib.DataContainer
 {
   public class DtoFiCol
   {
-    public static List<dynamic> ImportDtoFiCol2(FiColList fiColList)
+    public static List<dynamic> ImportDtoFiCol2(FicList ficList)
     {
       List<dynamic> list = new List<dynamic>();
 
-      foreach (var ficol in fiColList)
+      foreach (var ficol in ficList)
       {
         dynamic obj = CreateDynamicFiCol2(ficol);
         list.Add(obj);

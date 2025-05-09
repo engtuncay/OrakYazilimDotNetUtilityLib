@@ -153,7 +153,7 @@
     <Compile Include="UtilXml\FiXmlPars.cs" />
     <Compile Include="UtilXml\FiXmlReq.cs" />
     <Compile Include="Util\Collection\FkbList.cs" />
-    <Compile Include="Util\ColStruct\FiColList.cs" />
+    <Compile Include="Util\ColStruct\FicList.cs" />
     <Compile Include="Util\ColStruct\IFiTableMeta.cs" />
     <Compile Include="Util\config\IFiConfigManager.cs" />
     <Compile Include="Util\config\IFiLogManager.cs" />

@@ -8,8 +8,8 @@ namespace OrakYazilimLib.Util.ColStruct
 
         string GetITxPrefix();
 
-        FiColList GenITableCols();
+        FicList GenITableCols();
 
-        FiColList GenITableColsTrans();
+        FicList GenITableColsTrans();
     }
 }

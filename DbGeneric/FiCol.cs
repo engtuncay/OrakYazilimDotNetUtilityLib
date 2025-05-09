@@ -21,10 +21,10 @@ namespace OrakYazilimLib.DbGeneric
 
     public string ofcTxFieldType { get; set; }
 
-    /**
-     * Alanın Veri Türü (FiColType dan alınabilir)
-     */
-    public string ofcTxColType { get; set; }
+    // /**
+    //  * Alanın Veri Türü (FiColType dan alınabilir)
+    //  */
+    // public string ofcTxColType { get; set; }
 
     public bool? ofcBoTransient { get; set; }
 
@@ -36,6 +36,7 @@ namespace OrakYazilimLib.DbGeneric
     public int? ofcLnPrecision { get; set; }
     public int? ofcLnScale { get; set; }
 
+    public string ofcTxIdType { get; set; }
 
     /**
      * Alanın alacağı şablon, xml için düşünüldü.
@@ -87,6 +88,11 @@ namespace OrakYazilimLib.DbGeneric
     public string tof()
     {
       return ofcTxFieldName;
+    }
+    public bool CheckFiColIfPrimaryKey()
+    {
+      if (this.ofcTxIdType != null) return true;
+      return false;
     }
   }
 

@@ -15,7 +15,7 @@ namespace OrakYazilimLib.DbUtil
     public static class FicQugen
     {
 
-        public static string Select(FiColList list,IFiTableMeta iFiTableMeta)
+        public static string Select(FicList list,IFiTableMeta iFiTableMeta)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -35,7 +35,7 @@ namespace OrakYazilimLib.DbUtil
             return sb.ToString();
         }
         
-        public static string Insert(FiColList list,IFiTableMeta iFiTableMeta)
+        public static string Insert(FicList list,IFiTableMeta iFiTableMeta)
         {
                        //String template = "INSERT INTO {{tableName}} ( {{csvFields}} ) \n"
                        // + " VALUES ( {{paramFields}} )";

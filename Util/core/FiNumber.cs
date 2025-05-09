@@ -15,6 +15,12 @@ namespace OrakYazilimLib.Util.core
             return (double)value;
         }
 
+        public static int OrIntZero(object value)
+        {
+            if (value == null) return 0;
+            return (int)value;
+        }
+
         public static string FormatEbelge(double value)
         {
             return value.ToString("0.######", CultureInfo.InvariantCulture);
