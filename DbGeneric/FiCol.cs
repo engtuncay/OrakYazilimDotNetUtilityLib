@@ -96,6 +96,15 @@ namespace OrakYazilimLib.DbGeneric
       if (this.ofcTxIdType != null) return true;
       return false;
     }
-  }
+    public string GetTxDbFieldOrTxFieldName()
+    {
+      return !FiString.IsEmpty(ofcTxDbField) ? ofcTxDbField : ofcTxFieldName;
+    }
 
+    // ReSharper disable once InconsistentNaming
+    public string fnm()
+    {
+      return this.ofcTxFieldName;
+    }
+  }
 }

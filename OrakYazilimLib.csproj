@@ -138,6 +138,7 @@
     <Compile Include="DbUtil\FiMsQuery.cs" />
     <Compile Include="DemoEntity\DemoMkfields.cs" />
     <Compile Include="DemoEntity\MysqlQueryDemo.cs" />
+    <Compile Include="FicOrakUtil\FicOksCoding.cs" />
     <Compile Include="FiExtensions\DictionaryUtils.cs" />
     <Compile Include="FiExtensions\FiDataTableExt.cs" />
     <Compile Include="MvcPattern\AbsModal.cs" />

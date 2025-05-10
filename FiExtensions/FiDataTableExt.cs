@@ -1,4 +1,6 @@
 ﻿using OrakYazilimLib.DbGeneric;
+using OrakYazilimLib.Util.Collection;
+using OrakYazilimLib.Util.core;
 using System;
 using System.Data;
 using System.Text;
@@ -98,5 +100,38 @@ namespace OrakYazilimLib.FiExtensions
     //   // Sütunu sil
     //   dataTable.Columns.RemoveAt(columnIndex);
     // }
+
+    public static FkbList ToFkbListFi(this DataTable dataTable)
+    {
+      if (dataTable == null) return new FkbList();
+        //throw new ArgumentNullException(nameof(dataTable));
+
+      // Yeni bir FkbList oluştur
+      var fkbList = new FkbList();
+
+      // DataTable'daki her satırı FiKeybean olarak ekle
+      foreach (DataRow row in dataTable.Rows)
+      {
+        // Yeni bir FiKeybean oluştur
+        var fiKeybean = new FiKeybean();
+
+        // DataTable'ın her kolonu için FiKeybean'e değer ekle
+        foreach (DataColumn column in dataTable.Columns)
+        {
+          string columnName = column.ColumnName;
+          object value = row[column] != DBNull.Value ? row[column] : null;
+
+          // Kolon adını ve değerini FiKeybean'e ekle
+          fiKeybean.Add(columnName, value);
+        }
+
+        // FiKeybean'i FkbList'e ekle
+        fkbList.Add(fiKeybean);
+      }
+
+      return fkbList;
+    }
+
+
   }
 }
