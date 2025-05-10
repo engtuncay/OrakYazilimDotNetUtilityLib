@@ -38,6 +38,8 @@ namespace OrakYazilimLib.DbGeneric
 
     public string ofcTxIdType { get; set; }
 
+    public bool boInsertFieldForQuery { get; set; }
+
     /**
      * Alanın alacağı şablon, xml için düşünüldü.
      */

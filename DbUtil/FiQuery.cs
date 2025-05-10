@@ -1,5 +1,7 @@
 ﻿using OrakYazilimLib.DbGeneric;
 using OrakYazilimLib.Util;
+using OrakYazilimLib.Util.Collection;
+using OrakYazilimLib.Util.ColStruct;
 using OrakYazilimLib.Util.core;
 using System;
 using System.Collections.Generic;
@@ -16,6 +18,18 @@ namespace OrakYazilimLib.DbUtil
     public string sql { get; set; }
 
     public FiKeybean fkbParams { get; set; }
+
+    // Query özellikleri
+
+    public IFiTableMeta fiTableMeta { get; set; }
+
+    public FicList ficList { get; set; }
+
+    public bool? boInsertFieldsOnly { get; set; }
+
+    public FiQuery()
+    {
+    }
 
     public FiQuery(string sql)
     {
