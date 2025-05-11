@@ -2,6 +2,7 @@
 using OrakYazilimLib.Util;
 using OrakYazilimLib.Util.Collection;
 using OrakYazilimLib.Util.ColStruct;
+using OrakYazilimLib.Util.config;
 using OrakYazilimLib.Util.core;
 using System;
 using System.Collections.Generic;
@@ -67,10 +68,10 @@ namespace OrakYazilimLib.DbUtil
 
     }
 
-    /// Converts the parameters stored in the FiKeybean object to a list of SQL parameters for use in SQL queries.
-    /// Each entry in the FiKeybean is converted to a SqlParameter object with the key as the parameter name prefixed with "@".
-    /// Returns an empty list if the FiKeybean is null.
-    ///
+    /**
+     * Ntn
+     */
+    [Obsolete("bu db helper sınıfında olacak FiMssql'de mesela")]
     public List<SqlParameter> GetParamsAsSqlParamList()
     {
       if (fkbParams == null) return new List<SqlParameter>();
@@ -170,5 +171,10 @@ namespace OrakYazilimLib.DbUtil
 
 
 
+    public void LogQueryAndParams()
+    {
+      FiAppConfig.fiLog?.Debug("Query:"+ this.sql);
+      FiAppConfig.fiLog?.Debug("Params:"+ FiConsole.TextFkb(this.fkbParams));
+    }
   }
 }

@@ -1,4 +1,5 @@
-﻿using OrakYazilimLib.Util;
+﻿using OrakYazilimLib.DataContainer;
+using OrakYazilimLib.Util;
 using OrakYazilimLib.Util.core;
 
 namespace OrakYazilimLib.DbGeneric
@@ -39,6 +40,8 @@ namespace OrakYazilimLib.DbGeneric
     public string ofcTxIdType { get; set; }
 
     public bool boInsertFieldForQuery { get; set; }
+
+    //public FiWpfCntx refWpfCntx { get; set; }
 
     /**
      * Alanın alacağı şablon, xml için düşünüldü.
@@ -93,8 +96,7 @@ namespace OrakYazilimLib.DbGeneric
     }
     public bool CheckFiColIfPrimaryKey()
     {
-      if (this.ofcTxIdType != null) return true;
-      return false;
+      return !FiString.IsEmpty(this.ofcTxIdType);
     }
     public string GetTxDbFieldOrTxFieldName()
     {
@@ -106,5 +108,9 @@ namespace OrakYazilimLib.DbGeneric
     {
       return this.ofcTxFieldName;
     }
-  }
+
+
+
+
+  } // end class
 }

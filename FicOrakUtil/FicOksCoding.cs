@@ -75,6 +75,12 @@
       return fiCol;
     }
 
+    public static FiCol OkTxWhere()
+    {
+      FiCol fiCol = new FiCol("okTxWhere");
+      return fiCol;
+    }
+
     public static FiCol OkTableFields()
     {
       FiCol fiCol = new FiCol("okTableFields");

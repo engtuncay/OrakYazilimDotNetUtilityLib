@@ -98,7 +98,8 @@
     <Compile Include="DataContainer\DtoFdr1.cs" />
     <Compile Include="DataContainer\DtoFiCol.cs" />
     <Compile Include="DataContainer\FdrDtb.cs" />
-    <Compile Include="DataContainer\FiColGui.cs" />
+    <Compile Include="DataContainer\FdrInt.cs" />
+    <Compile Include="DataContainer\FdrStr.cs" />
     <Compile Include="DataContainer\Torg.cs" />
     <Compile Include="DataContainer\Tor.cs" />
     <Compile Include="DataContainer\FiReturn2.cs" />

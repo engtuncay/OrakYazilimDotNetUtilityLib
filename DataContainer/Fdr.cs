@@ -32,9 +32,10 @@ namespace OrakYazilimLib.DataContainer
 
     public bool? boTknValid { get; set; }
 
-    /// <summary>
-    /// deprecated - boExecution kullan
-    /// </summary>
+    /**
+     * Deprecated - boResult kullanılmalı
+     */
+    [Obsolete("boResult kullanılmalı")]
     public bool? blResult { get; set; }
 
     public bool? boResult { get; set; }
@@ -221,7 +222,7 @@ namespace OrakYazilimLib.DataContainer
       txMessage = txMessage + (!FiString.IsEmpty(txMessage) ? ";;" : "") + txValue;
     }
 
-    public Fdr(bool prmBlResult) { this.blResult = prmBlResult; }
+    public Fdr(bool boResult) { this.boResult = boResult; }
 
     public Fdr(int prmLnRowsAffected)
     {
