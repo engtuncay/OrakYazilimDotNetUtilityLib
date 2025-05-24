@@ -140,7 +140,7 @@ namespace OrakYazilimLib.DbUtil
      * <para><see cref="FiQueryUtils.ActivateParamsMain"/></para>
      * <para><see cref="FiQueryUtils.DeActivateAllOptParams"/></para>
      */
-    public void ActDeActAllParamsByMapParams()
+    public void ProcessAllParamsByMapParams()
     {
       ActivateParamsMain(false);
       DeActivateAllOptParams();
