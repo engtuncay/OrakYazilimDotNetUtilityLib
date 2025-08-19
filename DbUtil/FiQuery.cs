@@ -24,7 +24,7 @@ namespace OrakYazilimLib.DbUtil
 
     public IFiTableMeta fiTableMeta { get; set; }
 
-    public FicList ficList { get; set; }
+    public FicList ficListCol { get; set; }
 
     public bool? boInsertFieldsOnly { get; set; }
 

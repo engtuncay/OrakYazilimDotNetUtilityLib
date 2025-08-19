@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace OrakYazilimLib.Util.config
 {
+  /**
+   * App tarafında implemente eden class'dan bilgiler alınır
+   */
   public interface IFiConfigManager
   {
     //Dictionary<string, string?> mapConnString { get; set; }

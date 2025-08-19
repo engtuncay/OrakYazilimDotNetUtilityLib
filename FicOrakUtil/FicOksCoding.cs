@@ -1,5 +1,6 @@
 ﻿namespace OrakYazilimLib.FicOrakUtil
 {
+  // Fic:Ficol Oks:OrakSoft Coding
 // Csharp FiCol Class Generation v1
   using OrakYazilimLib.DbGeneric;
   using OrakYazilimLib.Util;
