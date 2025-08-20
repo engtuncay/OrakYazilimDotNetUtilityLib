@@ -109,6 +109,11 @@ namespace OrakYazilimLib.DbGeneric
       return this.ofcTxFieldName;
     }
 
+    public string fnmTemplate()
+    {
+      return "{{" + this.ofcTxFieldName + "}}";
+    }
+
 
 
 
