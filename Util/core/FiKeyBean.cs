@@ -141,7 +141,7 @@ namespace OrakYazilimLib.Util.core
       return GetAsString(fiCol.ofcTxFieldName);
     }
 
-    public object GetFiledAsObject(FiCol fiCol){
+    public object GetFieldAsObject(FiCol fiCol){
       return GetAsObject(fiCol.ofcTxFieldName);
     }
     public object GetAsObject(string txKey)
