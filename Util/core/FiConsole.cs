@@ -17,15 +17,25 @@ namespace OrakYazilimLib.Util.core
       }
     }
 
+    public static string TextAllMembers(Object obj)
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.AppendLine("Object Content");
+      foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(obj))
+      {
+        sb.AppendLine($"{descriptor.Name}={descriptor.GetValue(obj)}");
+      }
+      return sb.ToString();
+    }
+
     public static string TextFkb(FiKeybean fkb)
     {
       StringBuilder sb = new StringBuilder();
-      sb.Append("Fkb Content\n");
+      sb.AppendLine("Fkb İçerik");
       int index = 0;
       foreach (KeyValuePair<string, object> keyValuePair in fkb)
       {
-        if (index > 0) sb.Append("\n");
-        sb.Append($"{keyValuePair.Key}={keyValuePair.Value}");
+        sb.AppendLine($"{keyValuePair.Key}={keyValuePair.Value}");
         index++;
       }
       return sb.ToString();
