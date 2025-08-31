@@ -31,7 +31,7 @@ namespace OrakYazilimLib.Util.core
     public static string TextFkb(FiKeybean fkb)
     {
       StringBuilder sb = new StringBuilder();
-      sb.AppendLine("Fkb İçerik");
+      sb.AppendLine("Fkb Content:");
       int index = 0;
       foreach (KeyValuePair<string, object> keyValuePair in fkb)
       {

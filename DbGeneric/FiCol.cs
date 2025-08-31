@@ -39,7 +39,17 @@ namespace OrakYazilimLib.DbGeneric
 
     public string ofcTxIdType { get; set; }
 
-    public bool boInsertFieldForQuery { get; set; }
+    public bool boInsertCol { get; set; }
+
+    /**
+     * Sorguda güncellenmesi gereken alan olduğunu belirtir, aksi listedeki tüm sütunlara güncellenecek alan olarak düşünür
+     */
+    public bool boUpdateCol { get; set; }
+
+    /**
+     * Primary Key olduğunu gösterir
+     */
+    public bool ofcBoPrimaryKey { get; set; }
 
     //public FiWpfCntx refWpfCntx { get; set; }
 
@@ -98,6 +108,17 @@ namespace OrakYazilimLib.DbGeneric
     {
       return !FiString.IsEmpty(this.ofcTxIdType);
     }
+
+    public bool CheckFiColIfIdentityPrimaryKey()
+    {
+      if (FiString.IsEmpty(this.ofcTxIdType))
+      {
+        return false;
+      }
+
+      return this.ofcTxIdType == "identity";
+    }
+
     public string GetTxDbFieldOrTxFieldName()
     {
       return !FiString.IsEmpty(ofcTxDbField) ? ofcTxDbField : ofcTxFieldName;
@@ -113,6 +134,7 @@ namespace OrakYazilimLib.DbGeneric
     {
       return "{{" + this.ofcTxFieldName + "}}";
     }
+
 
 
 

@@ -28,6 +28,9 @@ namespace OrakYazilimLib.DbUtil
 
     public bool? boInsertFieldsOnly { get; set; }
 
+    public bool? boUseUpdateFieldsOnly { get; set; }
+
+
     public FiQuery()
     {
     }
@@ -35,6 +38,11 @@ namespace OrakYazilimLib.DbUtil
     public FiQuery(string sql)
     {
       this.sql = sql;
+    }
+
+    public FiQuery(FiKeybean fkbParams)
+    {
+      this.fkbParams = fkbParams;
     }
 
     public FiQuery(string sql, FiKeybean fkbParams)
