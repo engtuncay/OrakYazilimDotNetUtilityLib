@@ -18,7 +18,7 @@ namespace OrakYazilimLib.Util.config
     }
 
 
-    public static string GetConnectionString2(string txProfile)
+    public static string GetConnStringWthTest(string txProfile)
     {
       // config dosyasından key'den sonra test ile geleni alması için.
       if (boTestMode == true) txProfile = txProfile + "-test";
