@@ -83,7 +83,7 @@ namespace OrakYazilimLib.FiExtensions
       return GetCellAsObjectFi(dataTable, lnRowNo, fiCol.ofcTxFieldName);
     }
 
-    public static string GetFieldAsString(this DataTable dataTable, int lnRowNo, FiCol fiCol)
+    public static string GetFieldAsStr(this DataTable dataTable, int lnRowNo, FiCol fiCol)
     {
       return GetCellAsStringFi(dataTable, lnRowNo, fiCol.ofcTxFieldName);
     }
