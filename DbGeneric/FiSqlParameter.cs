@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using OrakYazilimLib.Util.core;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 
@@ -27,7 +28,7 @@ namespace OrakYazilimLib.DbGeneric
 
             List<SqlParameter> list = new List<SqlParameter>();
 
-            foreach (var sqlParameter in listPrmSqlParameters)
+            foreach (FiSqlParameter sqlParameter in listPrmSqlParameters)
             {
                 string sqlVariable = sqlParameter.field;
                 if (!Regex.IsMatch(sqlVariable, "^@.*"))
@@ -36,6 +37,27 @@ namespace OrakYazilimLib.DbGeneric
                 }
 
                 list.Add(new SqlParameter(sqlParameter.field,sqlParameter.value));
+            }
+
+            return list;
+        }
+
+        public static List<SqlParameter> convertSqlParameter(FiKeybean fkbParams)
+        {
+            if (fkbParams == null) return new List<SqlParameter>();
+
+            List<SqlParameter> list = new List<SqlParameter>();
+
+            foreach (KeyValuePair<string, object> sqlParameter in fkbParams)
+            {
+                string fieldName = sqlParameter.Key;
+
+                if (!Regex.IsMatch(fieldName, "^@.*"))
+                {
+                    fieldName = "@" + fieldName;
+                }
+
+                list.Add(new SqlParameter(fieldName, sqlParameter.Value));
             }
 
             return list;

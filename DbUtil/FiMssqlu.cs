@@ -417,7 +417,7 @@ namespace OrakYazilimLib.DbUtil
 
       DataSet ds = new DataSet();
       SqlConnection connection = new SqlConnection(connString);
-      var prms = FiSqlParameter.convertSqlParameter(fiMsQuery.getListParams()).ToArray();
+      var arrSqlParams = FiSqlParameter.convertSqlParameter(fiMsQuery.getListParams()).ToArray();
 
       var fiReturn = new Fdr<DataTable>();
 
@@ -425,9 +425,9 @@ namespace OrakYazilimLib.DbUtil
       {
         SqlCommand command = new SqlCommand(fiMsQuery.sql, connection);
 
-        if (FiCollection.IsFull(prms))
+        if (FiCollection.IsFull(arrSqlParams))
         {
-          AttachParameters(command, prms);
+          AttachParameters(command, arrSqlParams);
         }
 
         using (SqlDataAdapter da = new SqlDataAdapter(command))
@@ -467,6 +467,60 @@ namespace OrakYazilimLib.DbUtil
       return fiReturn;
     }
 
+    public Fdr<DataTable> SqlExecuteDataTable(FiQuery fiMsQuery)
+    {
+
+      DataSet ds = new DataSet();
+      SqlConnection connection = new SqlConnection(connString);
+      var arrSqlParams = FiSqlParameter.convertSqlParameter(fiMsQuery.fkbParams).ToArray();
+
+      var fdrMain = new Fdr<DataTable>();
+
+      using (connection)
+      {
+        SqlCommand command = new SqlCommand(fiMsQuery.sql, connection);
+
+        if (FiCollection.IsFull(arrSqlParams))
+        {
+          AttachParameters(command, arrSqlParams);
+        }
+
+        using (SqlDataAdapter da = new SqlDataAdapter(command))
+        {
+
+          // Fill the DataSet using default values for DataTable names, etc
+          try
+          {
+            da.Fill(ds);
+            fdrMain.blResult = true;
+            fdrMain.obReturn = ds.Tables[0];
+            //fdr.txErrorMsgDetail = "Success:" + FiLogWeb.GetDetailSqlLog(fiSqlQuery);
+          }
+          catch (Exception ex)
+          {
+            Debug.Write(ex.ToString());
+            fdrMain.blResult = false;
+            fdrMain.txErrorMsgShort = FiLogWeb.GetMessage(ex);
+            fdrMain.obReturn = new DataTable();
+            //fiReturn.txErrorMsgDetail = FiLogWeb.GetDetailSqlLog(fiMsQuery);
+          }
+        }
+
+        // Detach the SqlParameters from the command object, so they can be used again
+        //cmd.Parameters.Clear();
+
+        //cmd.CommandTimeout = 600;
+
+        //if (mustCloseConnection)
+        //  connection.Close();
+
+        // Return the dataset
+        //return ds;
+      }
+
+
+      return fdrMain;
+    }
     public Fdr<DataTable> SqlExecuteDataTable(string sql, List<FiSqlParameter> listParam)
     {
       var fdrMain = new Fdr<DataTable>();
@@ -502,16 +556,21 @@ namespace OrakYazilimLib.DbUtil
           try
           {
             da.Fill(ds);
-            fdrMain.boExecution = true;
             fdrMain.obReturn = ds.Tables[0];
+            fdrMain.refValue = ds.Tables[0];
+            fdrMain.refDtbVal = ds.Tables[0];
+            fdrMain.boExecution = true;
+            fdrMain.boResult = true;
           }
           catch (Exception ex)
           {
             //Debug.Write(ex.ToString());
             FiAppConfig.fiLog?.Debug(ex.ToString());
             fdrMain.boExecution = false;
+            fdrMain.boResult = false;
             fdrMain.txErrorMsgShort = ex.Message;
             fdrMain.obReturn = new DataTable();
+            fdrMain.refValue = new DataTable();
           }
         }
 

@@ -58,12 +58,34 @@ namespace OrakYazilimLib.FiExtensions
       return value;
     }
 
+    public static string GetCellAsStringFi(this DataTable dataTable, int lnRowNo, string txFieldName)
+    {
+      // 1. DataTable null kontrolü
+      if (dataTable == null) return null;
+
+      // 2. Satır numarasının geçerli olup olmadığının kontrolü
+      if (lnRowNo < 0 || lnRowNo >= dataTable.Rows.Count) return null;
+
+      // 3. Kolon adının geçerli olup olmadığının kontrolü
+      if (!dataTable.Columns.Contains(txFieldName)) return null;
+
+      // 4. Satırda ilgili değer null olabilir, bunu kontrol edelim (isteğe bağlı)
+      object value = dataTable.Rows[lnRowNo][txFieldName];
+
+      return value?.ToString();
+    }
+
     /**
      * GetFieldAsObject
      */
     public static object GetFldAsObject(this DataTable dataTable, int lnRowNo, FiCol fiCol)
     {
       return GetCellAsObjectFi(dataTable, lnRowNo, fiCol.ofcTxFieldName);
+    }
+
+    public static string GetFieldAsString(this DataTable dataTable, int lnRowNo, FiCol fiCol)
+    {
+      return GetCellAsStringFi(dataTable, lnRowNo, fiCol.ofcTxFieldName);
     }
 
     // DataTable'dan bir sütunu silen extension metot
