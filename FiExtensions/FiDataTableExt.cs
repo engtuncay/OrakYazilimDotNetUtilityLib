@@ -78,7 +78,7 @@ namespace OrakYazilimLib.FiExtensions
     /**
      * GetFieldAsObject
      */
-    public static object GetFldAsObject(this DataTable dataTable, int lnRowNo, FiCol fiCol)
+    public static object GetFieldAsObj(this DataTable dataTable, int lnRowNo, FiCol fiCol)
     {
       return GetCellAsObjectFi(dataTable, lnRowNo, fiCol.ofcTxFieldName);
     }

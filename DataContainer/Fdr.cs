@@ -13,22 +13,28 @@ namespace OrakYazilimLib.DataContainer
 {
   public class Fdr<T>
   {
-    private bool? _boExecution;
+    private bool? _boResult;
 
-    public bool? boExecution
+    public bool? boResult
     {
       get
       {
-        return _boExecution;
+        return _boResult;
       }
-
       set
       {
-        _boExecution = value;
-        // blResult
-        // blResult = value;
+        _boResult = value;
+        blResult = value;
       }
     }
+
+    /**
+     * boExecution false olursa, sorgunun server vs bağlantı kurulamadığını gösterir.
+     *
+     * boResult,boExecution yapıldığı için bazı yerlerde mantık hatası var
+     *
+     */
+    public bool? boExecution { get; set; }
 
     public bool? boTknValid { get; set; }
 
@@ -36,9 +42,19 @@ namespace OrakYazilimLib.DataContainer
      * Deprecated - boResult kullanılmalı
      */
     [Obsolete("boResult kullanılmalı")]
-    public bool? blResult { get; set; }
+    public bool? blResult
+    {
+      get
+      {
+        return _boResult;
+      }
+      set
+      {
+        _boResult = value;
+      }
+    }
 
-    public bool? boResult { get; set; }
+
     public T obReturn { get; set; }
 
     private T _refValue;
@@ -290,7 +306,8 @@ namespace OrakYazilimLib.DataContainer
     public bool IsTrueBoExec()
     {
       if (this.boExecution == null) return false;
-      return boExecution.Value;;
+      return boExecution.Value;
+      ;
     }
 
     public Fdr<T> BuiMess(string txMessage)
@@ -299,7 +316,7 @@ namespace OrakYazilimLib.DataContainer
       return this;
     }
 
-    public  void  CombineLogsAndMess<PrmT>(Fdr<PrmT> fdrSubWork)
+    public void CombineLogsAndMess<PrmT>(Fdr<PrmT> fdrSubWork)
     {
       // Tüm işlemlerde mesaj birleştirilir.
       if (!FiString.IsEmpty(fdrSubWork.txMessage)) AppendMessageLn(fdrSubWork.txMessage);
@@ -311,12 +328,14 @@ namespace OrakYazilimLib.DataContainer
 
     public void AddLogInfo(string txMess)
     {
-     GetListFieLogInit().Add(new FieLog(FimLogTypes.Info(), txMess));;
+      GetListFieLogInit().Add(new FieLog(FimLogTypes.Info(), txMess));
+      ;
     }
 
     public void AddLogError(string txMess)
     {
-      GetListFieLogInit().Add(new FieLog(FimLogTypes.Error(), txMess));;
+      GetListFieLogInit().Add(new FieLog(FimLogTypes.Error(), txMess));
+      ;
     }
 
     public void SetBoExecAndResultFalse()
@@ -331,6 +350,7 @@ namespace OrakYazilimLib.DataContainer
       this.boResult = true;
     }
 
+
   }
 
   public class Fdr : Fdr<object>
@@ -340,9 +360,9 @@ namespace OrakYazilimLib.DataContainer
 
     }
 
-    public Fdr(bool v)
+    public Fdr(bool boResult)
     {
-      base.boExecution = v;
+      base.boResult = boResult;
     }
 
 

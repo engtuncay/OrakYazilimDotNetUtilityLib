@@ -22,7 +22,7 @@ namespace OrakYazilimLib.DbGeneric
         {
         }
 
-        public static List<SqlParameter> convertSqlParameter(List<FiSqlParameter> listPrmSqlParameters)
+        public static List<SqlParameter> convertToSqlParamsList(List<FiSqlParameter> listPrmSqlParameters)
         {
             if (listPrmSqlParameters == null) return new List<SqlParameter>();
 
@@ -42,7 +42,7 @@ namespace OrakYazilimLib.DbGeneric
             return list;
         }
 
-        public static List<SqlParameter> convertSqlParameter(FiKeybean fkbParams)
+        public static List<SqlParameter> convertToSqlParamsList(FiKeybean fkbParams)
         {
             if (fkbParams == null) return new List<SqlParameter>();
 

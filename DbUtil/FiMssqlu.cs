@@ -228,7 +228,7 @@ namespace OrakYazilimLib.DbUtil
 
       SqlConnection connection = new SqlConnection(connString);
       Fdr fdr = new Fdr();
-      SqlParameter[] prms = FiSqlParameter.convertSqlParameter(sqlParamList).ToArray();
+      SqlParameter[] prms = FiSqlParameter.convertToSqlParamsList(sqlParamList).ToArray();
 
       using (connection)
       {
@@ -267,7 +267,7 @@ namespace OrakYazilimLib.DbUtil
     {
 
       SqlConnection connection = new SqlConnection(connString);
-      var prms = FiSqlParameter.convertSqlParameter(listParam).ToArray();
+      var prms = FiSqlParameter.convertToSqlParamsList(listParam).ToArray();
 
       object result = null;
       var fdrMain = new Fdr<T>();
@@ -339,7 +339,7 @@ namespace OrakYazilimLib.DbUtil
     {
 
       SqlConnection connection = new SqlConnection(connString);
-      var prms = FiSqlParameter.convertSqlParameter(fiMsQuery.listParams).ToArray();
+      var prms = FiSqlParameter.convertToSqlParamsList(fiMsQuery.listParams).ToArray();
 
       object result = null;
       var fiResponse = new Fdr<T>();
@@ -417,7 +417,7 @@ namespace OrakYazilimLib.DbUtil
 
       DataSet ds = new DataSet();
       SqlConnection connection = new SqlConnection(connString);
-      var arrSqlParams = FiSqlParameter.convertSqlParameter(fiMsQuery.getListParams()).ToArray();
+      var arrSqlParams = FiSqlParameter.convertToSqlParamsList(fiMsQuery.getListParams()).ToArray();
 
       var fiReturn = new Fdr<DataTable>();
 
@@ -467,18 +467,18 @@ namespace OrakYazilimLib.DbUtil
       return fiReturn;
     }
 
-    public Fdr<DataTable> SqlExecuteDataTable(FiQuery fiMsQuery)
+    public Fdr<DataTable> SqlExecuteDataTable(FiQuery fiQuery)
     {
 
       DataSet ds = new DataSet();
       SqlConnection connection = new SqlConnection(connString);
-      var arrSqlParams = FiSqlParameter.convertSqlParameter(fiMsQuery.fkbParams).ToArray();
+      var arrSqlParams = FiSqlParameter.convertToSqlParamsList(fiQuery.fkbParams).ToArray();
 
       var fdrMain = new Fdr<DataTable>();
 
       using (connection)
       {
-        SqlCommand command = new SqlCommand(fiMsQuery.sql, connection);
+        SqlCommand command = new SqlCommand(fiQuery.sql, connection);
 
         if (FiCollection.IsFull(arrSqlParams))
         {
@@ -492,16 +492,19 @@ namespace OrakYazilimLib.DbUtil
           try
           {
             da.Fill(ds);
-            fdrMain.blResult = true;
-            fdrMain.obReturn = ds.Tables[0];
+            fdrMain.boResult = true;
+            fdrMain.refValue = ds.Tables[0];
+            fdrMain.refDtbVal = ds.Tables[0];
             //fdr.txErrorMsgDetail = "Success:" + FiLogWeb.GetDetailSqlLog(fiSqlQuery);
           }
           catch (Exception ex)
           {
-            Debug.Write(ex.ToString());
-            fdrMain.blResult = false;
+            FiAppConfig.fiLog?.Debug(ex.ToString());
+            fdrMain.boResult = false;
             fdrMain.txErrorMsgShort = FiLogWeb.GetMessage(ex);
-            fdrMain.obReturn = new DataTable();
+            DataTable dtbEmpty = new DataTable();
+            fdrMain.refValue = dtbEmpty;
+            fdrMain.refDtbVal = dtbEmpty;
             //fiReturn.txErrorMsgDetail = FiLogWeb.GetDetailSqlLog(fiMsQuery);
           }
         }
@@ -538,7 +541,7 @@ namespace OrakYazilimLib.DbUtil
       DataSet ds = new DataSet();
       SqlConnection connection = new SqlConnection(connString);
 
-      var prms = FiSqlParameter.convertSqlParameter(listParam).ToArray();
+      var prms = FiSqlParameter.convertToSqlParamsList(listParam).ToArray();
 
       using (connection)
       {
@@ -598,7 +601,7 @@ namespace OrakYazilimLib.DbUtil
 
       DataSet ds = new DataSet();
       SqlConnection connection = new SqlConnection(connString);
-      var prms = FiSqlParameter.convertSqlParameter(listParam).ToArray();
+      var prms = FiSqlParameter.convertToSqlParamsList(listParam).ToArray();
 
       var fiReturn = new Fdr();
 
@@ -1202,7 +1205,7 @@ namespace OrakYazilimLib.DbUtil
 
     public Fdr<int> SqlExecuteNonQuery(string sql, List<FiSqlParameter> sqlParamList)
     {
-      return SqlExecuteNonQuery(sql, FiSqlParameter.convertSqlParameter(sqlParamList).ToArray());
+      return SqlExecuteNonQuery(sql, FiSqlParameter.convertToSqlParamsList(sqlParamList).ToArray());
     }
   }
 } // end namesapce
