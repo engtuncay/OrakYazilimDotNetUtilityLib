@@ -1,6 +1,7 @@
 ﻿using OrakYazilimLib.DataContainer;
 using OrakYazilimLib.Util;
 using OrakYazilimLib.Util.core;
+using System;
 
 namespace OrakYazilimLib.DbGeneric
 {
@@ -135,10 +136,29 @@ namespace OrakYazilimLib.DbGeneric
       return "{{" + this.ofcTxFieldName + "}}";
     }
 
+    public bool IsText()
+    {
+      if(this.ofcTxFieldType == null)return false;
 
+      if(this.ofcTxFieldType.ToLower().Equals("text")
+      || this.ofcTxFieldType.IndexOf("nvarchar", StringComparison.OrdinalIgnoreCase)!=-1
+       )
+      {
+        return true;
+      }
+      return false;
+    }
+    public bool IsBool()
+    {
+      if(this.ofcTxFieldType == null)return false;
 
+      if(this.ofcTxFieldType.ToLower().Equals("bool")
+      )
+      {
+        return true;
+      }
 
-
-
+      return false;
+    }
   } // end class
 }
