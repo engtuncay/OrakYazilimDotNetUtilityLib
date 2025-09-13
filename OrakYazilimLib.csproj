@@ -155,6 +155,7 @@
     <Compile Include="UtilXml\FiXmlUtils.cs" />
     <Compile Include="UtilXml\FiXmlPars.cs" />
     <Compile Include="UtilXml\FiXmlReq.cs" />
+    <Compile Include="Util\Collection\FimList.cs" />
     <Compile Include="Util\Collection\FkbList.cs" />
     <Compile Include="Util\ColStruct\FicList.cs" />
     <Compile Include="Util\ColStruct\IFiTableMeta.cs" />

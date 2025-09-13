@@ -1,5 +1,6 @@
 ﻿using OrakYazilimLib.DataContainer;
 using OrakYazilimLib.Util;
+using OrakYazilimLib.Util.Collection;
 using OrakYazilimLib.Util.core;
 using System;
 
@@ -64,6 +65,10 @@ namespace OrakYazilimLib.DbGeneric
      *
      */
     public FiColType fiColType { get; set; }
+
+    public string ofcTxCompType { get; set; }
+
+    public FimList ofcRefFimList { get; set; }
 
     public FiCol(string ofcTxFieldName)
     {
