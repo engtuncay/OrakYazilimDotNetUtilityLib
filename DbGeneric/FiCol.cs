@@ -157,12 +157,10 @@ namespace OrakYazilimLib.DbGeneric
     {
       if(this.ofcTxFieldType == null)return false;
 
-      if(this.ofcTxFieldType.ToLower().Equals("bool")
-      )
+      if(this.ofcTxFieldType.ToLower().Equals("bool"))
       {
         return true;
       }
-
       return false;
     }
   } // end class
