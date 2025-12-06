@@ -93,6 +93,48 @@ namespace OrakYazilimLib.DbUtil
       return fdrMain;
     }
 
+    public FdrDtb SqlSelect2(FiQuery fiQuery)
+    {
+      var fdrMain = new FdrDtb();
+
+      using SqlConnection sqConn = new SqlConnection(connString);
+      string query = FiQueryUtils.FixSqlProblems(fiQuery.sql);
+
+      using SqlCommand command = new SqlCommand(query, sqConn);
+
+      SqlParameter[] queryParams = ConvertParamsToSqlParamArr(fiQuery.fkbParams);
+
+      if (FiCollection.IsFull(queryParams))
+      {
+        AttachParameters(command, queryParams);
+      }
+
+      try
+      {
+        sqConn.Open();
+
+        var dt = new DataTable();
+        using (var da = new SqlDataAdapter(command))
+        {
+          da.Fill(dt);
+        }
+
+        fdrMain.SetBoExecAndResultTrue();
+        fdrMain.refValue = dt;
+      }
+      catch (Exception ex) // SQL Hataları için
+      {
+        //Console.WriteLine(ex.StackTrace);
+        fdrMain.SetBoExecAndResultFalse();
+        fdrMain.txErrorMsgShort = ex.Message;
+        fdrMain.refValue = new DataTable();
+        FiAppConfig.fiLog?.Error($"Error: {ex.Message}");
+        FiAppConfig.fiLog?.Error($"StackTrace: {ex.StackTrace}");
+      }
+
+      return fdrMain;
+    }
+
     public Fdr SqlSelectDtb(FiQuery fiQuery)
     {
       Fdr fdrMain = new Fdr();
@@ -1213,7 +1255,10 @@ namespace OrakYazilimLib.DbUtil
 
     public static SqlParameter[] ConvertParamsToSqlParamArr(FiKeybean fkbParams)
     {
-      if (fkbParams == null) return new SqlParameter[] {};
+      if (fkbParams == null)
+        return new SqlParameter[]
+        {
+        };
 
       List<SqlParameter> list = new List<SqlParameter>();
 
