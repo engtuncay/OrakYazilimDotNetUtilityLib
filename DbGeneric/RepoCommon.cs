@@ -3,7 +3,7 @@ using System;
 
 namespace OrakYazilimLib.DbGeneric
 {
-    public class RepoCommon : RepoCommonGen<Object>
+    public class RepoCommon : AbsRepoCommon //<Object>
     {
 
     }

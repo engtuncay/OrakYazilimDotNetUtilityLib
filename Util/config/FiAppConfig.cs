@@ -8,7 +8,7 @@ namespace OrakYazilimLib.Util.config
   public static class FiAppConfig
   {
     public static bool boTestMode = false;
-    public static bool boUseConfigManager = false; // { get; set; }  //= false;
+    public static bool boUseConfigManagerDirectly = false; // { get; set; }  //= false;
     public static IFiConfigManager fiConfig;
     public static IFiLogManager fiLog;
 
@@ -30,7 +30,7 @@ namespace OrakYazilimLib.Util.config
       // config dosyasından key'den sonra test ile geleni alması için.
       if (boTestMode == true) txProfile = txProfile + "-test";
 
-      if (boUseConfigManager)
+      if (boUseConfigManagerDirectly)
       {
         return fiConfig?.GetConnString(txProfile);
       }

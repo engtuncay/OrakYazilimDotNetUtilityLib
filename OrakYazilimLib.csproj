@@ -109,7 +109,7 @@
     <Compile Include="DbGeneric\FiCol.cs" />
     <Compile Include="DbGeneric\FiColType.cs" />
     <Compile Include="DbGeneric\FiTypeConverter.cs" />
-    <Compile Include="DbGeneric\RepoCommonGen.cs" />
+    <Compile Include="DbGeneric\AbsRepoCommon.cs" />
     <Compile Include="DbGeneric\RepoCommon.cs" />
     <Compile Include="DbGeneric\RepoGenericAlt.cs" />
     <Compile Include="DbUtil\FiwDataTable.cs" />
