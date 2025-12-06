@@ -1207,7 +1207,8 @@ namespace OrakYazilimLib.DbUtil
     {
       return SqlExecuteNonQuery(sql, FiSqlParameter.convertToSqlParamsList(sqlParamList).ToArray());
     }
-  }
+
+  } // end class
 } // end namesapce
 
 
