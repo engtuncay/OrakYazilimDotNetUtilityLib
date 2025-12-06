@@ -13,7 +13,9 @@ namespace OrakYazilimLib.DbUtil
 {
 
   /// <summary>
-  /// FiDbHelper - Mssql - Utility Library
+  /// FiDbHelper - Mssql - Utility Library (OrakYazilimLib)
+  ///
+  /// System.Data.SqlClient kullanılıyor
   /// </summary>
   public class FiMssqlu
   {
@@ -58,7 +60,8 @@ namespace OrakYazilimLib.DbUtil
 
       using SqlCommand command = new SqlCommand(query, sqConn);
 
-      SqlParameter[] queryParams = fiQuery.GetParamsAsSqlParamList().ToArray();
+      SqlParameter[] queryParams = ConvertParamsToSqlParamArr(fiQuery.fkbParams);
+
       if (FiCollection.IsFull(queryParams))
       {
         AttachParameters(command, queryParams);
@@ -1206,6 +1209,25 @@ namespace OrakYazilimLib.DbUtil
     public Fdr<int> SqlExecuteNonQuery(string sql, List<FiSqlParameter> sqlParamList)
     {
       return SqlExecuteNonQuery(sql, FiSqlParameter.convertToSqlParamsList(sqlParamList).ToArray());
+    }
+
+    public static SqlParameter[] ConvertParamsToSqlParamArr(FiKeybean fkbParams)
+    {
+      if (fkbParams == null) return new SqlParameter[] {};
+
+      List<SqlParameter> list = new List<SqlParameter>();
+
+      foreach (var fkbItem in fkbParams)
+      {
+        string sqlParamName = "@" + fkbItem.Key;
+        //if (!Regex.IsMatch(sqlParam, "^@.*"))
+        //{
+        //sqlParamName = "@" + sqlParamName;
+        //}
+        list.Add(new SqlParameter(sqlParamName, fkbItem.Value));
+      }
+
+      return list.ToArray();
     }
 
   } // end class

@@ -184,5 +184,7 @@ namespace OrakYazilimLib.DbUtil
       FiAppConfig.fiLog?.Debug("Query:"+ this.sql);
       FiAppConfig.fiLog?.Debug("Params:"+ FiConsole.TextFkb(this.fkbParams));
     }
+
+
   }
 }
