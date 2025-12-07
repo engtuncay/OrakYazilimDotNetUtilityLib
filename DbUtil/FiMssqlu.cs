@@ -167,13 +167,14 @@ namespace OrakYazilimLib.DbUtil
 
         fdrMain.SetBoExecAndResultTrue();
         fdrMain.refDtbVal = dt;
+        // refValue set etmeyelim
       }
       catch (Exception ex) // SQL Hataları için
       {
         //Console.WriteLine(ex.StackTrace);
         fdrMain.SetBoExecAndResultFalse();
         fdrMain.txErrorMsgShort = ex.Message;
-        fdrMain.refValue = new DataTable();
+        fdrMain.refDtbVal = new DataTable();
         FiAppConfig.fiLog?.Error($"Error: {ex.Message}");
         FiAppConfig.fiLog?.Error($"StackTrace: {ex.StackTrace}");
       }

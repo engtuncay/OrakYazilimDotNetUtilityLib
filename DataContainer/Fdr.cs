@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Dynamic;
-using System.Web.UI.WebControls;
 using OrakYazilimLib.Util;
 using OrakYazilimLib.Util.Collection;
 using OrakYazilimLib.Util.core;
@@ -32,6 +30,8 @@ namespace OrakYazilimLib.DataContainer
      * boExecution false olursa, sorgunun server vs bağlantı kurulamadığını gösterir.
      *
      * boResult,boExecution yapıldığı için bazı yerlerde mantık hatası var
+     *
+     * Kullanılmamaya çalışılmalı
      *
      */
     public bool? boExecution { get; set; }
@@ -90,17 +90,17 @@ namespace OrakYazilimLib.DataContainer
     //public string txResponse2 { get; set; }
 
     /**
-     * Metod dönüşü verilen fkbResponse objesi
+     * İşlem Dönüşü Fkb Değeri
      */
     public FiKeybean fkbVal { get; set; }
 
     /**
-     * İşlem Dönüşü alınan FkbList değeri
+     * İşlem Dönüşü FkbList değeri
      */
     public FkbList refFkbListVal { get; set; }
 
     /**
-     * İşlem Dönüşü alınan DataTable değeri
+     * İşlem Dönüşü DataTable değeri
      */
     public DataTable refDtbVal { get; set; }
 
