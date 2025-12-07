@@ -43,7 +43,7 @@ namespace OrakYazilimLib.Util.core
       Add(ficol.ofcTxFieldName, objValue);
     }
 
-    public void AddFieldCore(FiCol ficol, object objValue)
+    public void AddFieldByFiCol(FiCol ficol, object objValue)
     {
       Add(ficol.ofcTxFieldName, objValue);
     }

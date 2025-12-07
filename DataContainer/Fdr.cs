@@ -11,7 +11,7 @@ using System.Data;
 
 namespace OrakYazilimLib.DataContainer
 {
-  public class Fdr<T>
+  public class Fdr<T> : IFdr
   {
     private bool? _boResult;
 
@@ -228,6 +228,52 @@ namespace OrakYazilimLib.DataContainer
       // fdrSubWork.setBoLockAddLog(true);
     }
 
+    public void CombineAnd2(IFdr fdrSub)
+    {
+
+      // And işlemi olduğu false sonuç, boExecution false yapar
+      if (FiBool.IsFalse(fdrSub.boResult))
+      {
+        boResult = false;
+        //setLnFailureOpCount(getLnFailureOpCountInit() + 1);
+      }
+
+      if (FiBool.IsTrue(fdrSub.boResult))
+      {
+        //setLnSuccessOpCount(getLnSuccessOpCountInit() + 1);
+        boResult ??= true;
+      }
+
+      // null olduğunda boResult sonucunu değiştirme
+//        if (fdrSubWork.getBoResult() == null) {
+//
+//        }
+
+      // if(FiBool.isTrue(getBoMultiFdr())){
+      //   getFdrListInit().add(fdrSubWork);
+      // }
+
+      // Tüm işlemlerde mesaj birleştirilir.
+      // Loglar birleştirilir.
+      CombineLogsAndMess(fdrSub);
+
+      // Tümü için yapılacaklar
+      if (fdrSub.refException != null)
+      {
+        refException ??= fdrSub.refException;
+        // exception birden fazla olma ihtimali var.
+        //getListExceptionInit().add(fdrSubWork.getException());
+      }
+
+      // appendRowsAffected(fdrSubWork.getRowsAffectedOrEmpty());
+      // appendLnUpdated(fdrSubWork.getLnUpdatedRows());
+      // appendLnInserted(fdrSubWork.getLnInsertedRows());
+      // appendLnDeleted(fdrSubWork.getLnDeletedRows());
+
+      // Birleştirme yapıldığı için eski Fdr'ye log eklenmesi engellenir
+      // fdrSubWork.setBoLockAddLog(true);
+    }
+
     public void AppendMessageLn(string txValue)
     {
       txMessage = txMessage + (!FiString.IsEmpty(txMessage) ? "\n" : "") + txValue;
@@ -324,6 +370,15 @@ namespace OrakYazilimLib.DataContainer
       // Loglar Birleştirilir
       GetListFieLogInit().AddRange(fdrSubWork.GetListFieLogInit());
 
+    }
+
+    public void CombineLogsAndMess(IFdr fdrSubWork)
+    {
+      // Tüm işlemlerde mesaj birleştirilir.
+      if (!FiString.IsEmpty(fdrSubWork.txMessage)) AppendMessageLn(fdrSubWork.txMessage);
+
+      // Loglar Birleştirilir
+      GetListFieLogInit().AddRange(fdrSubWork.GetListFieLogInit());
     }
 
     public void AddLogInfo(string txMess)

@@ -121,6 +121,7 @@ namespace OrakYazilimLib.DbUtil
 
         fdrMain.SetBoExecAndResultTrue();
         fdrMain.refValue = dt;
+        fdrMain.refDtbVal = dt;
       }
       catch (Exception ex) // SQL Hataları için
       {
@@ -135,6 +136,9 @@ namespace OrakYazilimLib.DbUtil
       return fdrMain;
     }
 
+    /**
+     * Returns DataTable in Fdr.refDtbVal
+     */
     public Fdr SqlSelectDtb(FiQuery fiQuery)
     {
       Fdr fdrMain = new Fdr();
@@ -144,7 +148,8 @@ namespace OrakYazilimLib.DbUtil
 
       using SqlCommand command = new SqlCommand(query, sqConn);
 
-      SqlParameter[] queryParams = fiQuery.GetParamsAsSqlParamList().ToArray();
+      SqlParameter[] queryParams = ConvertParamsToSqlParamArr(fiQuery.fkbParams);
+
       if (FiCollection.IsFull(queryParams))
       {
         AttachParameters(command, queryParams);
@@ -199,7 +204,7 @@ namespace OrakYazilimLib.DbUtil
 
       Fdr fdrMain = new Fdr();
 
-      SqlParameter[] queryParams = fiQuery.GetParamsAsSqlParamList().ToArray();
+      SqlParameter[] queryParams = ConvertParamsToSqlParamArr(fiQuery.fkbParams);
 
       if (FiCollection.IsFull(queryParams))
       {
@@ -273,7 +278,7 @@ namespace OrakYazilimLib.DbUtil
 
       SqlConnection connection = new SqlConnection(connString);
       Fdr fdr = new Fdr();
-      SqlParameter[] prms = FiSqlParameter.convertToSqlParamsList(sqlParamList).ToArray();
+      SqlParameter[] prms = FiSqlParameter.ConvertToSqlParamsList(sqlParamList).ToArray();
 
       using (connection)
       {
@@ -312,7 +317,7 @@ namespace OrakYazilimLib.DbUtil
     {
 
       SqlConnection connection = new SqlConnection(connString);
-      var prms = FiSqlParameter.convertToSqlParamsList(listParam).ToArray();
+      var prms = FiSqlParameter.ConvertToSqlParamsList(listParam).ToArray();
 
       object result = null;
       var fdrMain = new Fdr<T>();
@@ -384,7 +389,7 @@ namespace OrakYazilimLib.DbUtil
     {
 
       SqlConnection connection = new SqlConnection(connString);
-      var prms = FiSqlParameter.convertToSqlParamsList(fiMsQuery.listParams).ToArray();
+      var prms = FiSqlParameter.ConvertToSqlParamsList(fiMsQuery.listParams).ToArray();
 
       object result = null;
       var fiResponse = new Fdr<T>();
@@ -462,7 +467,7 @@ namespace OrakYazilimLib.DbUtil
 
       DataSet ds = new DataSet();
       SqlConnection connection = new SqlConnection(connString);
-      var arrSqlParams = FiSqlParameter.convertToSqlParamsList(fiMsQuery.getListParams()).ToArray();
+      var arrSqlParams = FiSqlParameter.ConvertToSqlParamsList(fiMsQuery.getListParams()).ToArray();
 
       var fiReturn = new Fdr<DataTable>();
 
@@ -517,7 +522,7 @@ namespace OrakYazilimLib.DbUtil
 
       DataSet ds = new DataSet();
       SqlConnection connection = new SqlConnection(connString);
-      var arrSqlParams = FiSqlParameter.convertToSqlParamsList(fiQuery.fkbParams).ToArray();
+      var arrSqlParams = FiSqlParameter.ConvertToSqlParamsList(fiQuery.fkbParams).ToArray();
 
       var fdrMain = new Fdr<DataTable>();
 
@@ -586,7 +591,7 @@ namespace OrakYazilimLib.DbUtil
       DataSet ds = new DataSet();
       SqlConnection connection = new SqlConnection(connString);
 
-      var prms = FiSqlParameter.convertToSqlParamsList(listParam).ToArray();
+      var prms = FiSqlParameter.ConvertToSqlParamsList(listParam).ToArray();
 
       using (connection)
       {
@@ -646,7 +651,7 @@ namespace OrakYazilimLib.DbUtil
 
       DataSet ds = new DataSet();
       SqlConnection connection = new SqlConnection(connString);
-      var prms = FiSqlParameter.convertToSqlParamsList(listParam).ToArray();
+      var prms = FiSqlParameter.ConvertToSqlParamsList(listParam).ToArray();
 
       var fiReturn = new Fdr();
 
@@ -1250,7 +1255,7 @@ namespace OrakYazilimLib.DbUtil
 
     public Fdr<int> SqlExecuteNonQuery(string sql, List<FiSqlParameter> sqlParamList)
     {
-      return SqlExecuteNonQuery(sql, FiSqlParameter.convertToSqlParamsList(sqlParamList).ToArray());
+      return SqlExecuteNonQuery(sql, FiSqlParameter.ConvertToSqlParamsList(sqlParamList).ToArray());
     }
 
     public static SqlParameter[] ConvertParamsToSqlParamArr(FiKeybean fkbParams)

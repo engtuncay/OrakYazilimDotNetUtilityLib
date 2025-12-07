@@ -83,6 +83,18 @@ namespace OrakYazilimLib.FiExtensions
       return GetCellAsObjectFi(dataTable, lnRowNo, fiCol.ofcTxFieldName);
     }
 
+    public static int GetFieldAsIntOrZero(this DataTable dataTable, int lnRowNo, FiCol fiCol)
+    {
+      object objVAlue = GetCellAsObjectFi(dataTable, lnRowNo, fiCol.ofcTxFieldName);
+
+      if (objVAlue == null) return 0;
+
+      return Int32.TryParse(objVAlue.ToString(), out int intValue) ? intValue : 0;
+    }
+
+    /**
+     * GetFieldAsString : alternatif metod isimlendirmesi
+     */
     public static string GetFieldAsStr(this DataTable dataTable, int lnRowNo, FiCol fiCol)
     {
       return GetCellAsStringFi(dataTable, lnRowNo, fiCol.ofcTxFieldName);

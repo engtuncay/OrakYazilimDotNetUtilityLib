@@ -1,11 +1,11 @@
-﻿namespace OrakYazilimLib.FicOrakUtil
+﻿using OrakYazilimLib.DbGeneric;
+using OrakYazilimLib.Util.Collection;
+using OrakYazilimLib.Util.ColStruct;
+
+namespace OrakYazilimLib.FiMetas.FicStore
 {
   // Fic:Ficol Class , Oks:OrakSoft Coding
   // Csharp FiCol Class Generation v1
-  using OrakYazilimLib.DbGeneric;
-  using OrakYazilimLib.Util;
-  using OrakYazilimLib.Util.Collection;
-  using OrakYazilimLib.Util.ColStruct;
 
   public class FicOksCoding:IFiTableMeta
   {
