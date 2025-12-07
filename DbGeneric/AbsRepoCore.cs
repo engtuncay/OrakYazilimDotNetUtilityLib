@@ -5,6 +5,13 @@ namespace OrakYazilimLib.DbGeneric
 {
   public abstract class AbsRepoCore //<T>
   {
+    /**
+     * connProfile shows server and sometimes db
+     *
+     * hp -> shows server
+     *
+     * hp-kraft -> shows server and db
+     */
     public string connProfile { get; set; }
 
     // public AbsRepoGeneric()
