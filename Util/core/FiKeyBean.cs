@@ -48,8 +48,23 @@ namespace OrakYazilimLib.Util.core
       Add(ficol.ofcTxFieldName, objValue);
     }
 
+    public void AddFieldByFim(FiMeta fiMeta, object objValue)
+    {
+      Add(fiMeta.txKey, objValue);
+    }
+
+    public void AddFieldBy(FiMeta fiMeta, object objValue)
+    {
+      Add(fiMeta.txKey, objValue);
+    }
+
+    public void AddFieldBy(FiCol ficol, object objValue)
+    {
+      Add(ficol.ofcTxFieldName, objValue);
+    }
+
     /**
-     * Default imple. Add Force (if exist, remove it, add)
+     * Default imple. Add Force (if exists, remove it, add)
      */
     public void AddField(FiCol fiCol, object objValue)
     {
