@@ -143,6 +143,8 @@
     <Compile Include="FiExtensions\DictionaryUtils.cs" />
     <Compile Include="FiExtensions\FiDataTableExt.cs" />
     <Compile Include="FiMetas\FicStore\FicOksCoding.cs" />
+    <Compile Include="FiMetas\FimStore\FimFiCol.cs" />
+    <Compile Include="FiMetas\FimStore\FimFiMeta.cs" />
     <Compile Include="MvcPattern\AbsModal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UtilRequest\FiRequest.cs" />
@@ -214,7 +216,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="FiMetas\FimStore\" />
     <Folder Include="FiMetas\FkbStore\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
