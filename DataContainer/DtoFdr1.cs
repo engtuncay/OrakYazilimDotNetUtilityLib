@@ -14,9 +14,11 @@
       if (fdr.refValue != null) obj.refValue = fdr.refValue;
       if (fdr.txResponse != null) obj.txResponse = fdr.txResponse;
       if (fdr.GetListFieLogInit().Count > 0) obj.listFieLog = fdr.GetListFieLogInit();
+      if (fdr.refDtbVal != null) obj.refDtbVal = fdr.refDtbVal;
 
       // geçici olarak eklendi
       if (fdr.refValue == null && fdr.obReturn != null) obj.refValue = fdr.obReturn;
+
 
       return obj;
     }
