@@ -2,7 +2,7 @@
 
 namespace OrakYazilimLib.Util.core
 {
-  public class FiCrypto
+  public static class FiCrypto
   {
     public static string ComputeMd5Hash(string input)
     {
