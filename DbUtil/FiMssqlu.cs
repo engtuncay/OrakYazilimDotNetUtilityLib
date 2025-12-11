@@ -159,14 +159,14 @@ namespace OrakYazilimLib.DbUtil
       {
         sqConn.Open();
 
-        var dt = new DataTable();
+        var dtbResult = new DataTable();
         using (var da = new SqlDataAdapter(command))
         {
-          da.Fill(dt);
+          da.Fill(dtbResult);
         }
 
         fdrMain.SetBoExecAndResultTrue();
-        fdrMain.refDtbVal = dt;
+        fdrMain.refDtbVal = dtbResult;
         // refValue set etmeyelim
       }
       catch (Exception ex) // SQL Hataları için
@@ -181,6 +181,7 @@ namespace OrakYazilimLib.DbUtil
 
       return fdrMain;
     }
+
     public Fdr SqlUpdateQuery(FiQuery fiQuery)
     {
       return SqlExecuteNonQuery(fiQuery);
