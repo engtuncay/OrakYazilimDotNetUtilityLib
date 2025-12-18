@@ -171,6 +171,7 @@
     <Compile Include="Util\core\FiConsole.cs" />
     <Compile Include="Util\core\FiConsoleWeb.cs" />
     <Compile Include="Util\core\FiCrypto.cs" />
+    <Compile Include="Util\core\FiDatabean.cs" />
     <Compile Include="Util\core\FiDataTable2.cs" />
     <Compile Include="Util\core\FiDate.cs" />
     <Compile Include="Util\core\FiJArray.cs" />

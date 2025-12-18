@@ -2,7 +2,7 @@
 {
   public static class DtoFdr1
   {
-    public static object ImportFdr1<TP>(Fdr<TP> fdr)
+    public static object GenFdr1<TP>(Fdr<TP> fdr)
     {
       dynamic obj = new System.Dynamic.ExpandoObject();
 

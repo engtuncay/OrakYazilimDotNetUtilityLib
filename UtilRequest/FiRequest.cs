@@ -14,6 +14,7 @@ namespace OrakYazilimLib.UtilRequest
     public string frTxPass { get; set; }
     public string frTxToken { get; set; }
     public FiKeybean frFkbParams { get; set; }
+
     public bool frBoShowDoc { get; set; }
     public string frTxDb { get; set; }
 
@@ -57,9 +58,15 @@ namespace OrakYazilimLib.UtilRequest
     }
 
 
-    public string GetConnProfile()
+    public string GetDbConnProfile()
     {
       return frTxProfile + (FiString.IsEmpty(frTxDb)?"": "-" + frTxDb);
     }
+
+    public string GetConnProfile()
+    {
+      return frTxProfile??"";
+    }
+
   }
 }
