@@ -142,6 +142,12 @@
     }
 
 
+    public static FiMeta OfcLnId()
+    {
+      FiMeta fiMeta = new FiMeta("ofcLnId");
+
+      return fiMeta;
+    }
   }
 
 }
