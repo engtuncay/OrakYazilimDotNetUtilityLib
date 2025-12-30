@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace OrakYazilimLib.UtilXml
 {
-  public static class FiXmlUtils
+  public static class FiXmlUtil
   {
 
     public static string ConvertXmlParams(string txXmlTemp, FiKeybean fkbParams)

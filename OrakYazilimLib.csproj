@@ -155,7 +155,7 @@
     <Compile Include="UtilXml\FiSoap.cs" />
     <Compile Include="UtilXml\FiXmlPars2.cs" />
     <Compile Include="UtilXml\FiXmlPars3.cs" />
-    <Compile Include="UtilXml\FiXmlUtils.cs" />
+    <Compile Include="UtilXml\FiXmlUtil.cs" />
     <Compile Include="UtilXml\FiXmlPars.cs" />
     <Compile Include="UtilXml\FiXmlReq.cs" />
     <Compile Include="Util\Collection\FimList.cs" />

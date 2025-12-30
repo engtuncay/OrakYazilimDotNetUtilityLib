@@ -30,11 +30,11 @@ namespace OrakYazilimLib.UtilXml
 
     public void PrepFkbParams()
     {
-      this.txXml = FiXmlUtils.PrepFkbParams(txXml, this.fkbParams);
+      this.txXml = FiXmlUtil.PrepFkbParams(txXml, this.fkbParams);
     }
     public void DeactiveAllParams()
     {
-      this.txXml = FiXmlUtils.DeActivateAllParams(this.txXml);
+      this.txXml = FiXmlUtil.DeActivateAllParams(this.txXml);
     }
     /**
      * Xml deki parametreleri değerlerle değiştirir.
@@ -42,18 +42,18 @@ namespace OrakYazilimLib.UtilXml
     public void ProcessParams()
     {
       if (FiCollection.IsEmpty(this.fkbParams)) return;
-      this.txXml = FiXmlUtils.ConvertXmlParams(this.txXml, this.fkbParams);
+      this.txXml = FiXmlUtil.ConvertXmlParams(this.txXml, this.fkbParams);
     }
 
     public void ProcessParamsWitPrep()
     {
       if (FiCollection.IsEmpty(this.fkbParams)) return;
-      this.txXml = FiXmlUtils.PrepFkbParams(this.txXml, this.fkbParams);
-      this.txXml = FiXmlUtils.ConvertXmlParams(this.txXml, this.fkbParams);
+      this.txXml = FiXmlUtil.PrepFkbParams(this.txXml, this.fkbParams);
+      this.txXml = FiXmlUtil.ConvertXmlParams(this.txXml, this.fkbParams);
     }
     public void DeactiveField(FiCol fiCol)
     {
-      this.txXml = FiXmlUtils.DeActivateParam(this.txXml, fiCol.ofcTxFieldName);
+      this.txXml = FiXmlUtil.DeActivateParam(this.txXml, fiCol.ofcTxFieldName);
     }
 
   }
