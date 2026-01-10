@@ -56,7 +56,7 @@ namespace OrakYazilimLib.DbUtil
     /// <param name="columnName">Sütun adı</param>
     /// <param name="defaultValue"></param>
     /// <returns>İlk satırdaki sütun verisinin belirtilen türde döndürülmüş hali</returns>
-    public Fdr<T> GetValueFromFirstRow2<T>(string columnName, T defaultValue = default)
+    public Fdr<T> GetValueFromFirstRowV2<T>(string columnName, T defaultValue = default)
     {
       //FiAppConfig.fiLogManager?.LogMessage("col : " + columnName);
 

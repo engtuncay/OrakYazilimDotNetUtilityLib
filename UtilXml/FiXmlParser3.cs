@@ -13,16 +13,16 @@ namespace OrakYazilimLib.UtilXml
   /// <summary>
   /// Xml Parser (xml alanlarını objeye atar)
   /// </summary>
-  public class FiXmlPars3
+  public class FiXmlParser3
   {
     private string txXmlRaw { get; set; }
 
-    public FiXmlPars3(string txXml)
+    public FiXmlParser3(string txXml)
     {
       this.txXmlRaw = txXml;
     }
 
-    public FiXmlPars3()
+    public FiXmlParser3()
     {
     }
 

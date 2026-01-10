@@ -182,6 +182,9 @@ namespace OrakYazilimLib.DataContainer
       // fdrSubWork.setBoLockAddLog(true);
     }
 
+    /**
+     * fdrSub boResult null ise, boResult değiştirilmez
+     */
     public void CombineAnd<PrmT>(Fdr<PrmT> fdrSub)
     {
 

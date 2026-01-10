@@ -1,5 +1,6 @@
 ﻿using OrakYazilimLib.DbGeneric;
 using OrakYazilimLib.Util.Collection;
+using OrakYazilimLib.Util.config;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -231,10 +232,46 @@ namespace OrakYazilimLib.Util.core
       return null;
     }
 
+    public int? GetFieldAsInt(FiCol fiCol)
+    {
+
+      if (this.ContainsKey(fiCol.ofcTxFieldName))
+      {
+        object value = this[fiCol.ofcTxFieldName];
+
+        if(value is int ntValue)
+        {
+          return ntValue;
+        }
+
+        if(value is long lnValue)
+        {
+          return (int)lnValue;
+        }
+
+        if(value is string txValue)
+        {
+          if(int.TryParse(txValue, out int parsedInt))
+          {
+            FiAppConfig.fiLog?.Debug("string-converted-to-int");
+            return parsedInt;
+          }
+        }
+
+        return null;
+      }
+      // Eğer anahtar bulunamazsa, null döner
+      return null;
+    }
 
     public double GetFieldAsDoubleNtn(FiCol fiCol)
     {
-      return GetFieldAsDouble(fiCol)??0;
+      return GetFieldAsDouble(fiCol)??0d;
+    }
+
+    public int GetFieldAsIntNtn(FiCol fiCol)
+    {
+      return GetFieldAsInt(fiCol)??0;
     }
   }
 }
