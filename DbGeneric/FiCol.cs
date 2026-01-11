@@ -51,7 +51,7 @@ namespace OrakYazilimLib.DbGeneric
     /**
      * Primary Key olduğunu gösterir
      */
-    public bool ofcBoPrimaryKey { get; set; }
+    public bool ofcBoPriKey { get; set; }
 
     //public FiWpfCntx refWpfCntx { get; set; }
 
