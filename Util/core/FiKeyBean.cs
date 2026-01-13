@@ -65,7 +65,7 @@ namespace OrakYazilimLib.Util.core
     }
 
     /**
-     * Default imple. Add Force (if exists, remove it, add)
+     * Add or Overwrite (if exists, remove it, add)
      */
     public void AddField(FiCol fiCol, object objValue)
     {
@@ -273,5 +273,9 @@ namespace OrakYazilimLib.Util.core
     {
       return GetFieldAsInt(fiCol)??0;
     }
+
+
+
+
   }
 }

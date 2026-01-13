@@ -151,9 +151,9 @@ namespace OrakYazilimLib.DataContainer
       }
 
       // null sonuçlara özel combine işlemi
-//        if (fdrSubWork.getBoResult() == null) {
-//
-//        }
+      //  if (fdrSubWork.getBoResult() == null) {
+      //
+      // }
 
       // if(FiBool.isTrue(getBoMultiFdr())){
       //   getFdrListInit().add(fdrSubWork);
@@ -187,6 +187,7 @@ namespace OrakYazilimLib.DataContainer
      */
     public void CombineAnd<PrmT>(Fdr<PrmT> fdrSub)
     {
+      if (fdrSub == null) return;
 
       // And işlemi olduğu false sonuç, boExecution false yapar
       if (FiBool.IsFalse(fdrSub.boResult))
@@ -201,10 +202,64 @@ namespace OrakYazilimLib.DataContainer
         boResult ??= true;
       }
 
+
       // null olduğunda boResult sonucunu değiştirme
 //        if (fdrSubWork.getBoResult() == null) {
 //
 //        }
+
+      // if(FiBool.isTrue(getBoMultiFdr())){
+      //   getFdrListInit().add(fdrSubWork);
+      // }
+
+      // Tüm işlemlerde mesaj birleştirilir.
+      // Loglar birleştirilir.
+      CombineLogsAndMess(fdrSub);
+
+      // Tümü için yapılacaklar
+      if (fdrSub.refException != null)
+      {
+        refException ??= fdrSub.refException;
+        // exception birden fazla olma ihtimali var.
+        //getListExceptionInit().add(fdrSubWork.getException());
+      }
+
+      // appendRowsAffected(fdrSubWork.getRowsAffectedOrEmpty());
+      // appendLnUpdated(fdrSubWork.getLnUpdatedRows());
+      // appendLnInserted(fdrSubWork.getLnInsertedRows());
+      // appendLnDeleted(fdrSubWork.getLnDeletedRows());
+
+      // Birleştirme yapıldığı için eski Fdr'ye log eklenmesi engellenir
+      // fdrSubWork.setBoLockAddLog(true);
+    }
+
+    /**
+     * fdrSub boResult değerinin tersini alarak birleştirir
+     */
+    public void CombineAndReverse<PrmT>(Fdr<PrmT> fdrSub)
+    {
+      if (fdrSub == null) return;
+
+      if (fdrSub.boResult != null)
+      {
+        // And işlemi olduğu false sonuç, boExecution false yapar
+        if (FiBool.IsFalse(!fdrSub.boResult))
+        {
+          boResult = false;
+          //setLnFailureOpCount(getLnFailureOpCountInit() + 1);
+        }
+
+        if (FiBool.IsTrue(!fdrSub.boResult))
+        {
+          //setLnSuccessOpCount(getLnSuccessOpCountInit() + 1);
+          boResult ??= true;
+        }
+      }
+
+      // null olduğunda boResult sonucunu değiştirme
+      //if (fdrSubWork.getBoResult() == null) {
+      //
+      // }
 
       // if(FiBool.isTrue(getBoMultiFdr())){
       //   getFdrListInit().add(fdrSubWork);
@@ -393,7 +448,16 @@ namespace OrakYazilimLib.DataContainer
     public void AddLogError(string txMess)
     {
       GetListFieLogInit().Add(new FieLog(FimLogTypes.Error(), txMess));
-      ;
+    }
+
+    public void AddLogAlert(string txMess)
+    {
+      GetListFieLogInit().Add(new FieLog(FimLogTypes.Alert(), txMess));
+    }
+
+    public void AddLogNotice(string txMess)
+    {
+      GetListFieLogInit().Add(new FieLog(FimLogTypes.Notice(), txMess));
     }
 
     public void SetBoExecAndResultFalse()
