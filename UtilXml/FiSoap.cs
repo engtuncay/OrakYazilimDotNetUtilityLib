@@ -20,8 +20,9 @@ namespace OrakYazilimLib.UtilXml
                 //request.ContentType = "text/xml;charset=\"utf-8\"";
                 XmlDocument soapEnvelopeXml = new XmlDocument();
                 soapEnvelopeXml.LoadXml(fiXmlReq.GetXmlFinal()); //AddNamespace(txXmlContent) //txXmlContent
-                //FiAppConfig.fiLogManager?.LogMessage(fiXmlReq.txXml);
-                //FiAppConfig.fiLogManager?.LogMessage(fiXmlReq.txBaseUrl);
+
+                //FiAppConfig.fiLog?.Debug(fiXmlReq.txXml);
+                //FiAppConfig.fiLog?.Debug(fiXmlReq.txBaseUrl);
 
                 using (Stream stream = request.GetRequestStream())
                 {

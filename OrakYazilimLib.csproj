@@ -191,6 +191,7 @@
     <Compile Include="Util\core\FiType.cs" />
     <Compile Include="Util\core\ObservableProps.cs" />
     <Compile Include="Util\FiEntity\FieLog.cs" />
+    <Compile Include="Util\FiMetas\FiLogTypes.cs" />
     <Compile Include="Util\FiMetas\FimLogTypes.cs" />
     <Compile Include="Util\FiModal.cs" />
     <Compile Include="Util\helper\Fistf.cs" />
